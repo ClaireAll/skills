@@ -1,6 +1,6 @@
 # Codex Skills 清单
 
-生成日期：2026-07-23
+生成日期：2026-07-29
 
 个人 skills 根目录：`D:\Claire\skills`
 
@@ -21,6 +21,7 @@
 | `plugin-creator` | `D:\Claire\skills\.system\plugin-creator` | 创建个人 Codex 插件目录、`.codex-plugin/plugin.json`、市场条目和可选插件结构。 |
 | `skill-creator` | `D:\Claire\skills\.system\skill-creator` | 创建或更新 Codex skill，帮助设计 `SKILL.md`、目录结构、触发条件和可复用工作流。 |
 | `skill-installer` | `D:\Claire\skills\.system\skill-installer` | 从 GitHub 或 curated skills 源安装 Codex skills 到本地 skills 目录。 |
+| `worklog` | `D:\Claire\skills\worklog` | 给修复后的飞书项目缺陷登记工时；修完 bug 并提交/打开 PR 后自动执行，工时页为 `https://project.feishu.cn/b2rl2h/meegoPlg/MII_686B6DA98EC9C002_board_f3d5nl`，工作项类型固定为 `缺陷`，实例按精确 issue id/title 匹配，默认随机选择不与已有工时重叠的 1-3h 时间段，开始时间在 09:00 后、20:00 前，登记日志写 `问题描述` 和 `修复方案`。 |
 
 ## 文档、表格、演示和 PDF
 
@@ -94,4 +95,3 @@
 | `superpowers:using-git-worktrees` | Superpowers plugin | 开始需要隔离的开发工作时创建或复用 git worktree。 |
 | `superpowers:finishing-a-development-branch` | Superpowers plugin | 实现和验证完成后，决定合并、PR 或清理分支的收尾流程。 |
 | `superpowers:writing-skills` | Superpowers plugin | 创建、编辑或验证 skills 时使用的工作流。 |
-
