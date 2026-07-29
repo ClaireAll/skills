@@ -9,6 +9,15 @@ description: "Use when the user asks Codex to log or prepare Feishu Project/Meeg
 
 Use this skill after bug-fix work when Feishu Project hours should be recorded for that bug. After Codex submits/opens a PR for a fixed Feishu issue/缺陷, run this skill automatically as the final follow-up without asking whether to log hours. Prefer live browser automation when a logged-in Feishu session and browser-control tool are available; if login is required, notify the user to log in manually and resume after they finish.
 
+## Worklog Information
+
+- Page: `https://project.feishu.cn/b2rl2h/meegoPlg/MII_686B6DA98EC9C002_board_f3d5nl`
+- Work item type: `缺陷`
+- Work item instance: exact Feishu issue id/title from the fixed bug.
+- Duration/start time: explicit values when supplied; otherwise use the default random non-overlapping 1-3h slot starting after 09:00 and before 20:00 local time.
+- Log body: `问题描述：...` and `修复方案：...`.
+- Submit button: `提交工时`.
+
 ## Required Context
 
 Collect these values before submitting:
