@@ -1,0 +1,4 @@
+interface:
+  display_name: "Worklog"
+  short_description: "Log Feishu hours after bug-fix PRs."
+  default_prompt: "Use $worklog after submitting a bug-fix PR to enter Feishu Project work hours with the bug details and fix plan."

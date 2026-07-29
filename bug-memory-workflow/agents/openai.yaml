@@ -1,0 +1,4 @@
+interface:
+  display_name: "Bug Memory Workflow"
+  short_description: "Reuse and record bug-fix history"
+  default_prompt: "Use $bug-memory-workflow to fix a bug while reusing prior bug memories and recording the verified fix."

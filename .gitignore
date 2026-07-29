@@ -1,0 +1,16 @@
+# Local/editor noise
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.temp
+
+# Dependency/cache folders that should not be committed with skills
+node_modules/
+__pycache__/
+*.py[cod]
+.cache/
+.tmp/
+tmp/
+dist/
+build/

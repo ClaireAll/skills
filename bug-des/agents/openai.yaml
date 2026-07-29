@@ -1,0 +1,3 @@
+display_name: Bug Template Filler (fx-data-web)
+short_description: Ask for 问题描述/问题原因/修复方法 and complete the rest from fx-data-web.
+default_prompt: 请帮我填写 bug 模板，我提供问题描述/问题原因/修复方法，其余字段请根据 D:\work\fx-data-web 工程补充并输出完整版。
