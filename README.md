@@ -1,6 +1,6 @@
 # Codex Skills 清单
 
-生成日期：2026-07-29
+生成日期：2026-07-30
 
 个人 skills 根目录：`D:\Claire\skills`
 
@@ -8,11 +8,19 @@
 
 这份清单按当前 Codex 会话暴露出来的 skills 整理。`D:\Claire\skills` 下的是个人/系统 skills；插件提供的 skills 仍来自 Codex 插件缓存目录。
 
+## 仓库说明
+
+这个仓库是 `D:\Claire\skills` 的备份和维护入口，对应远端仓库 `ClaireAll/skills`。本机 Codex 默认 skills 路径 `C:\Users\Claire\.codex\skills` 是指向 `D:\Claire\skills` 的 junction，所以这里的个人/system skills 会被 Codex 默认发现。
+
+维护时优先把可复用 skill 放在 `D:\Claire\skills\<skill-name>\SKILL.md`。如果旧 memory 里还有 `D:\Claire\memory\skills\...` 之类路径，应该改为指向 `D:\Claire\skills`；临时兼容可以保留 junction，但正式位置以本仓库为准。
+
 ## D 盘个人和系统 Skills
 
 | Skill | 位置 | 用途 |
 |---|---|---|
 | `bug-des` | `D:\Claire\skills\bug-des` | 生成 `fx-data-web` 项目的缺陷说明模板；会询问问题描述、原因、修复方法，并结合 git diff 推断完整内容。 |
+| `bug-memory-workflow` | `D:\Claire\skills\bug-memory-workflow` | 调试、修复或 review bug 前查询历史 bug 记忆，避免重复踩坑，适用于回归、失败测试、运行时错误、UI/API 缺陷等问题。 |
+| `fx-data-web-bugfix-workflow` | `D:\Claire\skills\fx-data-web-bugfix-workflow` | 遵循 `D:\work\fv-web2 / fx-data-web` 的 bugfix 交付流程：先改代码给用户 review，再按 Feishu、commit、PR、worklog 等规则继续。 |
 | `find-skills` | `D:\Claire\skills\find-skills` | 帮你发现、筛选、推荐和安装开放生态里的 agent skills。适合问“有没有某某 skill”“帮我找一个能做 X 的 skill”。 |
 | `frontend-code-review` | `D:\Claire\skills\frontend-code-review` | 对前端 `.tsx`、`.ts`、`.js` 等文件做代码审查，重点看 bug、回归风险、可访问性、状态和交互问题。 |
 | `hue` | `D:\Claire\skills\hue` | 生成新的设计语言 skill。适合创建 design system skill、从截图/产品风格提炼视觉规范、重混已有设计 skill。 |
@@ -66,6 +74,16 @@
 |---|---|---|
 | `gmail:gmail` | Gmail plugin | 搜索、阅读、总结邮件/线程，提取待办，草拟回复、转发或整理邮件。 |
 | `gmail:gmail-inbox-triage` | Gmail plugin | 对收件箱做优先级分流，区分紧急、需回复、等待中和 FYI。 |
+
+## OpenAI Developers Skills
+
+| Skill | 来源 | 用途 |
+|---|---|---|
+| `openai-developers:agents-sdk` | OpenAI Developers plugin | 构建、运行、部署和评估 OpenAI Agents SDK 应用，适合 agent 原型、focused eval 和运行配置。 |
+| `openai-developers:build-chatgpt-app` | OpenAI Developers plugin | 构建、重构和排查 ChatGPT Apps SDK 应用，覆盖 MCP server、widget UI、工具注册和 Apps bridge。 |
+| `openai-developers:chatgpt-app-submission` | OpenAI Developers plugin | 检查 ChatGPT Apps MCP server 代码库，并生成 app submission 信息、测试用例和 review 检查建议。 |
+| `openai-developers:openai-api-troubleshooting` | OpenAI Developers plugin | 分析 OpenAI API 请求失败原因，定位网络、认证、请求格式、限流或模型相关问题的下一步。 |
+| `openai-developers:openai-platform-api-key` | OpenAI Developers plugin | 在需要 OpenAI API key 的 AI app、脚本、CLI、生成器或测试场景中，引导安全配置 API key。 |
 
 ## Product Design Skills
 
