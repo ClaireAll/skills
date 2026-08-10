@@ -1,50 +1,40 @@
 ---
 name: bug-des
-description: Ask for 问题描述、问题原因、修复方法, then ask where the diff lives (package path) and require git diff context to complete the full bug template by inferring remaining fields from the fx-data-web repo (D:\work\fx-data-web) and the user's changes. Expand brief原因/修复方法 into fuller, concrete descriptions. Omit 问题描述 in the final output. Use when the user wants this project-aware template completion.
+description: Create Chinese Feishu bug comments or PR descriptions for fx-data-web/fv-web2 from issue context plus git diff evidence. Use when the user asks to comment on a Feishu bug, prepare a bug-fix PR description, fill the team's bug template, or summarize change description, linked issue, changed content, testing, and checklist items.
 ---
 
-# Bug Template Filler (fx-data-web)
+# Bug Description Writer (fx-data-web)
 
-Use `assets/template.txt` as the base template.
+Use `assets/template.txt` as the default template for Feishu bug comments and bug-fix PR descriptions.
 
 ## Workflow
 
-1. Load `assets/template.txt` (UTF-8).
-2. Collect user-provided fields (ask if missing):
+1. Collect issue context when available:
    - 问题描述
    - 问题原因
-   - 修复方法
-3. Ask for diff location (required):
-   - “改动的 diff 在哪个包/路径？请给出相对 D:\\work\\fx-data-web 的路径（例如 packages/jsy-web）。”
-4. Require git diff context:
+   - 修复方案
+   - Feishu/JIRA/工单 title, id, or URL
+2. Ask for diff location only when it cannot be inferred from the current repo state:
+   - `改动的 diff 在哪个包/路径？请给出相对 D:\work\fx-data-web 或 D:\work\fv-web2 的路径，例如 packages/jsy-web。`
+3. Require git diff context:
    - Prefer running `git status` and `git diff` scoped to the provided path.
-   - If git diff cannot be accessed, ask the user to paste the diff (or a file list + key snippets). Do not guess without diff evidence.
-5. Inspect repo context in `D:\\work\\fx-data-web` scoped to the diff location to infer remaining fields:
+   - If git diff cannot be accessed, ask the user to paste the diff or a file list plus key snippets. Do not guess without diff evidence.
+4. Inspect repo context in `D:\work\fx-data-web` or `D:\work\fv-web2` scoped to the diff location:
    - Use `rg` to locate touched modules, routes, APIs, and components referenced by the diff.
-   - Use `readme.md` and routing/config files to map changes to pages and entry points.
-   - Identify tests near the changed code (e.g., `vitest`, `__tests__`, `*.spec.*`, `*.test.*`).
-   - Treat comments, screenshots, attachments, and linked docs as first-class bug evidence when the user provides them; do not rely on the title/description alone.
-6. Expand brief原因/修复方法 into fuller, concrete descriptions:
-   - 根因: explain the mechanism (what code path + why it failed) using diff evidence.
-   - 修复方法: describe the code change in terms of behavior (what was changed, where, and why it fixes the issue).
-   - Keep it accurate and avoid inventing details not supported by the diff or repo context.
-7. Fill the template:
-   - If a label line exists (e.g., `【问题原因】：`), insert the user value after the label.
-   - If a label line lacks `：`, add `：` before inserting the value.
-   - If the template does not contain `【问题描述】`, prepend a new line `【问题描述】：<value>` at the top.
-   - Preserve all other lines and their order.
-8. Field completion rules (project-aware + diff-scoped):
-   - 影响范围: list impacted modules/pages/routes/roles/environments based on changed files, call sites, and data-flow evidence within the diff scope; do not write “no impact” from intuition alone.
-   - 功能: summarize user-visible behavior changes (features, flows, UI states) based on affected modules/pages.
-   - 性能: note any performance implications; if no evidence, write “无明显影响”.
-   - 测试范围: list affected tests; if none exist, provide minimal manual checks with concrete URLs from the repo (or mark as “待补充”). Write checks as operation + expected result; for bug fixes with automated tests, mention base-red/fix-green evidence when available.
-9. Output rules:
-   - Output only the completed full template, no extra commentary.
-   - Do NOT include 问题描述 in the final output; omit that line even if the template contains it.
-   - Ensure 测试范围 is the last item in the output.
+   - Use README and routing/config files to map changes to pages and entry points.
+   - Identify tests near the changed code, such as `vitest`, `__tests__`, `*.spec.*`, or `*.test.*`.
+   - Treat comments, screenshots, attachments, and linked docs as bug evidence when the user provides them.
+5. Fill `assets/template.txt` and preserve its section order:
+   - `变更描述`: replace the HTML comment with a concise evidence-backed summary of the change. Include the bug symptom, root cause, fix, and known impact/risk when the evidence supports them.
+   - `关联Issue`: replace `#12345` with the Feishu/JIRA/工单 id or URL from the issue context. If no id is available, use `- 待补充`.
+   - `改动内容`: replace the sample checkbox items with concrete changed files/modules/behaviors from the diff. Check only items that are confirmed by evidence.
+   - `测试情况`: replace the sample checkbox items with concrete verification results. Check only tests or manual checks that were actually run or explicitly provided.
+   - `Checklist`: keep the checklist section, checking only items supported by evidence. Leave unchecked when not confirmed.
+6. Output only the completed template for comments or PR descriptions, with no extra commentary.
+7. Keep it accurate and avoid inventing details not supported by the diff, issue context, or repo evidence.
 
 ## Notes
 
-- If repo evidence is insufficient to complete a field, ask a concise follow-up question and mark that field as “待确认”.
+- If repo evidence is insufficient to complete a field, ask a concise follow-up question or mark that field as `待补充`.
 - Prefer concrete file paths and routes over generic descriptions.
 - If the diff path is outside the repo or unclear, ask the user to re-enter it.

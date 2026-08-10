@@ -1,0 +1,4 @@
+interface:
+  display_name: "I18n Helper"
+  short_description: "Generate a Chinese i18n report, replace duplicate keys, and delete unused keys safely."
+  default_prompt: "Use $i18n-helper to scan the configured project and generate an i18n usage report."

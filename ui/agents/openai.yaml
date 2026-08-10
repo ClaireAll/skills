@@ -1,0 +1,4 @@
+interface:
+  display_name: "UI"
+  short_description: "Route UI work to the right module"
+  default_prompt: "Use $ui to handle this UI task with the relevant internal modules."

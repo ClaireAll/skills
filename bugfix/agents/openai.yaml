@@ -1,0 +1,4 @@
+interface:
+  display_name: "Bugfix"
+  short_description: "Deliver fv-web2/fx-data-web bugs through BKT PRs"
+  default_prompt: "Use $bugfix to fix and deliver this bug; create its Bitbucket PR with bkt."

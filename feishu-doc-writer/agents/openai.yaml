@@ -1,0 +1,4 @@
+interface:
+  display_name: "Feishu Doc Writer"
+  short_description: "Create and verify Feishu wiki documents from Markdown."
+  default_prompt: "Generate a Feishu wiki document under the target wiki node using the embedded style guide."
