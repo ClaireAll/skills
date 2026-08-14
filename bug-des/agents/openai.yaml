@@ -1,4 +1,4 @@
 interface:
   display_name: "Bug Description Writer"
-  short_description: "Draft Chinese Feishu bug comments and PR descriptions from diffs."
-  default_prompt: "Use $bug-des to draft a Chinese Feishu bug comment with 变更描述、关联Issue、改动内容、测试情况、Checklist from my issue context and git diff."
+  short_description: "Draft natural Chinese Feishu bug comments with commit attribution."
+  default_prompt: "Use $bug-des to create a natural Chinese Feishu bug comment with five rich-text headings: 疑似原因、变更描述、改动内容、测试情况、可能导致的问题. Link recognized item ids in a history-backed suspected cause; when no source commit is found, write 略. Keep source file names out, report actual functional verification, and make risks condition-specific."

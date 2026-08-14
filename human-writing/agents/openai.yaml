@@ -1,0 +1,4 @@
+interface:
+  display_name: "Human Writing"
+  short_description: "Revise Chinese-first prose naturally without inventing facts."
+  default_prompt: "Use $human-writing to revise this Chinese-first text naturally. Preserve facts, terminology, links, formatting, and the intended voice; remove only inappropriate AI-style filler, inflated claims, promotional language, formulaic structure, or chatbot residue."
