@@ -1,10 +1,10 @@
 # Codex Skills
 
-更新日期：2026-08-14
+更新日期：2026-08-20
 
 个人 skill 根目录：`D:\Claire\skills`。Codex 默认发现路径 `C:\Users\Claire\.codex\skills` 是指向这里的 junction，因此本仓库是本地 skill 的唯一维护入口。
 
-这里只维护本地 personal 与 `.system` skills。插件提供的 skills 会随 Codex 会话和插件版本变化，以当前会话的可用 skill 列表为准，不在这里复制一份易过期的清单。
+这里只维护本地 personal 与 `.system` skills。插件提供的 skills 会随 Codex 会话和插件版本变化，以当前会话的可用 skill 列表为准；下方仅登记已接入插件的稳定调用入口，不复制其流程正文。
 
 ## 使用原则
 
@@ -21,6 +21,15 @@
 | `find-skills` | 本地没有合适能力时，发现和安装可复用 skill。 |
 | `require-understand` | 读取、对齐飞书、Figma、本地文档或混合需求输入；需要测试计划时自动串联测试场景、脑图与回填流程。 |
 | `feishu-doc-writer` | 创建、更新或核验飞书/Lark 文档和 wiki 页面。 |
+
+## BDD 流水线
+
+| Skill | 适用场景 |
+| --- | --- |
+| `bdd-onboarding` | 接入或巡检 FXDATA 跨仓库 BDD 流水线：校验插件依赖、准备 harness 与产品仓归档，并在执行前完成 `doctor`。 |
+| `fx-bdd:bdd`（Codex 插件） | 官方 BDD 流水线执行入口，负责初始化、`doctor`、需求到可执行场景的完整编排。首次安装或更新插件后必须新开 Codex 会话，再以 `$fx-bdd:bdd` 调用。 |
+
+本机已接入 `fx-data-test-skills` 与 `fx-bdd` 两个插件，二者必须同时保持 `installed, enabled`。`fx-data-test-skills` 是前置依赖；不要只安装 `fx-bdd`。用 `codex plugin list -m fx-data-test-skills` 和 `codex plugin list -m skill-manager` 复核状态。
 
 ## 产品与界面设计
 
