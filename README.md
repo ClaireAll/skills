@@ -1,10 +1,29 @@
 # Codex Skills
 
-更新日期：2026-08-20
+更新日期：2026-08-29
 
 个人 skill 根目录：`D:\Claire\skills`。Codex 默认发现路径 `C:\Users\Claire\.codex\skills` 是指向这里的 junction，因此本仓库是本地 skill 的唯一维护入口。
 
-这里只维护本地 personal 与 `.system` skills。插件提供的 skills 会随 Codex 会话和插件版本变化，以当前会话的可用 skill 列表为准；下方仅登记已接入插件的稳定调用入口，不复制其流程正文。
+这里维护本地 personal 与 `.system` skills，并记录当前会话可用 skill 的名称快照。插件提供的 skills 会随 Codex 会话和插件版本变化；实际调用以前，以当前会话的可用 skill 列表为准。
+
+## 当前会话可用 Skill 名称
+
+统计时间：2026-08-29。当前会话可调用 **73** 个 skill；下表按来源列出完整名称。
+
+| 来源 | 数量 | Skill 名称 |
+| --- | ---: | --- |
+| 本地 personal | 16 | `archify`、`bdd-onboarding`、`bug-des`、`bug-memory-workflow`、`bugfix`、`feishu-doc-writer`、`find-skills`、`fixing-accessibility`、`fixing-metadata`、`fixing-motion-performance`、`frontend-code-review`、`human-writing`、`i18n-helper`、`require-understand`、`ui`、`worklog` |
+| 本地 `.system` | 5 | `imagegen`、`openai-docs`、`plugin-creator`、`skill-creator`、`skill-installer` |
+| FXDATA BDD 插件 | 3 | `fx-bdd:bdd`、`fx-data-test-skills:read-feature-input`、`fx-data-test-skills:test-plan-generator` |
+| Figma 插件 | 12 | `figma:figma-code-connect`、`figma:figma-create-new-file`、`figma:figma-design-to-code`、`figma:figma-generate-design`、`figma:figma-generate-diagram`、`figma:figma-generate-library`、`figma:figma-implement-motion`、`figma:figma-swiftui`、`figma:figma-use`、`figma:figma-use-figjam`、`figma:figma-use-motion`、`figma:figma-use-slides` |
+| OpenAI 开发者插件 | 5 | `openai-developers:agents-sdk`、`openai-developers:build-chatgpt-app`、`openai-developers:chatgpt-app-submission`、`openai-developers:openai-api-troubleshooting`、`openai-developers:openai-platform-api-key` |
+| 文档与表格能力 | 6 | `documents:documents`、`pdf:pdf`、`presentations:Presentations`、`spreadsheets:Spreadsheets`、`spreadsheets:excel-live-control`、`template-creator:template-creator` |
+| 插件管理 | 1 | `plugin-management:plugin-management` |
+| Ponytail 插件 | 6 | `ponytail:ponytail`、`ponytail:ponytail-audit`、`ponytail:ponytail-debt`、`ponytail:ponytail-gain`、`ponytail:ponytail-help`、`ponytail:ponytail-review` |
+| Product Design 插件 | 5 | `product-design:audit`、`product-design:ideate`、`product-design:image-to-code`、`product-design:index`、`product-design:url-to-code` |
+| Superpowers 插件 | 14 | `superpowers:brainstorming`、`superpowers:dispatching-parallel-agents`、`superpowers:executing-plans`、`superpowers:finishing-a-development-branch`、`superpowers:receiving-code-review`、`superpowers:requesting-code-review`、`superpowers:subagent-driven-development`、`superpowers:systematic-debugging`、`superpowers:test-driven-development`、`superpowers:using-git-worktrees`、`superpowers:using-superpowers`、`superpowers:verification-before-completion`、`superpowers:writing-plans`、`superpowers:writing-skills` |
+
+`review-agent` 位于本地 `.system` 目录，但未在本次会话的动态 skill 列表中出现，因此不计入上述 73 个可调用 skill。
 
 ## 使用原则
 
