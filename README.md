@@ -1,6 +1,6 @@
 # Codex Skills
 
-更新日期：2026-08-29
+更新日期：2026-09-04
 
 个人 skill 根目录：`D:\Claire\skills`。Codex 默认发现路径 `C:\Users\Claire\.codex\skills` 是指向这里的 junction，因此本仓库是本地 skill 的唯一维护入口。
 
@@ -8,11 +8,11 @@
 
 ## 当前会话可用 Skill 名称
 
-统计时间：2026-08-29。当前会话可调用 **73** 个 skill；下表按来源列出完整名称。
+统计时间：2026-09-04。安装完成并在新会话加载后可调用 **75** 个 skill；下表按来源列出完整名称。
 
 | 来源 | 数量 | Skill 名称 |
 | --- | ---: | --- |
-| 本地 personal | 16 | `archify`、`bdd-onboarding`、`bug-des`、`bug-memory-workflow`、`bugfix`、`feishu-doc-writer`、`find-skills`、`fixing-accessibility`、`fixing-metadata`、`fixing-motion-performance`、`frontend-code-review`、`human-writing`、`i18n-helper`、`require-understand`、`ui`、`worklog` |
+| 本地 personal | 18 | `archify`、`bdd-onboarding`、`bug-des`、`bug-memory-workflow`、`bugfix`、`feishu-doc-writer`、`find-skills`、`fixing-accessibility`、`fixing-metadata`、`fixing-motion-performance`、`frontend-code-review`、`human-writing`、`i18n-helper`、`require-understand`、`resolving-merge-conflicts`、`to-questionnaire`、`ui`、`worklog` |
 | 本地 `.system` | 5 | `imagegen`、`openai-docs`、`plugin-creator`、`skill-creator`、`skill-installer` |
 | FXDATA BDD 插件 | 3 | `fx-bdd:bdd`、`fx-data-test-skills:read-feature-input`、`fx-data-test-skills:test-plan-generator` |
 | Figma 插件 | 12 | `figma:figma-code-connect`、`figma:figma-create-new-file`、`figma:figma-design-to-code`、`figma:figma-generate-design`、`figma:figma-generate-diagram`、`figma:figma-generate-library`、`figma:figma-implement-motion`、`figma:figma-swiftui`、`figma:figma-use`、`figma:figma-use-figjam`、`figma:figma-use-motion`、`figma:figma-use-slides` |
@@ -28,7 +28,7 @@
 ## 使用原则
 
 - 优先选择职责清晰、覆盖完整任务的最小入口。
-- `require-understand` 会按目标自动加载需求理解模块，生成测试计划时自动追加测试计划模块。
+- `require-understand` 会按目标自动加载需求理解模块；需要把他人掌握的需求缺口整理成问卷时调用 `to-questionnaire`，生成测试计划时自动追加测试计划模块。
 - `ui` 会按目标自动加载一个或多个 UI 内部模块；明确的小任务不必加载宽泛路由上下文。
 - `bugfix` 是 `fv-web2 / fx-data-web` 的唯一缺陷交付编排器；它取代已移除的 `fx-data-web-bugfix-workflow`，并调用 `bug-memory-workflow`、`bug-des` 与 `worklog`，这些 skill 仍可独立使用。
 - 只有脚本产生的缓存、报告和构建输出应被忽略；skill 源码、模板和验证脚本应留在版本控制中。
@@ -38,7 +38,8 @@
 | Skill | 适用场景 |
 | --- | --- |
 | `find-skills` | 本地没有合适能力时，发现和安装可复用 skill。 |
-| `require-understand` | 读取、对齐飞书、Figma、本地文档或混合需求输入；需要测试计划时自动串联测试场景、脑图与回填流程。 |
+| `require-understand` | 读取、对齐飞书、Figma、本地文档或混合需求输入；可将指定源码与交互文档逐项对照并就地标注矛盾或遗漏；需要时将他人掌握的需求缺口转成交付问卷，或串联测试场景、脑图与回填流程。 |
+| `to-questionnaire` | 将只有产品、测试、开发或其他特定人员能回答的需求缺口整理为结构化 Markdown 问卷；普通澄清问题不会触发。 |
 | `feishu-doc-writer` | 创建、更新或核验飞书/Lark 文档和 wiki 页面。 |
 
 ## BDD 流水线
@@ -86,6 +87,12 @@
 | `bugfix` | `fv-web2 / fx-data-web` 的修复、review gate、Feishu、Bitbucket PR 与交付流程。 |
 | `bug-des` | 基于 issue 与 diff 生成中文 Feishu 缺陷评论或 PR 描述。 |
 | `worklog` | 已提交 Feishu 缺陷 PR 后登记或准备项目工时。 |
+
+## Git 协作
+
+| Skill | 适用场景 |
+| --- | --- |
+| `resolving-merge-conflicts` | 处理正在进行的 Git merge 或 rebase 冲突：追溯双方提交、PR 或工单意图，逐段合并并完成项目校验，而不是机械保留某一侧。 |
 
 ## 系统 Skills
 

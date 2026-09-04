@@ -1,4 +1,4 @@
 interface:
   display_name: "Understand Requirements"
-  short_description: "Read requirements and build test plans"
-  default_prompt: "Use $require-understand to route this requirement request."
+  short_description: "Read requirements, resolve gaps, compare specs, and build test plans"
+  default_prompt: "Use $require-understand to read this requirement, compare it with source code, turn stakeholder-owned gaps into a questionnaire, or build a test plan."
