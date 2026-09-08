@@ -1,4 +1,4 @@
 interface:
   display_name: "Bugfix"
-  short_description: "Deliver fv-web2/fx-data-web bugs through BKT PRs"
+  short_description: "Handle Feishu bug links and BKT delivery"
   default_prompt: "Use $bugfix to fix and deliver this bug; create its Bitbucket PR with bkt."

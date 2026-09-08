@@ -4,11 +4,12 @@
 
 Search these before bug edits:
 
+- `D:\Claire\memory\bug-fix.md` (primary Bug history)
 - `C:\Users\Claire\.codex\memories\MEMORY.md`
 - `C:\Users\Claire\.codex\memories\extensions\ad_hoc\notes\`
 - `D:\Claire\memory\extensions\ad_hoc\notes\` if the junction path needs direct access
 
-Prefer `rg`. If `rg` is unavailable or denied, use PowerShell `Select-String`.
+Prefer `rg`. Search `bug-fix.md` by work item, repo, module, API, error, or symptom before reading a narrow matching section. If `rg` is unavailable or denied, use PowerShell `Select-String`.
 
 Example PowerShell fallback:
 
@@ -21,43 +22,48 @@ Get-ChildItem "C:\Users\Claire\.codex\memories\extensions\ad_hoc\notes" -Filter 
 
 ## Write Location
 
-Write one note per verified bug fix:
+Write every verified Bug fix to the unified file:
 
-`C:\Users\Claire\.codex\memories\extensions\ad_hoc\notes\<timestamp>-bug-<short-slug>.md`
+`D:\Claire\memory\bug-fix.md`
 
-Use local time for `<timestamp>` in `yyyy-MM-ddTHH-mm-ss` format. Keep `<short-slug>` lowercase, short, and searchable.
+Before writing, search for the same work item or confirmed problem. Update that entry when it already exists; otherwise append a new entry under `## 后续记录`. Do not create a per-Bug Markdown file under `extensions/ad_hoc/notes`.
 
-## Note Template
+## Entry Template
 
 ```md
-# Bug Memory: <short title>
+### <yyyy-MM-dd> | <short title>
 
 scope: <repo/module/page/api>
 date: <yyyy-MM-dd>
 status: verified
+issue: <work item key or link, when known>
 
-## Symptom
+#### Symptom
 <confirmed user-visible symptom, failing test, error, or regression>
 
-## Root Cause
+#### Root Cause
 <confirmed mechanism and code path>
 
-## Fix
+#### Fix
 <what changed and why it fixed the root cause>
 
-## Verification
+#### Verification
 <fresh verification command or manual check and result>
 
-## Reuse Hint
+#### Delivery
+<commit, comment, push, PR, or worklog status when relevant>
+
+#### Reuse Hint
 <what to check first next time; what mistake to avoid>
 
-## Keywords
+#### Keywords
 <repo>, <module>, <component>, <api>, <error>, <data key>, <symptom words>
 ```
 
 ## Quality Bar
 
 - Mention concrete files, routes, APIs, and data keys when they are relevant.
-- Keep the note compact; prefer 100-250 words.
+- Keep the entry compact; prefer 100-250 words.
 - Include a reuse hint that changes future debugging behavior.
 - If the fix involved a repo-specific workflow, link the memory to that repo in `scope` and `Keywords`.
+- Preserve confirmed delivery status, but do not copy full diffs, full comments, or unresolved investigation branches.

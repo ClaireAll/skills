@@ -1,0 +1,4 @@
+interface:
+  display_name: "转测前自查"
+  short_description: "按本次迭代生成手动自查用例，覆盖业务边界、历史风险与关联回归"
+  default_prompt: "使用 $test-skill，结合本次迭代的需求、交互和代码改动，生成完整的手动转测自查用例，并列出待确认与未覆盖项。"

@@ -1,4 +1,4 @@
 interface:
   display_name: "Bug Description Writer"
-  short_description: "Draft natural Chinese Feishu bug comments with commit attribution."
-  default_prompt: "Use $bug-des to create a natural Chinese Feishu bug comment with five rich-text headings: 疑似原因、变更描述、改动内容、测试情况、可能导致的问题. Link recognized item ids in a history-backed suspected cause; when no source commit is found, write 略. Keep source file names out, report actual functional verification, and make risks condition-specific."
+  short_description: "Draft and publish concise colored Chinese Feishu bug comments."
+  default_prompt: "Use $bug-des to create a natural Chinese Feishu bug comment with exactly three headings: 原因、改动内容、可能导致的问题. When publishing to Feishu, first keep one plain fallback comment, then edit that same comment through browser rich-text clipboard paste so the headings and labels use the skill's colors while body text stays 14px and normal weight. Preserve the fallback if rich-text verification fails. State the evidence-backed Bug cause first, keep source file names out, include every independently meaningful final-diff behavior change, and write each supported residual risk only as one concrete scenario with its possible result."

@@ -1,6 +1,6 @@
 # Codex Skills
 
-更新日期：2026-09-04
+更新日期：2026-09-08
 
 个人 skill 根目录：`D:\Claire\skills`。Codex 默认发现路径 `C:\Users\Claire\.codex\skills` 是指向这里的 junction，因此本仓库是本地 skill 的唯一维护入口。
 
@@ -8,11 +8,11 @@
 
 ## 当前会话可用 Skill 名称
 
-统计时间：2026-09-04。安装完成并在新会话加载后可调用 **75** 个 skill；下表按来源列出完整名称。
+以 2026-09-04 的会话快照为基础，2026-09-08 新增本地 `interaction-guide` 与 `test-skill`，索引合计 **77** 个 skill；插件部分仍为历史快照，实际可调用项以新会话发现结果为准。
 
 | 来源 | 数量 | Skill 名称 |
 | --- | ---: | --- |
-| 本地 personal | 18 | `archify`、`bdd-onboarding`、`bug-des`、`bug-memory-workflow`、`bugfix`、`feishu-doc-writer`、`find-skills`、`fixing-accessibility`、`fixing-metadata`、`fixing-motion-performance`、`frontend-code-review`、`human-writing`、`i18n-helper`、`require-understand`、`resolving-merge-conflicts`、`to-questionnaire`、`ui`、`worklog` |
+| 本地 personal | 20 | `archify`、`bdd-onboarding`、`bug-des`、`bug-memory-workflow`、`bugfix`、`feishu-doc-writer`、`find-skills`、`fixing-accessibility`、`fixing-metadata`、`fixing-motion-performance`、`frontend-code-review`、`human-writing`、`i18n-helper`、`interaction-guide`、`require-understand`、`resolving-merge-conflicts`、`test-skill`、`to-questionnaire`、`ui`、`worklog` |
 | 本地 `.system` | 5 | `imagegen`、`openai-docs`、`plugin-creator`、`skill-creator`、`skill-installer` |
 | FXDATA BDD 插件 | 3 | `fx-bdd:bdd`、`fx-data-test-skills:read-feature-input`、`fx-data-test-skills:test-plan-generator` |
 | Figma 插件 | 12 | `figma:figma-code-connect`、`figma:figma-create-new-file`、`figma:figma-design-to-code`、`figma:figma-generate-design`、`figma:figma-generate-diagram`、`figma:figma-generate-library`、`figma:figma-implement-motion`、`figma:figma-swiftui`、`figma:figma-use`、`figma:figma-use-figjam`、`figma:figma-use-motion`、`figma:figma-use-slides` |
@@ -23,12 +23,14 @@
 | Product Design 插件 | 5 | `product-design:audit`、`product-design:ideate`、`product-design:image-to-code`、`product-design:index`、`product-design:url-to-code` |
 | Superpowers 插件 | 14 | `superpowers:brainstorming`、`superpowers:dispatching-parallel-agents`、`superpowers:executing-plans`、`superpowers:finishing-a-development-branch`、`superpowers:receiving-code-review`、`superpowers:requesting-code-review`、`superpowers:subagent-driven-development`、`superpowers:systematic-debugging`、`superpowers:test-driven-development`、`superpowers:using-git-worktrees`、`superpowers:using-superpowers`、`superpowers:verification-before-completion`、`superpowers:writing-plans`、`superpowers:writing-skills` |
 
-`review-agent` 位于本地 `.system` 目录，但未在本次会话的动态 skill 列表中出现，因此不计入上述 73 个可调用 skill。
+`review-agent` 未计入上述索引；系统技能是否存在及是否可调用，以本机目录和会话发现结果为准。
 
 ## 使用原则
 
 - 优先选择职责清晰、覆盖完整任务的最小入口。
 - `require-understand` 会按目标自动加载需求理解模块；需要把他人掌握的需求缺口整理成问卷时调用 `to-questionnaire`，生成测试计划时自动追加测试计划模块。
+- `interaction-guide` 是源码交互 HTML 说明的入口，配合 `require-understand` 核对行为、配合 `archify` 展示流程；默认独立子流程、右侧详情和悬浮关联线高亮，内容覆盖与页面验证分开验收。
+- `test-skill` 用于根据当前迭代、需求、分支或 PR 生成转测前的开发自测、手动自查用例和提测检查清单。
 - `ui` 会按目标自动加载一个或多个 UI 内部模块；明确的小任务不必加载宽泛路由上下文。
 - `bugfix` 是 `fv-web2 / fx-data-web` 的唯一缺陷交付编排器；它取代已移除的 `fx-data-web-bugfix-workflow`，并调用 `bug-memory-workflow`、`bug-des` 与 `worklog`，这些 skill 仍可独立使用。
 - 只有脚本产生的缓存、报告和构建输出应被忽略；skill 源码、模板和验证脚本应留在版本控制中。
@@ -38,6 +40,7 @@
 | Skill | 适用场景 |
 | --- | --- |
 | `find-skills` | 本地没有合适能力时，发现和安装可复用 skill。 |
+| [`interaction-guide`](interaction-guide/SKILL.md) | 根据指定源码逐动作整理可点击 HTML 交互说明；覆盖实际文案、环境权限、置灰 tooltip、异步状态及字段级分支，支持分块补充现有文档和核对遗漏。 |
 | `require-understand` | 读取、对齐飞书、Figma、本地文档或混合需求输入；可将指定源码与交互文档逐项对照并就地标注矛盾或遗漏；需要时将他人掌握的需求缺口转成交付问卷，或串联测试场景、脑图与回填流程。 |
 | `to-questionnaire` | 将只有产品、测试、开发或其他特定人员能回答的需求缺口整理为结构化 Markdown 问卷；普通澄清问题不会触发。 |
 | `feishu-doc-writer` | 创建、更新或核验飞书/Lark 文档和 wiki 页面。 |
@@ -78,6 +81,12 @@
 | `fixing-metadata` | 完善 SEO、Open Graph、canonical、结构化数据和 robots 元数据。 |
 | `fixing-motion-performance` | 排查和修复动画、滚动联动和模糊效果的性能问题。 |
 | `i18n-helper` | 检查 JS/TS i18n JSON 的未使用 key、重复值和误报风险。 |
+
+## 测试协作
+
+| Skill | 适用场景 |
+| --- | --- |
+| `test-skill` | 根据当前迭代、需求、分支或 PR 生成转测前的开发自测、手动自查用例或提测检查清单；默认不执行测试、不编写 BDD 用例、不修改业务代码。 |
 
 ## 缺陷协作与交付
 
