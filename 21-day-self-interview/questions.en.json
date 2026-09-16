@@ -1,0 +1,288 @@
+{
+  "lang": "en",
+  "title": "21 Days of Self-Interview",
+  "subtitle": "Three questions every night. A mirror that slowly develops.",
+  "phases": [
+    {
+      "id": 1,
+      "name": "See",
+      "range": [
+        1,
+        7
+      ],
+      "intent": "Don't rush to change anything. Just see clearly what you're actually doing, and where your time and attention truly go."
+    },
+    {
+      "id": 2,
+      "name": "Understand",
+      "range": [
+        8,
+        14
+      ],
+      "intent": "Dig beneath what you saw: where do these patterns come from? What drives you — fear, longing, or a script someone else wrote?"
+    },
+    {
+      "id": 3,
+      "name": "Choose",
+      "range": [
+        15,
+        21
+      ],
+      "intent": "Once you see and understand, what remains is freedom: in a finite life, who you choose to become and where you spend yourself."
+    }
+  ],
+  "days": [
+    {
+      "day": 1,
+      "phase": 1,
+      "theme": "Starting Point",
+      "opening": "You don't have to answer beautifully — only honestly. Tonight is Day 1. We start exactly where you're standing.",
+      "questions": [
+        "If you had to describe your life right now honestly to a stranger, what would you say? (Not how you wish it were — how it actually is.)",
+        "Why are you willing to spend 21 nights doing this? What makes you feel \"I need to see something clearly\"?",
+        "If one change 21 days from now would make this feel worth it, what would that change be?"
+      ],
+      "mirror": "Record the user's raw description of their current state and their motivation for starting. This is the baseline for every later reflection."
+    },
+    {
+      "day": 2,
+      "phase": 1,
+      "theme": "Time",
+      "opening": "Time is a ledger that never lies. We don't look at how you want to spend time — we look at how you actually do.",
+      "questions": [
+        "Thinking back on today, what three things did your time actually go to? Roughly what share each?",
+        "Which part of today did you actively choose, and which part swept you along until you looked up and it was gone?",
+        "If today were an ordinary day in your life — and most of your days look like this — how do you feel about that?"
+      ],
+      "mirror": "Notice the gap between the user's described time allocation and the life they said they wanted on Day 1."
+    },
+    {
+      "day": 3,
+      "phase": 1,
+      "theme": "Energy",
+      "opening": "Time is finite; energy even more so. Tonight: what feeds you, and what quietly drains you.",
+      "questions": [
+        "Was there a moment today when you felt lit up, fully alive? What were you doing?",
+        "Was there something that left you hollowed out afterward — even if it looked like something you \"should\" do?",
+        "If you could delete one thing that constantly drains you, what would it be? What's stopping you from deleting it?"
+      ],
+      "mirror": "Distinguish 'draining but cherished' from 'draining and resented' — the latter is a focus for later phases."
+    },
+    {
+      "day": 4,
+      "phase": 1,
+      "theme": "Attention",
+      "opening": "You slowly become whatever you point your attention at. Tonight we look at what's been taking yours.",
+      "questions": [
+        "Where did your attention drift most today? (Phone, a certain person, an unresolved thing, a worry...)",
+        "Is there something you keep calling important that you've barely given any real attention to?",
+        "If someone could see where your attention actually went today, what would they assume matters most to you? Does that match your own answer?"
+      ],
+      "mirror": "Contrast the user's stated priorities with where attention actually flows; point out the mismatch gently."
+    },
+    {
+      "day": 5,
+      "phase": 1,
+      "theme": "The Body",
+      "opening": "The mind is a skilled liar; the body, less so. Tonight we listen to what your body knows but you haven't admitted yet.",
+      "questions": [
+        "What state is your body in right now? Where is it tight, tired, or at ease?",
+        "Lately, has an emotion shown up in your body first — a clenched stomach, stiff shoulders, a sleepless night? In what situation?",
+        "If your body could speak, what's the one thing it would most want to tell you today?"
+      ],
+      "mirror": "The body is often the doorway to suppressed emotion. Note the somatic signals the user mentions and their contexts."
+    },
+    {
+      "day": 6,
+      "phase": 1,
+      "theme": "Masks",
+      "opening": "We're different people in front of different people. That's not fakeness — it's survival. Tonight, which masks do you wear?",
+      "questions": [
+        "In front of which person or situation are you least yourself? Who are you playing in that moment?",
+        "Is there any setting where you can drop the act completely and be real? If not, what does that tell you?",
+        "Which side of yourself are you most afraid others will see? If it were seen, what do you fear would happen?"
+      ],
+      "mirror": "Masks and the 'most feared exposure' often point to core shame or an unintegrated self. Hold it carefully, without judgment."
+    },
+    {
+      "day": 7,
+      "phase": 1,
+      "theme": "Week One Review",
+      "opening": "Phase one, \"See,\" closes tonight. No judging — we just piece together what this week revealed.",
+      "questions": [
+        "Reading back over what you said these six days, which line moves you most right now?",
+        "This week, was there a fact about how you actually live that you'd never truly faced before?",
+        "If you summed up \"the self I saw this week\" in one sentence, what would it be?"
+      ],
+      "mirror": "First formal reflection. Quote the user's own words from the past six days; weave the fragments into a preliminary self-portrait and hand it back."
+    },
+    {
+      "day": 8,
+      "phase": 2,
+      "theme": "Fear",
+      "opening": "Welcome to phase two, \"Understand.\" So much of what we do and don't do is rooted in fear. Tonight we see its face.",
+      "questions": [
+        "Is there something you've long wanted to do but keep putting off? If you honestly ask \"what am I afraid of,\" what's the answer?",
+        "Your deepest fear — failure, abandonment, not being enough, being seen through, dying unremarkable — which one cuts closest?",
+        "When and how did this fear first enter your life? Do you remember the earliest time?"
+      ],
+      "mirror": "Identify the user's core fear archetype and try to connect it to the avoidance behaviors mentioned the previous week."
+    },
+    {
+      "day": 9,
+      "phase": 2,
+      "theme": "Longing",
+      "opening": "The flip side of fear is often longing. Tonight we look at what you truly want — not what you should want, but what you really do.",
+      "questions": [
+        "Setting aside every \"should,\" what does the deepest part of you long for? Does saying it out loud embarrass you a little?",
+        "When did you last want something badly, then tell yourself \"forget it, it's not realistic\"? What was it?",
+        "If you were guaranteed not to fail and not to be mocked, what would you go after immediately?"
+      ],
+      "mirror": "Contrast the user's true longing with where their time/attention actually went on Days 2-4. The gap is where the tension lives."
+    },
+    {
+      "day": 10,
+      "phase": 2,
+      "theme": "The Script",
+      "opening": "Much of how we live wasn't chosen — it's a script inherited from family and culture. Tonight, whose script are you performing?",
+      "questions": [
+        "What \"a person should...\" sentences were drilled into you growing up? Which one still runs you today?",
+        "If you trace a current way of living or standard back to its source, whose voice is it really? (A parent, a teacher, a cultural expectation?)",
+        "If you could tear up one rule someone else wrote for you that you've kept obeying, which would you tear up?"
+      ],
+      "mirror": "Identify conflicts between inherited scripts and the user's real values — key groundwork for the 'Choose' phase."
+    },
+    {
+      "day": 11,
+      "phase": 2,
+      "theme": "Repetition",
+      "opening": "Fate is often just repetition. Tonight we find the loop that keeps replaying in your life.",
+      "questions": [
+        "Is there a pattern that recurs in your life? (The same kind of relationship, the same sticking point, the same giving-up halfway...)",
+        "Each time the loop begins, what do you feel inside? How do you usually respond?",
+        "If this loop is 'protecting' you from facing something, what is it helping you avoid?"
+      ],
+      "mirror": "Tie the repeating pattern to Day 8's fear and Day 10's script, presenting a chain of cause and effect."
+    },
+    {
+      "day": 12,
+      "phase": 2,
+      "theme": "Relationships",
+      "opening": "Who we are develops largely in our relationships with others. Tonight, who are you when you're with people?",
+      "questions": [
+        "In your closest relationships, are you more often the one who gives and pleases, or the one who takes and withdraws? Or does it depend?",
+        "When did you last truly feel understood? When did you last feel lonely?",
+        "What do people most often misunderstand about you? Is any part of that misunderstanding something you created yourself?"
+      ],
+      "mirror": "Attend to the user's attachment posture and loneliness; connect to Day 6's masks — the masks worn in relationships are often the heaviest."
+    },
+    {
+      "day": 13,
+      "phase": 2,
+      "theme": "Regret",
+      "opening": "Regret isn't for wallowing — it's for reading what you truly care about. Tonight we read it.",
+      "questions": [
+        "Looking back right now, what's your single biggest regret? Something you did, or something you didn't?",
+        "What is this regret telling you that you deeply cared about but didn't treat well?",
+        "If nothing changes, five years from now what choice — or non-choice — of today are you most likely to regret?"
+      ],
+      "mirror": "Regret reveals a value that wasn't honored. Note it — circle back when discussing values on Day 15."
+    },
+    {
+      "day": 14,
+      "phase": 2,
+      "theme": "Week Two Review",
+      "opening": "Phase two, \"Understand,\" gathers tonight. We piece fear, longing, script, and repetition into a map.",
+      "questions": [
+        "Digging deeper this week, what discovery about \"why you are the way you are\" surprised you most?",
+        "Fear, longing, inherited script, the repeating loop — which of these has the largest grip on you today?",
+        "If the first two weeks showed you what shaped you, where do you most want to start taking back the reins?"
+      ],
+      "mirror": "Second major reflection. Integrate the threads from Days 8-13 into a 'causal chain,' then transition naturally toward the Choose phase."
+    },
+    {
+      "day": 15,
+      "phase": 3,
+      "theme": "Values",
+      "opening": "Welcome to the final phase, \"Choose.\" Choice begins with knowing what you truly value. Tonight we name it plainly.",
+      "questions": [
+        "Without borrowing any grand words, in your own language: what are the three things you truly value in this life?",
+        "Looking at the regrets and longings you named these past two weeks, what one or two shared values do they point to?",
+        "How much of your current daily life is actually lived by those values? Give it a score from 0 to 10."
+      ],
+      "mirror": "Quote Day 9's longing and Day 13's regret to help the user distill their own core values — in their words. Don't name it for them."
+    },
+    {
+      "day": 16,
+      "phase": 3,
+      "theme": "Freedom & Responsibility",
+      "opening": "Existentialism has a hard line: you are freer than you think, and therefore more responsible. Tonight we face it.",
+      "questions": [
+        "Take the thing you keep telling yourself \"I can't, because...\" and swap \"can't\" for \"I choose not to.\" What does the sentence become? How does it read?",
+        "Where in your life is there actually a choice that you keep treating as \"this is just how it has to be\"?",
+        "If you fully admit \"my current life is the result of a series of my own choices,\" do you feel heavier, or a little freer?"
+      ],
+      "mirror": "Gently reframe 'forced' as 'chosen' to restore the user's sense of agency — not to manufacture guilt. Hold the emotion that surfaces."
+    },
+    {
+      "day": 17,
+      "phase": 3,
+      "theme": "Finitude",
+      "opening": "Tonight's questions are a little heavy, but they're the most honest wake-up: we all die, and time is finite.",
+      "questions": [
+        "If you knew for certain you had five years left, what would you stop doing immediately? What would you start immediately?",
+        "Picture yourself old, sitting in a chair, looking back on this life. What one sentence do you most hope that self can say?",
+        "Knowing time is finite, what suddenly feels precious enough that you shouldn't keep postponing it?"
+      ],
+      "mirror": "Death awareness is for clarifying priorities, not generating anxiety. Align answers with Day 15's values and point to something doable now."
+    },
+    {
+      "day": 18,
+      "phase": 3,
+      "theme": "Authenticity",
+      "opening": "Authenticity isn't the breezy \"just be yourself.\" It means aligning the inside with the outside, even at a cost. Tonight we talk about it.",
+      "questions": [
+        "What do you believe inside but have never lived out, because you were afraid?",
+        "On what specific thing is the gap between your outward behavior and your inner truth the widest? What has that gap cost you?",
+        "What's the lowest-cost first step toward being more truly yourself — small enough that you'd dare promise it to yourself tonight?"
+      ],
+      "mirror": "Bring the grand idea of 'authenticity' down to one concrete, doable step. Echo the Day 6 masks theme."
+    },
+    {
+      "day": 19,
+      "phase": 3,
+      "theme": "Commitment",
+      "opening": "After seeing, understanding, and thinking it through, meaning finally lands on commitment. Tonight we turn thought into a promise.",
+      "questions": [
+        "Based on everything you've seen these 18 days, is there one thing you're now willing to solemnly commit to yourself — to do, or to stop?",
+        "When did you last make yourself a promise and not keep it? What's different this time that could make it actually happen?",
+        "To keep this commitment, what do you need to set down, or say no to?"
+      ],
+      "mirror": "Help the user make the commitment concrete and measurable, and anticipate resistance (echoing Day 11's repetition pattern)."
+    },
+    {
+      "day": 20,
+      "phase": 3,
+      "theme": "Giving",
+      "opening": "Meaning rarely closes its loop on the self alone. Tonight we look outward a little: your connection to something larger than you.",
+      "questions": [
+        "Of the things you've done, which one truly helped someone, or left something behind? How does recalling it feel?",
+        "If your existence were to leave something for the world — even just for the few people around you — what would you want that to be?",
+        "Is there a kind of giving or creating during which you lose track of time, and of yourself? What might that be pointing to?"
+      ],
+      "mirror": "Self-transcendence is a major source of meaning. Note the user's 'self-forgetting moments' — they often point to gifts and calling."
+    },
+    {
+      "day": 21,
+      "phase": 3,
+      "theme": "The Self-Portrait",
+      "opening": "The last night. 21 days ago we started from a blank page. Tonight we look together at the self-portrait that slowly developed.",
+      "questions": [
+        "After these 21 days, if you answered Day 1's question again — \"what is your life like right now\" — how is your answer different?",
+        "Your single most important discovery on this journey, distilled into one sentence — what is it? Write it down as a word to yourself.",
+        "Tomorrow there's no one here to ask you. How will you carry forward the honesty-with-yourself these 21 nights built?"
+      ],
+      "mirror": "The finale. Weave the key quotes from the whole journey into a complete self-portrait and hand it back: what they saw, understood, and chose. Dignified, warm, never preachy. This is the climax of the entire journey."
+    }
+  ]
+}

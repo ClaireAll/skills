@@ -1,6 +1,6 @@
 # Codex Skills
 
-更新日期：2026-09-08
+更新日期：2026-09-16
 
 个人 skill 根目录：`D:\Claire\skills`。Codex 默认发现路径 `C:\Users\Claire\.codex\skills` 是指向这里的 junction，因此本仓库是本地 skill 的唯一维护入口。
 
@@ -8,20 +8,21 @@
 
 ## 当前会话可用 Skill 名称
 
-以 2026-09-04 的会话快照为基础，2026-09-08 新增本地 `interaction-guide` 与 `test-skill`，索引合计 **77** 个 skill；插件部分仍为历史快照，实际可调用项以新会话发现结果为准。
+以 2026-09-04 的会话快照为基础，当前新增本地 `interaction-guide`、`test-skill`、`21-day-self-interview` 与 `life-design`，并安装 `fx-workflow` 插件，索引合计 **82** 个 skill；插件部分以安装状态为准，实际调用项以新会话发现结果为准。
 
 | 来源 | 数量 | Skill 名称 |
 | --- | ---: | --- |
-| 本地 personal | 20 | `archify`、`bdd-onboarding`、`bug-des`、`bug-memory-workflow`、`bugfix`、`feishu-doc-writer`、`find-skills`、`fixing-accessibility`、`fixing-metadata`、`fixing-motion-performance`、`frontend-code-review`、`human-writing`、`i18n-helper`、`interaction-guide`、`require-understand`、`resolving-merge-conflicts`、`test-skill`、`to-questionnaire`、`ui`、`worklog` |
+| 本地 personal | 21 | `21-day-self-interview`、`archify`、`bdd-onboarding`、`bug-des`、`bug-memory-workflow`、`bugfix`、`feishu-doc-writer`、`find-skills`<br>`fixing-accessibility`、`fixing-metadata`、`fixing-motion-performance`、`frontend-code-review`、`human-writing`、`i18n-helper`、`interaction-guide`、`life-design`<br>`require-understand`、`resolving-merge-conflicts`、`test-skill`、`to-questionnaire`、`ui` |
 | 本地 `.system` | 5 | `imagegen`、`openai-docs`、`plugin-creator`、`skill-creator`、`skill-installer` |
 | FXDATA BDD 插件 | 3 | `fx-bdd:bdd`、`fx-data-test-skills:read-feature-input`、`fx-data-test-skills:test-plan-generator` |
-| Figma 插件 | 12 | `figma:figma-code-connect`、`figma:figma-create-new-file`、`figma:figma-design-to-code`、`figma:figma-generate-design`、`figma:figma-generate-diagram`、`figma:figma-generate-library`、`figma:figma-implement-motion`、`figma:figma-swiftui`、`figma:figma-use`、`figma:figma-use-figjam`、`figma:figma-use-motion`、`figma:figma-use-slides` |
+| FX Workflow 插件 | 4 | `fx-workflow:dev-doc-writer`、`fx-workflow:feishu-mcp-reauth`、`fx-workflow:reading-kms-confluence-pages`、`fx-workflow:work-log` |
+| Figma 插件 | 12 | `figma:figma-code-connect`、`figma:figma-create-new-file`、`figma:figma-design-to-code`、`figma:figma-generate-design`、`figma:figma-generate-diagram`、`figma:figma-generate-library`、`figma:figma-implement-motion`、`figma:figma-swiftui`<br>`figma:figma-use`、`figma:figma-use-figjam`、`figma:figma-use-motion`、`figma:figma-use-slides` |
 | OpenAI 开发者插件 | 5 | `openai-developers:agents-sdk`、`openai-developers:build-chatgpt-app`、`openai-developers:chatgpt-app-submission`、`openai-developers:openai-api-troubleshooting`、`openai-developers:openai-platform-api-key` |
 | 文档与表格能力 | 6 | `documents:documents`、`pdf:pdf`、`presentations:Presentations`、`spreadsheets:Spreadsheets`、`spreadsheets:excel-live-control`、`template-creator:template-creator` |
 | 插件管理 | 1 | `plugin-management:plugin-management` |
 | Ponytail 插件 | 6 | `ponytail:ponytail`、`ponytail:ponytail-audit`、`ponytail:ponytail-debt`、`ponytail:ponytail-gain`、`ponytail:ponytail-help`、`ponytail:ponytail-review` |
 | Product Design 插件 | 5 | `product-design:audit`、`product-design:ideate`、`product-design:image-to-code`、`product-design:index`、`product-design:url-to-code` |
-| Superpowers 插件 | 14 | `superpowers:brainstorming`、`superpowers:dispatching-parallel-agents`、`superpowers:executing-plans`、`superpowers:finishing-a-development-branch`、`superpowers:receiving-code-review`、`superpowers:requesting-code-review`、`superpowers:subagent-driven-development`、`superpowers:systematic-debugging`、`superpowers:test-driven-development`、`superpowers:using-git-worktrees`、`superpowers:using-superpowers`、`superpowers:verification-before-completion`、`superpowers:writing-plans`、`superpowers:writing-skills` |
+| Superpowers 插件 | 14 | `superpowers:brainstorming`、`superpowers:dispatching-parallel-agents`、`superpowers:executing-plans`、`superpowers:finishing-a-development-branch`、`superpowers:receiving-code-review`、`superpowers:requesting-code-review`、`superpowers:subagent-driven-development`、`superpowers:systematic-debugging`<br>`superpowers:test-driven-development`、`superpowers:using-git-worktrees`、`superpowers:using-superpowers`、`superpowers:verification-before-completion`、`superpowers:writing-plans`、`superpowers:writing-skills` |
 
 `review-agent` 未计入上述索引；系统技能是否存在及是否可调用，以本机目录和会话发现结果为准。
 
@@ -32,7 +33,7 @@
 - `interaction-guide` 是源码交互 HTML 说明的入口，配合 `require-understand` 核对行为、配合 `archify` 展示流程；默认独立子流程、右侧详情和悬浮关联线高亮，内容覆盖与页面验证分开验收。
 - `test-skill` 用于根据当前迭代、需求、分支或 PR 生成转测前的开发自测、手动自查用例和提测检查清单。
 - `ui` 会按目标自动加载一个或多个 UI 内部模块；明确的小任务不必加载宽泛路由上下文。
-- `bugfix` 是 `fv-web2 / fx-data-web` 的唯一缺陷交付编排器；它取代已移除的 `fx-data-web-bugfix-workflow`，并调用 `bug-memory-workflow`、`bug-des` 与 `worklog`，这些 skill 仍可独立使用。
+- `bugfix` 是 `fv-web2 / fx-data-web` 的唯一缺陷交付编排器；它取代已移除的 `fx-data-web-bugfix-workflow`，并调用 `bug-memory-workflow` 与 `bug-des`，这些 skill 仍可独立使用。
 - 只有脚本产生的缓存、报告和构建输出应被忽略；skill 源码、模板和验证脚本应留在版本控制中。
 
 ## 需求、文档与计划
@@ -54,6 +55,15 @@
 
 本机已接入 `fx-data-test-skills` 与 `fx-bdd` 两个插件，二者必须同时保持 `installed, enabled`。`fx-data-test-skills` 是前置依赖；不要只安装 `fx-bdd`。用 `codex plugin list -m fx-data-test-skills` 和 `codex plugin list -m skill-manager` 复核状态。
 
+## 飞书与内部工作流
+
+| Skill | 适用场景 | 调用示例 |
+| --- | --- | --- |
+| `fx-workflow:feishu-mcp-reauth` | 检查或续期飞书文档 MCP 链接；默认无头执行，登录态失效时才打开 Chrome。 | `$fx-workflow:feishu-mcp-reauth 检查飞书 MCP 有效期` 或 `$fx-workflow:feishu-mcp-reauth 重新授权飞书 MCP`。 |
+| `fx-workflow:work-log` | 从 Bitbucket 已合并 PR 汇总每日工作内容与工时，并提交到飞书项目。首次使用需要配置空间 ID、用户 ID 和兜底工作项。 | `$fx-workflow:work-log 记录本周工作日志`。 |
+
+`fx-workflow` 以插件形式安装，因此同时提供 `fx-workflow:dev-doc-writer` 与 `fx-workflow:reading-kms-confluence-pages`；新安装的插件 skill 需要在新会话中加载。
+
 ## 产品与界面设计
 
 | Skill | 适用场景 |
@@ -71,6 +81,13 @@
 | Skill | 适用场景 |
 | --- | --- |
 | `human-writing` | 新写、改写或审计中文优先的内容；保留作者声音，不编造事实，并检查中英文常见 AI 写作痕迹。 |
+
+## 自我探索与人生设计
+
+| Skill | 适用场景 | 调用示例 |
+| --- | --- | --- |
+| `21-day-self-interview` | 连续 21 天、每天三个问题的渐进式自我访谈；第 7、14、21 天回顾此前回答。记录默认保存在 `D:\Claire\memory\self-interview`。 | `$21-day-self-interview 开始 21 天自我访谈，使用中文`；之后说“继续今晚的自我访谈”或“查看访谈进度”。 |
+| `life-design` | 针对职业、生活重心或未来方向进行 6–9 轮访谈，形成三条五年路径及低成本验证行动。仅在明确调用时使用。 | `$life-design 帮我做一次人生设计，重点梳理未来五年的职业方向`。 |
 
 ## 前端质量
 
@@ -95,7 +112,6 @@
 | `bug-memory-workflow` | Bug 修复、调查或 review 前检索已确认的历史经验。 |
 | `bugfix` | `fv-web2 / fx-data-web` 的修复、review gate、Feishu、Bitbucket PR 与交付流程。 |
 | `bug-des` | 基于 issue 与 diff 生成中文 Feishu 缺陷评论或 PR 描述。 |
-| `worklog` | 已提交 Feishu 缺陷 PR 后登记或准备项目工时。 |
 
 ## Git 协作
 

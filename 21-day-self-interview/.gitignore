@@ -1,0 +1,17 @@
+# Personal self-interview state — never commit your private answers
+.self-interview/
+*.backup.*.json
+state.json
+journal.json
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

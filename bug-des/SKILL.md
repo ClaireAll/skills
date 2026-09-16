@@ -33,6 +33,29 @@ User-facing prose must not contain source file paths, file names, extensions, di
 
 Do not substitute or add headings such as `疑似原因`, `变更描述`, `测试情况`, `简要描述`, `问题描述`, `问题原因`, `修复内容`, `修改方案`, `验证结果`, `关联Issue`, or `Checklist`.
 
+## Concise Output Rules
+
+Keep the final comment short while preserving every independently meaningful user-visible change:
+
+- `原因` 用 1～2 句说明故障机制；不写排查过程、背景介绍或实现细节。
+- 来源提交每项只保留“提交信息 + 改动行为 + 可能造成的现象 + 关联链接”，合并重复候选，不重复解释同一因果链。
+- `改动内容` 按独立改动逐条列出；多个内部改动不能合并成一条，每个 bullet 尽量只写一句话，直接说明用户可见结果。完整性通过逐条覆盖有意义的改动保证，不逐行复述 diff、调用链或文件改动。
+- `可能导致的问题` 每个场景只写一句“触发条件 + 可能结果”，不追加分析、验证、处理建议或保护措施。
+- 删除重复主语、套话、过程连接词和同义改写；不要为了显得完整而补充源码中没有的背景。
+
+先在内部保留完整的行为清单，再将同一用户结果合并到最终评论。内部清单不能直接整段复制到评论中。
+
+### External Comment Filter
+
+The completed template contains only these four kinds of information:
+
+- `原因`：解释当前现象所需的最短因果链。
+- `来源提交`：能够说明当前现象由何种改动引入的最少提交；只有中间修复本身造成了当前现象时，才把它列为来源提交。
+- `改动内容`：最终产生的用户可见变化；提交哈希、PR 链接、测试结果、工时和交付状态留在交付汇报中。
+- `可能导致的问题`：证据支持的剩余风险场景。
+
+输出前为每句话匹配上述一个位置；无法匹配的内容不进入评论。排查过程、尝试过但未引入当前现象的失败方案，以及同一因果链的重复解释只保留在内部证据中。
+
 ## Feishu Rich-Text Publishing
 
 When publishing or updating a Feishu bug comment, colored rich text is the default. Keep `assets/template.txt` as the content source, then apply this presentation:
@@ -98,7 +121,7 @@ Replace every recognized standalone item id found in a source commit or its cont
 | Section | Fill rule |
 | --- | --- |
 | `原因` | Write `Bug 原因` first, followed by `可能导致问题的来源提交`. Keep the cause behavior-focused and evidence-backed. Use `原因待确认。` when the cause is not established. Use one complete bullet per independently supported source commit; when none is supported, write `**可能导致问题的来源提交：** 略`. |
-| `改动内容` | Provide a complete behavior-level inventory of the final diff. Use one bullet for each independently meaningful feature, flow, interaction, business rule, state guard or recovery, validation or error-handling behavior, and API or data-contract behavior that changed. Do not merge distinct changes merely to shorten the comment. Pure formatting or comment-only changes may be omitted. Do not use checkboxes. |
+| `改动内容` | Provide a complete behavior-level inventory of the final diff. Keep each independently meaningful feature, flow, interaction, business rule, state guard or recovery, validation or error-handling behavior, and API or data-contract behavior as a separate concise bullet. Do not merge distinct changes. Do not list diff lines, call chains, or implementation steps. Pure formatting or comment-only changes may be omitted. Do not use checkboxes. |
 | `可能导致的问题` | Write only concrete scenarios. Use one natural sentence per bullet that combines the relevant condition or user action with its possible result. Do not add field labels, analysis, mitigation, verification status, or follow-up actions. A scenario must not be presented as observed fact unless evidence confirms it. |
 
    Use this shape for each supported scenario:
@@ -121,11 +144,11 @@ Replace every recognized standalone item id found in a source commit or its cont
 
    Do not invent a risk or use generic labels such as `逻辑问题`, `交互问题`, or `性能问题` merely to fill the section.
 4. Humanize the factual draft with `human-writing`:
-   - Treat it as Chinese technical rewrite work and use minimum intervention.
+   - Treat it as Chinese technical rewrite work with compression, not expansion.
    - Give it only the completed body text after source-artifact references have been removed. The three headings, cause/source order, bullets, links, and spacing remain under `bug-des` control.
-   - Keep the tone concise, professional, and direct. Prefer clear subjects and natural sentence rhythm.
+   - Keep the tone concise, professional, and direct. Prefer one sentence per change or risk bullet and natural sentence rhythm.
    - Preserve every fact, uncertainty, negation, commit detail, Markdown link, complete change item, and risk scenario.
-   - Do not add background, causal claims, verification claims, reassurance, personal voice, marketing language, source-file information, or a stronger or weaker certainty level.
+   - Remove repetition, background, causal claims not in the facts, verification claims, reassurance, personal voice, marketing language, source-file information, and unnecessary transition phrases without changing the certainty level.
 5. Run the final evidence gate:
    - Compare every `##` heading with `assets/template.txt`; exactly three headings must appear in the same order.
    - Remove every HTML comment and placeholder.
