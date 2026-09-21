@@ -122,3 +122,14 @@
 ## 系统 Skills
 
 `.system` 下的安装和平台能力保持独立：`imagegen`、`openai-docs`、`plugin-creator`、`review-agent`、`skill-creator`、`skill-installer`。除非明确维护平台能力，不要删除或合并它们。
+
+## 预选 Skill
+
+| Skill | 后续可能使用的能力 | 当前状态 |
+| --- | --- | --- |
+| `diagram-design` | 生成 editorial 风格的 HTML/SVG/PNG 图表；支持流程图、用户旅程、泳道图、状态图，并可导入 Mermaid、draw.io 和 Excalidraw。 | 尚未安装；需要高质量静态图表或飞书文档配图时使用 |
+| `interaction-guide` | 根据源码生成详细交互说明、HTML 模拟页面预览、流程节点与页面状态联动，以及权限、空状态、加载和失败场景。 | 已安装；交互文档和页面预览 |
+| `archify` | 生成经过校验的架构图、流程图、时序图、数据流图和生命周期图，并输出独立 HTML。 | 已安装；技术流程和结构图 |
+| `feishu-doc-writer` | 根据 Markdown 创建、更新和回读验证飞书文档或 Wiki；后续可接入图表图片插入。 | 已安装；飞书文档交付 |
+| `figma:figma-generate-diagram` | 将 Mermaid 生成可编辑的 FigJam 流程图、架构图、时序图、状态图或 ER 图。 | 已安装插件；需要 FigJam 协作时使用 |
+| `fx-bdd:bdd` | 根据产品和交互文档生成 Gherkin 用例，并接入 FXDATA BDD 执行流程。 | 已安装插件；需要可执行验收场景时使用 |
