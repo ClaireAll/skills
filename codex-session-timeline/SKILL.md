@@ -1,41 +1,38 @@
 ---
 name: codex-session-timeline
-description: Use when querying Codex Desktop sessions by Shanghai calendar date, viewing per-session token usage, or generating a local HTML session timeline.
+description: Use when browsing local Codex Desktop sessions by Shanghai calendar date, checking per-session token usage, or generating a standalone HTML timeline.
 ---
 
 # Codex Session Timeline
 
-Use the imported `codex_log` records to maintain a metadata-only JSON index and a standalone, date-filtered HTML timeline. The page has three visual themes in its upper-right corner; its session rows are static and never expand.
+Generate a local HTML timeline from the current user's Codex session files. This works with the user's own Codex installation and does not require the original author's database, credentials, or machine paths.
 
 ## Run
 
-1. Refresh the local index and generate the page. The script reads `D:\Claire\storage\.env.local` for read-only access to Supabase; set `CODEX_SESSION_TIMELINE_ENV` to use another env file.
+Run the bundled script with Node.js, using the installed skill's actual path:
 
-   ```powershell
-   node D:\Claire\skills\codex-session-timeline\scripts\refresh.mjs
-   ```
+```text
+node <skill-directory>/scripts/refresh.mjs
+```
 
-2. Open the generated HTML directly. The session data is embedded in the page, so it works from a local file without a server. To create a page that opens on a specific date:
+To generate a page with a date preselected:
 
-   ```powershell
-   node D:\Claire\skills\codex-session-timeline\scripts\refresh.mjs --date 2026-09-23
-   ```
+```text
+node <skill-directory>/scripts/refresh.mjs --date YYYY-MM-DD
+```
 
-   This also writes `D:\Claire\codex-session-timeline\2026-09-23.html`, with that date preselected. The general page remains `index.html`.
-
-The persistent output is `D:\Claire\codex-session-timeline\sessions.json` and `index.html`. Set `CODEX_SESSION_TIMELINE_DIR` to change that directory. The date-specific HTML is generated from the same index.
+The general page is `index.html`; the dated page is `<YYYY-MM-DD>.html`. Both open directly in a browser without a server. Output defaults to `<CODEX_HOME>/codex-session-timeline`, or `~/.codex/codex-session-timeline` when `CODEX_HOME` is unset. Set `CODEX_SESSION_TIMELINE_DIR` to choose another output directory.
 
 ## Data rules
 
-- Read only `codex_thread_id`, `date`, `created_at`, `thread_title`, `category`, and `token_count` from `codex_log`. Do not derive a second, competing session list from raw JSONL or overwrite the curated daily titles.
-- The daily import pipeline owns title cleanup, segmentation, timezone handling, categorization, and token attribution. Display those stored values as-is; sum `codex_log.token_count` only for the selected date.
-- Do not read or persist user messages, assistant replies, tool output, environment context, or other transcript text. Do not write to Supabase or generate daily-report summaries.
-- Keep session IDs in the local JSON only for identity; never display them.
-- The selected date is a single `Asia/Shanghai` calendar day. The total is the sum of known per-session usage for that date. Show `暂无` when no usage exists; if some sessions lack usage, mark the total as partial and show `暂无` on those rows.
+- Read session IDs and timestamps from local rollout metadata, titles from `session_index.jsonl`, and usage only from saved `token_count` events. Do not parse, display, or persist message text, tool output, prompts, environment context, or credentials.
+- Use the latest saved cumulative `total_tokens` value for each session. If the local record has no usage snapshot, show `暂无`; do not estimate usage or send transcript data to a service to recover it.
+- Convert each session timestamp to its `Asia/Shanghai` calendar date. Show sessions in chronological order for the selected date.
+- Session categories are not consistently available in local Codex records. Omit the category badge when there is no category instead of inventing one.
+- Keep session IDs only as local JSON identity keys; never display them in the page.
+- Keep a local file-signature cache in `sessions.json` so unchanged rollout files are not re-read. Do not embed that cache in the HTML.
+- If the Codex sessions directory is unavailable or no session metadata can be read, report the error and preserve existing output files.
 
-## UI and data boundaries
+## Page
 
-- Keep the date picker, selected-day total, and chronological session timeline. Each non-expandable row shows time, title, category, and token count.
-- Preserve the decorative corner artwork and distinct paper, forest, and geometric themes in `assets/index.html`. The three theme buttons sit at the upper right and show only their theme names; do not add a visible “样式” label.
-- The HTML embeds the same metadata index and can be opened directly. `sessions.json` is refreshed read-only from `codex_log`.
-- If credentials, the user identity, or the database is unavailable, report the error and preserve the existing JSON and HTML.
+Keep the single-date picker, selected-day total, and non-expandable chronological rows. Each row shows its time, title, and known token count. Preserve the three themes, their upper-right controls, and the decorative corner artwork in `assets/index.html`.

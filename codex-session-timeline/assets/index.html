@@ -220,10 +220,13 @@
         const title = document.createElement("span");
         title.className = "session-title";
         title.textContent = session.thread_title || "未命名会话";
-        const category = document.createElement("span");
-        category.className = "category";
-        category.textContent = categoryLabels[session.category] || categoryLabels[10000];
-        main.append(title, category);
+        main.append(title);
+        if (session.category != null && categoryLabels[session.category]) {
+          const category = document.createElement("span");
+          category.className = "category";
+          category.textContent = categoryLabels[session.category];
+          main.append(category);
+        }
         const token = document.createElement("span");
         token.className = "tokens";
         if (Number.isFinite(session.token_count)) {
