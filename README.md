@@ -8,11 +8,11 @@
 
 ## 当前会话可用 Skill 名称
 
-以 2026-09-04 的会话快照为基础，当前新增本地 `interaction-guide`、`test-skill`、`21-day-self-interview` 与 `life-design`，并安装 `fx-workflow` 插件，索引合计 **82** 个 skill；插件部分以安装状态为准，实际调用项以新会话发现结果为准。
+以 2026-09-04 的会话快照为基础，当前新增本地 `interaction-guide`、`test-skill`、`21-day-self-interview` 与 `life-design`，并安装 `fx-workflow` 插件，索引合计 **83** 个 skill；插件部分以安装状态为准，实际调用项以新会话发现结果为准。
 
 | 来源 | 数量 | Skill 名称 |
 | --- | ---: | --- |
-| 本地 personal | 21 | `21-day-self-interview`、`archify`、`bdd-onboarding`、`bug-des`、`bug-memory-workflow`、`bugfix`、`feishu-doc-writer`、`find-skills`<br>`fixing-accessibility`、`fixing-metadata`、`fixing-motion-performance`、`frontend-code-review`、`human-writing`、`i18n-helper`、`interaction-guide`、`life-design`<br>`require-understand`、`resolving-merge-conflicts`、`test-skill`、`to-questionnaire`、`ui` |
+| 本地 personal | 22 | `21-day-self-interview`、`archify`、`bdd-onboarding`、`bug-des`、`bug-memory-workflow`、`bugfix`、`codex-session-timeline`、`feishu-doc-writer`、`find-skills`<br>`fixing-accessibility`、`fixing-metadata`、`fixing-motion-performance`、`frontend-code-review`、`human-writing`、`i18n-helper`、`interaction-guide`、`life-design`<br>`require-understand`、`resolving-merge-conflicts`、`test-skill`、`to-questionnaire`、`ui` |
 | 本地 `.system` | 5 | `imagegen`、`openai-docs`、`plugin-creator`、`skill-creator`、`skill-installer` |
 | FXDATA BDD 插件 | 3 | `fx-bdd:bdd`、`fx-data-test-skills:read-feature-input`、`fx-data-test-skills:test-plan-generator` |
 | FX Workflow 插件 | 4 | `fx-workflow:dev-doc-writer`、`fx-workflow:feishu-mcp-reauth`、`fx-workflow:reading-kms-confluence-pages`、`fx-workflow:work-log` |
@@ -133,3 +133,9 @@
 | `feishu-doc-writer` | 根据 Markdown 创建、更新和回读验证飞书文档或 Wiki；后续可接入图表图片插入。 | 已安装；飞书文档交付 |
 | `figma:figma-generate-diagram` | 将 Mermaid 生成可编辑的 FigJam 流程图、架构图、时序图、状态图或 ER 图。 | 已安装插件；需要 FigJam 协作时使用 |
 | `fx-bdd:bdd` | 根据产品和交互文档生成 Gherkin 用例，并接入 FXDATA BDD 执行流程。 | 已安装插件；需要可执行验收场景时使用 |
+
+## Codex 会话时间轴
+
+| Skill | 适用场景 |
+| --- | --- |
+| [`codex-session-timeline`](codex-session-timeline/SKILL.md) | 按上海日期浏览日报中的 Codex 会话标题、分类、时间与 Token 用量，并生成可直接打开的 HTML 时间轴。 |

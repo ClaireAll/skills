@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Codex 会话时间轴</title>
+    <style>
+      :root {
+        --canvas: #f4f0e6;
+        --surface: rgba(255, 253, 247, .94);
+        --surface-soft: rgba(235, 238, 224, .92);
+        --ink: #20372d;
+        --muted: #718074;
+        --line: #d8dfd2;
+        --accent: #637b57;
+        --accent-soft: #e4eadc;
+        --coral: #c98264;
+        --art-sage: #9aaa84;
+        --art-coral: #ce8c70;
+        --art-line: #6e8067;
+        --shadow: 0 16px 38px rgba(49, 66, 46, .08);
+      }
+
+      * { box-sizing: border-box; }
+      body {
+        min-height: 100vh;
+        margin: 0;
+        padding: 42px 26px 72px;
+        color: var(--ink);
+        background: var(--canvas);
+        font-family: Inter, "Segoe UI", "Microsoft YaHei", sans-serif;
+        transition: background-color .25s ease, color .25s ease;
+      }
+      body[data-theme="forest"] {
+        color-scheme: dark;
+        --canvas: #10231e;
+        --surface: rgba(22, 47, 39, .94);
+        --surface-soft: rgba(29, 58, 46, .94);
+        --ink: #f1f0e7;
+        --muted: #a7b7aa;
+        --line: rgba(194, 211, 190, .2);
+        --accent: #9dbd98;
+        --accent-soft: #29483a;
+        --coral: #e8a17e;
+        --art-sage: #3e7258;
+        --art-coral: #754d3e;
+        --art-line: #8eaa90;
+        --shadow: 0 18px 48px rgba(0, 0, 0, .2);
+      }
+      body[data-theme="geometry"] {
+        color-scheme: light;
+        --canvas: #f2f6f8;
+        --surface: rgba(255, 255, 255, .95);
+        --surface-soft: #eaf7f5;
+        --ink: #203750;
+        --muted: #73879a;
+        --line: #dbe5ed;
+        --accent: #238c8c;
+        --accent-soft: #d9f1ed;
+        --coral: #d77b6b;
+        --art-sage: #72c4c1;
+        --art-coral: #ed9a8e;
+        --art-line: #579caa;
+        --shadow: 0 18px 42px rgba(49, 83, 112, .09);
+      }
+
+      button, input { font: inherit; }
+      button { color: inherit; }
+      .corner-art { position: fixed; z-index: 0; inset: 0; width: 100%; height: 100vh; min-height: 620px; pointer-events: none; }
+      .corner-art .contour { fill: none; stroke: var(--art-line); stroke-width: 1.1; opacity: .23; }
+      .corner-art .wash-sage { fill: var(--art-sage); opacity: .18; }
+      .corner-art .wash-coral { fill: var(--art-coral); opacity: .16; }
+      .corner-art .leaf { fill: none; stroke: var(--art-line); stroke-width: 2; opacity: .52; }
+      .corner-art .dots { fill: var(--art-line); opacity: .3; }
+
+      .page { position: relative; z-index: 1; width: min(1120px, 100%); margin: 0 auto; }
+      .topbar { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin-bottom: 34px; }
+      .brand { display: flex; align-items: center; gap: 15px; min-width: 0; }
+      .brand-mark { display: grid; place-items: center; width: 44px; height: 44px; flex: 0 0 auto; border: 1px solid var(--line); border-radius: 15px; color: var(--accent); background: var(--surface); box-shadow: var(--shadow); }
+      .brand-mark svg { width: 22px; height: 22px; }
+      h1 { margin: 0; font-size: clamp(25px, 3vw, 34px); letter-spacing: -.045em; line-height: 1.15; }
+      .eyebrow { margin-top: 6px; color: var(--muted); font-size: 13px; }
+      .themes { display: flex; align-items: center; gap: 5px; padding: 5px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); box-shadow: var(--shadow); }
+      .theme-button { min-height: 35px; padding: 0 11px; border: 0; border-radius: 10px; color: var(--muted); background: transparent; cursor: pointer; font-size: 12px; white-space: nowrap; }
+      .theme-button[aria-pressed="true"] { color: var(--ink); background: var(--accent-soft); font-weight: 700; }
+      .theme-button:focus-visible, input:focus-visible, .today:focus-visible { outline: 3px solid color-mix(in srgb, var(--accent) 48%, transparent); outline-offset: 2px; }
+
+      .controls { display: grid; grid-template-columns: minmax(280px, .85fr) minmax(0, 1.35fr); gap: 17px; margin-bottom: 46px; }
+      .date-panel, .total-panel { min-height: 156px; padding: 23px 26px; border: 1px solid var(--line); border-radius: 19px; background: var(--surface); box-shadow: var(--shadow); }
+      .label { display: block; margin-bottom: 12px; color: var(--muted); font-size: 13px; font-weight: 650; }
+      .date-line { display: flex; align-items: center; gap: 10px; }
+      .date-line input { width: 100%; min-width: 0; padding: 11px 12px; border: 1px solid var(--line); border-radius: 11px; color: var(--ink); background: var(--surface); }
+      .today { min-height: 43px; padding: 0 14px; border: 1px solid var(--line); border-radius: 11px; color: var(--accent); background: var(--accent-soft); cursor: pointer; font-weight: 650; }
+      .total-panel { position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: center; background: var(--surface-soft); }
+      .total-panel::after { position: absolute; right: -30px; bottom: -82px; width: 270px; height: 190px; border: 1px solid var(--art-line); border-radius: 50%; content: ""; opacity: .32; transform: rotate(-24deg); }
+      .total-panel::before { position: absolute; right: 20px; bottom: -108px; width: 270px; height: 190px; border: 1px solid var(--art-line); border-radius: 50%; content: ""; opacity: .22; transform: rotate(-24deg); }
+      .total-label { margin: 0; color: var(--muted); font-size: 13px; font-weight: 650; }
+      .total-value { margin: 6px 0 5px; font-size: clamp(38px, 6vw, 54px); font-weight: 740; letter-spacing: -.06em; line-height: 1; font-variant-numeric: tabular-nums; }
+      .total-note { color: var(--muted); font-size: 13px; }
+
+      .timeline-head { display: flex; justify-content: space-between; align-items: end; gap: 16px; margin-bottom: 19px; }
+      h2 { margin: 0; font-size: 23px; letter-spacing: -.035em; }
+      .timeline-date { margin-top: 6px; color: var(--muted); font-size: 13px; }
+      .timeline { position: relative; display: grid; gap: 11px; padding-left: 25px; }
+      .timeline::before { position: absolute; top: 23px; bottom: 23px; left: 7px; width: 2px; border-radius: 2px; background: var(--accent); opacity: .55; content: ""; }
+      .session-row { position: relative; display: grid; grid-template-columns: 74px minmax(0, 1fr) 145px; align-items: center; gap: 16px; min-height: 72px; padding: 14px 19px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); box-shadow: var(--shadow); }
+      .session-row::before { position: absolute; top: 50%; left: -24px; width: 12px; height: 12px; border: 3px solid var(--canvas); border-radius: 50%; background: var(--accent); content: ""; transform: translateY(-50%); }
+      .time { color: var(--accent); font-variant-numeric: tabular-nums; font-weight: 720; }
+      .session-main { display: flex; align-items: center; gap: 13px; min-width: 0; }
+      .session-title { overflow: hidden; font-weight: 630; text-overflow: ellipsis; white-space: nowrap; }
+      .category { flex: 0 0 auto; padding: 5px 9px; border-radius: 999px; color: var(--accent); background: var(--accent-soft); font-size: 11px; white-space: nowrap; }
+      .tokens { text-align: right; font-variant-numeric: tabular-nums; font-weight: 700; white-space: nowrap; }
+      .tokens small { margin-left: 4px; color: var(--muted); font-size: 11px; font-weight: 500; }
+      .empty { padding: 38px 20px; border: 1px dashed var(--line); border-radius: 15px; color: var(--muted); background: var(--surface); text-align: center; }
+      .error { padding: 13px 16px; border: 1px solid #ce8c70; border-radius: 12px; color: var(--ink); background: var(--surface); }
+
+      @media (max-width: 760px) {
+        body { padding: 25px 15px 48px; }
+        .topbar { align-items: stretch; flex-direction: column; margin-bottom: 26px; }
+        .themes { justify-content: space-between; }
+        .theme-button { padding: 0 9px; }
+        .controls { grid-template-columns: 1fr; gap: 12px; margin-bottom: 34px; }
+        .date-panel, .total-panel { min-height: 128px; padding: 19px; }
+        .session-row { grid-template-columns: 52px minmax(0, 1fr) auto; gap: 9px; padding: 13px 11px; }
+        .session-main { align-items: flex-start; flex-direction: column; gap: 6px; }
+        .tokens { font-size: 12px; }
+        .tokens small { display: none; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+      }
+    </style>
+  </head>
+  <body data-theme="paper">
+    <svg class="corner-art" viewBox="0 0 1600 1000" preserveAspectRatio="none" aria-hidden="true">
+      <g class="contour">
+        <path d="M-100 20C20 160 180 100 220 220S130 390 0 410"/><path d="M-90 -5C35 125 193 73 245 190S168 360 25 385"/><path d="M-80 -32C50 95 210 48 273 160S205 327 52 357"/>
+        <path d="M1310 -60C1420 75 1540 10 1660 155"/><path d="M1285 -33C1390 105 1520 38 1645 180"/><path d="M1260 -6C1360 135 1500 65 1620 208"/>
+        <path d="M-60 720C90 650 150 800 300 760S430 850 520 1010"/><path d="M-40 760C100 685 175 835 320 796S445 885 540 1030"/><path d="M1100 1010C1150 870 1310 930 1370 810S1530 690 1660 750"/><path d="M1080 1030C1135 895 1290 952 1350 837S1515 720 1645 780"/>
+      </g>
+      <path class="wash-sage" d="M0 0H125C115 82 72 117 0 133Z"/><path class="wash-coral" d="M1600 0H1478C1487 70 1534 111 1600 125Z"/>
+      <path class="wash-sage" d="M0 790C85 755 114 820 185 837C248 852 310 824 369 870C416 907 468 956 540 1000H0Z"/>
+      <path class="wash-coral" d="M1600 1000H1390C1435 944 1450 870 1523 840C1553 828 1584 810 1600 786Z"/>
+      <g class="leaf">
+        <path d="M1470 915C1510 860 1530 810 1545 744M1500 865C1465 850 1452 830 1450 804C1478 812 1493 831 1500 865ZM1522 817C1550 802 1565 777 1562 752C1536 764 1524 785 1522 817ZM1482 894C1455 887 1435 868 1428 844C1456 849 1474 866 1482 894Z"/>
+        <path d="M92 170C130 140 162 104 182 57M127 137C105 128 91 109 90 89C111 96 123 111 127 137ZM153 104C174 92 184 75 182 57C164 64 154 81 153 104Z"/>
+      </g>
+      <g class="dots"><circle cx="1470" cy="855" r="4"/><circle cx="1500" cy="855" r="4"/><circle cx="1530" cy="855" r="4"/><circle cx="1470" cy="885" r="4"/><circle cx="1500" cy="885" r="4"/><circle cx="1530" cy="885" r="4"/><circle cx="118" cy="825" r="4"/><circle cx="148" cy="825" r="4"/><circle cx="178" cy="825" r="4"/><circle cx="118" cy="855" r="4"/><circle cx="148" cy="855" r="4"/><circle cx="178" cy="855" r="4"/></g>
+    </svg>
+    <main class="page">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5.5h14v13H5z"/><path d="M8 3.5v4M16 3.5v4M8 11h3M8 14.5h7"/></svg></span>
+          <div><h1>Codex 会话时间轴</h1><div class="eyebrow">本地会话记录 · 按日浏览</div></div>
+        </div>
+        <nav class="themes" aria-label="切换视觉主题">
+          <button class="theme-button" type="button" data-theme-choice="paper" aria-pressed="true">暖纸感</button>
+          <button class="theme-button" type="button" data-theme-choice="forest" aria-pressed="false">深色森林</button>
+          <button class="theme-button" type="button" data-theme-choice="geometry" aria-pressed="false">明快几何</button>
+        </nav>
+      </header>
+
+      <section class="controls" aria-label="日期和当日 Token">
+        <div class="date-panel">
+          <label class="label" for="day">选择日期</label>
+          <div class="date-line"><input id="day" type="date" /><button class="today" id="today" type="button">今天</button></div>
+        </div>
+        <div class="total-panel" aria-live="polite">
+          <span class="total-label">当日总 Token</span>
+          <strong class="total-value" id="total">读取中</strong>
+          <span class="total-note" id="total-note">按上海时区统计</span>
+        </div>
+      </section>
+
+      <section aria-labelledby="timeline-title">
+        <div class="timeline-head"><div><h2 id="timeline-title">会话时间轴</h2><div class="timeline-date" id="timeline-date"></div></div></div>
+        <div class="timeline" id="timeline" aria-live="polite"><div class="empty">正在读取本地会话索引…</div></div>
+      </section>
+      <div class="error" id="error" role="status" hidden></div>
+    </main>
+    <script id="session-index" type="application/json">__SESSION_INDEX_JSON__</script>
+    <script>
+      const categoryLabels = { 1: "fx-data-web / fv-web2", 2: "skills", 3: "chrome-plugin", 4: "Storage", 5: "2026", 6: "money-tool", 7: "fd-biz", 10000: "其它" };
+      const dateInput = document.querySelector("#day");
+      const timeline = document.querySelector("#timeline");
+      const total = document.querySelector("#total");
+      const totalNote = document.querySelector("#total-note");
+      const dateLabel = document.querySelector("#timeline-date");
+      const error = document.querySelector("#error");
+      let sessions = [];
+
+      function shanghaiToday() {
+        return new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Shanghai", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
+      }
+
+      function selectedDateLabel(value) {
+        return new Intl.DateTimeFormat("zh-CN", { timeZone: "Asia/Shanghai", year: "numeric", month: "long", day: "numeric" }).format(new Date(`${value}T12:00:00+08:00`));
+      }
+
+      function formatCount(value) {
+        return new Intl.NumberFormat("en-US").format(value);
+      }
+
+      function formatToken(value) {
+        if (value >= 10000) return `${(value / 10000).toFixed(1)}w`;
+        if (value >= 1000) return `${(value / 1000).toFixed(1)}k`;
+        return formatCount(value);
+      }
+
+      function makeRow(session) {
+        const row = document.createElement("article");
+        row.className = "session-row";
+        const time = document.createElement("time");
+        time.className = "time";
+        time.dateTime = session.created_at;
+        time.textContent = new Intl.DateTimeFormat("zh-CN", { timeZone: "Asia/Shanghai", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).format(new Date(session.created_at));
+        const main = document.createElement("div");
+        main.className = "session-main";
+        const title = document.createElement("span");
+        title.className = "session-title";
+        title.textContent = session.thread_title || "未命名会话";
+        const category = document.createElement("span");
+        category.className = "category";
+        category.textContent = categoryLabels[session.category] || categoryLabels[10000];
+        main.append(title, category);
+        const token = document.createElement("span");
+        token.className = "tokens";
+        if (Number.isFinite(session.token_count)) {
+          token.textContent = formatToken(session.token_count);
+          const unit = document.createElement("small");
+          unit.textContent = "Token";
+          token.append(unit);
+        } else {
+          token.textContent = "暂无";
+        }
+        row.append(time, main, token);
+        return row;
+      }
+
+      function render() {
+        const selected = dateInput.value;
+        if (!selected) return;
+        const daySessions = sessions.filter((session) => session.date === selected).sort((a, b) => a.created_at.localeCompare(b.created_at));
+        const known = daySessions.filter((session) => Number.isFinite(session.token_count));
+        const missing = daySessions.length - known.length;
+        dateLabel.textContent = selectedDateLabel(selected);
+        total.textContent = known.length ? formatCount(known.reduce((sum, session) => sum + session.token_count, 0)) : "暂无";
+        totalNote.textContent = `${daySessions.length} 个会话${missing ? ` · ${missing} 个会话用量缺失` : " · 按上海时区统计"}`;
+        timeline.replaceChildren();
+        if (!daySessions.length) {
+          const empty = document.createElement("div");
+          empty.className = "empty";
+          empty.textContent = "这一天没有会话记录";
+          timeline.append(empty);
+          return;
+        }
+        daySessions.forEach((session) => timeline.append(makeRow(session)));
+      }
+
+      document.querySelectorAll("[data-theme-choice]").forEach((button) => button.addEventListener("click", () => {
+        document.body.dataset.theme = button.dataset.themeChoice;
+        document.querySelectorAll("[data-theme-choice]").forEach((item) => item.setAttribute("aria-pressed", String(item === button)));
+      }));
+      dateInput.addEventListener("change", render);
+      document.querySelector("#today").addEventListener("click", () => { dateInput.value = shanghaiToday(); render(); });
+      const requestedDate = new URLSearchParams(location.search).get("date");
+      const requestedTimestamp = requestedDate ? Date.parse(`${requestedDate}T00:00:00Z`) : NaN;
+      const validRequestedDate = /^\d{4}-\d{2}-\d{2}$/.test(requestedDate || "")
+        && Number.isFinite(requestedTimestamp)
+        && new Date(requestedTimestamp).toISOString().slice(0, 10) === requestedDate;
+      const snapshotDefaultDate = "__DEFAULT_DATE__";
+      dateInput.value = validRequestedDate ? requestedDate : snapshotDefaultDate || shanghaiToday();
+      try {
+        const index = JSON.parse(document.querySelector("#session-index").textContent || "{}");
+        sessions = Array.isArray(index.sessions) ? index.sessions : [];
+        render();
+      } catch (cause) {
+        total.textContent = "暂无";
+        totalNote.textContent = "本地索引格式无效";
+        timeline.replaceChildren();
+        error.hidden = false;
+        error.textContent = cause.message;
+      }
+    </script>
+  </body>
+</html>
