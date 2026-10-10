@@ -1,0 +1,4 @@
+interface:
+  display_name: "Claire Test"
+  short_description: "只读审查需求与源码，补查边界并给出可自行实施的修改方案和验证步骤"
+  default_prompt: "使用 $claire-test，对照需求和指定源码审查实现，结合 spec-to-code-compliance 列出代码问题、触发条件、证据及修改方案，由我自行修改；不改源码、不跑页面或 BDD。"

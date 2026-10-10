@@ -1,0 +1,14 @@
+{
+  "name": "claire-page-testing",
+  "owner": {
+    "name": "Claire"
+  },
+  "plugins": [
+    {
+      "name": "spec-to-code-compliance",
+      "version": "2.0.2",
+      "description": "Trail of Bits specification-to-code review with independent verification.",
+      "source": "./.plugins/spec-to-code-compliance"
+    }
+  ]
+}

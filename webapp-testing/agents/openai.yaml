@@ -1,0 +1,6 @@
+interface:
+  display_name: "Webapp Testing"
+  short_description: "明确点名时实测页面、截图和查看日志，不改业务源码或增加测试标识"
+  default_prompt: "使用 $webapp-testing 验证我指定的页面场景，记录实际结果、截图、日志和未验证项；不修改业务源码，不调用 BDD。"
+policy:
+  allow_implicit_invocation: false

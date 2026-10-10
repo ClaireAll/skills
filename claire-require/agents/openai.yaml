@@ -1,0 +1,4 @@
+interface:
+  display_name: "Claire Require"
+  short_description: "Read Feishu/Figma requirements and clarify acceptance criteria"
+  default_prompt: "Use $claire-require to read these requirements, explain confirmed behavior and acceptance criteria, and identify development considerations and important open questions."
