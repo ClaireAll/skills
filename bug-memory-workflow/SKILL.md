@@ -14,7 +14,7 @@ Use this skill as the memory gate around bug work. Read relevant historical bug 
 ## Workflow
 
 1. Extract search terms from the bug report: repo name, package, route/page, component, API, error text, data key, visible symptom, and touched files.
-2. Search historical bug memories before editing code. Search the unified `bug-fix.md` first, then read `references/bug-memory-notes.md` for fallback paths and entry format.
+2. Search the unified `bug-fix.md` before editing code, then read `references/bug-memory-notes.md` for the entry format.
 3. Summarize only relevant prior memories before debugging: symptom, root cause, fix, and reuse hint. If none are found, say none were found and continue.
 4. Diagnose and fix the bug using normal repo workflow and any repo-specific skills or memories.
 5. Verify the original symptom or failing test with fresh evidence.
@@ -26,7 +26,7 @@ Use this skill as the memory gate around bug work. Read relevant historical bug 
 - Do not record guesses as memory. Store confirmed facts only.
 - Do not write a bug memory for abandoned, unverified, or unresolved work. Instead, tell the user what is missing.
 - Keep each bug entry small and searchable.
-- Do not create a separate Markdown file under `extensions/ad_hoc/notes` for a Bug fix.
+- Do not create a separate Markdown file for an individual Bug fix.
 - Keep one final entry per Bug or problem. Update an existing entry after follow-up work instead of appending a duplicate final record.
 - Keep repo-specific delivery rules separate. For example, `bug-des` still handles bug-description output when requested.
 

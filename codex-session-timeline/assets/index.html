@@ -177,6 +177,7 @@
       const timeline = document.querySelector("#timeline");
       const total = document.querySelector("#total");
       const totalNote = document.querySelector("#total-note");
+      const totalLabel = document.querySelector(".total-label");
       const dateLabel = document.querySelector("#timeline-date");
       const error = document.querySelector("#error");
       let sessions = [];
@@ -237,8 +238,9 @@
         const known = daySessions.filter((session) => Number.isFinite(session.token_count));
         const missing = daySessions.length - known.length;
         dateLabel.textContent = selectedDateLabel(selectedDate);
+        totalLabel.textContent = missing ? "已知 Token 合计" : "当日总 Token";
         total.textContent = known.length ? formatCount(known.reduce((sum, session) => sum + session.token_count, 0)) : "暂无";
-        totalNote.textContent = `${daySessions.length} 个会话${missing ? ` · ${missing} 个会话用量缺失` : " · 按上海时区统计"}`;
+        totalNote.textContent = `${daySessions.length} 个会话${missing ? ` · ${missing} 个会话用量缺失，当前为部分合计` : " · 按上海时区统计"}`;
         timeline.replaceChildren();
         if (!daySessions.length) {
           const empty = document.createElement("div");

@@ -1,7 +1,30 @@
 ---
 name: interaction-guide
-description: Use when a user requests a source-grounded UI interaction guide, clickable HTML interaction flowcharts, or detailed behavior coverage for an existing product page, including missing tooltips, environment branches, async states, and field-level actions. Not for implementing product features or generic architecture diagrams.
+description: Use when a user requests a source-grounded UI interaction guide, a step-by-step operation guide, clickable HTML interaction flowcharts, or detailed behavior coverage for an existing product page, including missing tooltips, environment branches, async states, and field-level actions. Not for implementing product features or generic architecture diagrams.
 ---
+
+## Operation Guide Mode
+
+When the user asks “怎么操作”“如何使用” or requests a `how-to` style guide, reuse the same source-grounded interaction analysis and output an executable procedure instead of a generic explanation:
+
+- State the applicable page, role, environment, permissions, and prerequisites.
+- List actions in user order, with the visible result after each action and the condition for continuing.
+- Include only source-confirmed branches such as loading, empty, failure, permission, cancel, retry, and recovery states.
+- Mark unresolved behavior as “待确认”; do not invent backend rules, error messages, or success criteria.
+- End with a short completion check and the most important recovery path.
+
+This mode is documentation only. It does not modify product code, submit data, or replace the source-code and document comparison rules below.
+
+## Mock Page Preview Mode
+
+When the user asks for a preview, use a deterministic HTML page simulation by default. This is not the running product and must not be described as real browser validation of product behavior.
+
+- Keep `archify` responsible for the flow map; keep the mock page, state switching, and preview-to-node binding in this skill's HTML output.
+- Give every actionable flow node a `previewStateId`. Each state must define the visible page structure, real product copy, control states, dialogs or banners, and the control to highlight. Do not leave a clickable node without a matching preview state.
+- Clicking a flow node must select the node, switch the center preview to its bound state, highlight the related control, and update the detail panel. Switching preview states must not invent backend results; mark unsupported behavior as `待确认`.
+- Represent enterprise editions, user identities, permissions, empty results, loading, failures, and recovery as explicit mock states or scenario tabs. Label them as simulated scenarios and keep their source evidence in hidden verification data.
+- Build the first meaningful preview after the page shell and main path exist. Update the same HTML after each completed interaction module, not after every wording or layout edit. Finish with a full node-to-preview-state coverage check.
+- Keep the preview lightweight and behavior-focused: use the real layout hierarchy, controls, states, and copy, but do not rebuild the product or add real API calls, authentication, persistence, or business logic.
 
 # 源码交互说明
 

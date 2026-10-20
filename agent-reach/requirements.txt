@@ -1,0 +1,2 @@
+agent-reach @ https://github.com/Panniantong/Agent-Reach/archive/94f06c1969dfc1834001269d79d3ad0972d9dee6.zip
+akshare==1.19.1

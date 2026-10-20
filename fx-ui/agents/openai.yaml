@@ -1,0 +1,6 @@
+interface:
+  display_name: "FX UI"
+  short_description: "约束并审查 FXDATA 前端交互规范"
+  default_prompt: "使用 $fx-ui，按适用交互规范审查这份前端开发计划或代码差异。"
+policy:
+  allow_implicit_invocation: true

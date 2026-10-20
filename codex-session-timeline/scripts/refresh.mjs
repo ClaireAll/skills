@@ -40,25 +40,16 @@ function readSessionMetadata(line) {
   }
 }
 
-function tokenValue(usage) {
-  if (Number.isSafeInteger(usage?.total_tokens) && usage.total_tokens >= 0) return usage.total_tokens;
-  if (Number.isSafeInteger(usage?.input_tokens) && usage.input_tokens >= 0
-    && Number.isSafeInteger(usage?.output_tokens) && usage.output_tokens >= 0) {
-    return usage.input_tokens + usage.output_tokens;
-  }
-  return null;
-}
-
 function readUsageSnapshot(line) {
   try {
     const entry = JSON.parse(line);
     const info = entry.payload?.info;
     const timestamp = entry.timestamp;
     if (!timestamp || !Number.isFinite(Date.parse(timestamp))) return null;
+    const tokens = info?.last_token_usage?.total_tokens;
     return {
       timestamp,
-      total_tokens: tokenValue(info?.total_token_usage),
-      last_tokens: tokenValue(info?.last_token_usage),
+      last_tokens: Number.isSafeInteger(tokens) && tokens >= 0 ? tokens : null,
     };
   } catch {
     // Ignore malformed or incomplete usage lines.
@@ -71,7 +62,7 @@ function buildDailySessions(rollouts, summaries, previousSummaryById) {
   for (const rollout of rollouts) {
     let thread = threads.get(rollout.codex_thread_id);
     if (!thread) {
-      thread = { id: rollout.codex_thread_id, created_at: rollout.created_at, root_created_at: "", rolloutStartDates: new Map(), snapshots: [] };
+      thread = { id: rollout.codex_thread_id, created_at: rollout.created_at, root_created_at: "", snapshots: [] };
       threads.set(thread.id, thread);
     } else if (rollout.created_at < thread.created_at) {
       thread.created_at = rollout.created_at;
@@ -79,10 +70,6 @@ function buildDailySessions(rollouts, summaries, previousSummaryById) {
     if (rollout.rollout_id === rollout.codex_thread_id
       && (!thread.root_created_at || rollout.created_at < thread.root_created_at)) {
       thread.root_created_at = rollout.created_at;
-    }
-    if (!thread.rolloutStartDates.has(rollout.rollout_id)
-      || rollout.created_at < thread.rolloutStartDates.get(rollout.rollout_id)) {
-      thread.rolloutStartDates.set(rollout.rollout_id, dateInShanghai(rollout.created_at));
     }
     thread.snapshots.push(...rollout.usage_snapshots.map((snapshot) => ({ ...snapshot, rollout_id: rollout.rollout_id })));
   }
@@ -96,13 +83,12 @@ function buildDailySessions(rollouts, summaries, previousSummaryById) {
       snapshot,
     ])).values()].sort((a, b) => a.timestamp.localeCompare(b.timestamp));
     const daily = new Map();
-    const previousTotals = new Map();
     for (const snapshot of snapshots) {
       const date = dateInShanghai(snapshot.timestamp);
       if (!date) continue;
       let day = daily.get(date);
       if (!day) {
-        day = { first_at: snapshot.timestamp, total: 0, has_usage: false, unknown: false };
+        day = { first_at: snapshot.timestamp, total: 0, has_usage: false };
         daily.set(date, day);
       }
       if (snapshot.timestamp < day.first_at) day.first_at = snapshot.timestamp;
@@ -110,25 +96,11 @@ function buildDailySessions(rollouts, summaries, previousSummaryById) {
       if (snapshot.last_tokens !== null) {
         day.total += snapshot.last_tokens;
         day.has_usage = true;
-      } else if (snapshot.total_tokens !== null) {
-        const previousTotal = previousTotals.get(snapshot.rollout_id);
-        if (previousTotal !== undefined && snapshot.total_tokens >= previousTotal) {
-          day.total += snapshot.total_tokens - previousTotal;
-          day.has_usage = true;
-        } else if (previousTotal === undefined && date === thread.rolloutStartDates.get(snapshot.rollout_id)) {
-          day.total += snapshot.total_tokens;
-          day.has_usage = true;
-        } else {
-          day.unknown = true;
-        }
-        previousTotals.set(snapshot.rollout_id, snapshot.total_tokens);
-      } else {
-        day.unknown = true;
       }
     }
 
     if (startDate && !daily.has(startDate)) {
-      daily.set(startDate, { first_at: thread.created_at, total: 0, has_usage: false, unknown: false });
+      daily.set(startDate, { first_at: thread.created_at, total: 0, has_usage: false });
     }
     for (const [date, day] of daily) {
       sessions.push({
@@ -137,7 +109,7 @@ function buildDailySessions(rollouts, summaries, previousSummaryById) {
         created_at: date === startDate ? thread.created_at : day.first_at,
         summary: summaries[thread.id]?.trim() || previousSummaryById.get(thread.id) || "",
         category: null,
-        token_count: day.unknown || !day.has_usage ? null : day.total,
+        token_count: day.has_usage ? day.total : null,
       });
     }
   }
