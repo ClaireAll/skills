@@ -3,8 +3,8 @@
 //
 // Usage: node scripts/validate.mjs <path-to-generated-skill-folder>
 //
-// Zero runtime dependencies. The only external touch is `npx --yes js-yaml`
-// for strict YAML syntax checking — skipped gracefully when npx is missing.
+// No dependency installation or network access. Strict YAML syntax checking
+// uses an already installed js-yaml parser, or reports the check as skipped.
 //
 // Checks:
 //   1. yaml-parse    design-model.yaml parses as valid YAML
@@ -20,7 +20,9 @@
 
 import { readFileSync, readdirSync, existsSync, statSync } from 'node:fs';
 import { join, basename, resolve, relative, extname } from 'node:path';
-import { spawnSync } from 'node:child_process';
+import { createRequire } from 'node:module';
+
+const require = createRequire(import.meta.url);
 
 const HTML_VIEWS = ['landing-page.html', 'component-library.html', 'preview.html', 'app-screen.html'];
 const BANNED_DISPLAY_FONTS = [
@@ -95,14 +97,18 @@ function checkYamlParse(dir) {
     add('WARN', 'yaml-parse', 'design-model.yaml', 'file not found — every generated skill must ship a design model');
     return;
   }
-  const r = spawnSync('npx', ['--yes', 'js-yaml', file], { encoding: 'utf8' });
-  if (r.error) {
-    add('SKIP', 'yaml-parse', 'design-model.yaml', `npx unavailable (${r.error.code ?? r.error.message}) — YAML syntax check skipped`);
+  let load;
+  try {
+    ({ load } = require('js-yaml'));
+  } catch (error) {
+    if (error.code !== 'MODULE_NOT_FOUND') throw error;
+    add('SKIP', 'yaml-parse', 'design-model.yaml', 'installed js-yaml unavailable - YAML syntax check skipped; no package was downloaded');
     return;
   }
-  if (r.status !== 0) {
-    const msg = (r.stderr || r.stdout || '').trim().split('\n')[0] || `js-yaml exit ${r.status}`;
-    add('ERROR', 'yaml-parse', 'design-model.yaml', msg);
+  try {
+    load(read(file));
+  } catch (error) {
+    add('ERROR', 'yaml-parse', 'design-model.yaml', error.message.split('\n')[0]);
   }
 }
 

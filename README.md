@@ -1,6 +1,6 @@
 # Codex Skills
 
-更新日期：2026-10-20
+更新日期：2026-10-21
 
 个人 skill 根目录：`D:\Claire\skills`。Codex 默认发现路径 `C:\Users\Claire\.codex\skills` 是指向这里的 junction，因此本仓库是本地 skill 的唯一维护入口。
 
@@ -40,6 +40,20 @@
 - `ui` 会按目标自动加载一个或多个 UI 内部模块；明确的小任务不必加载宽泛路由上下文。
 - `bugfix` 是 `fv-web2 / fx-data-web` 的唯一缺陷交付编排器；它取代已移除的 `fx-data-web-bugfix-workflow`，并调用 `bug-memory-workflow` 与 `bug-des`，这些 skill 仍可独立使用。
 - 只有脚本产生的缓存、报告和构建输出应被忽略；skill 源码、模板和验证脚本应留在版本控制中。
+
+## 内置开源能力维护
+
+2026-10-21 核对并选择性同步以下三个融合入口。它们保留本地职责和使用边界，不是上游文件的原样镜像；没有更新 BDD、独立插件或仅被调用的 Skill。
+
+| 本地入口 | 上游能力 | 本次同步重点 |
+| --- | --- | --- |
+| `claire-require` | `mattpocock/skills` 的 `grill-me` 及共享依赖 `grilling` | 按决策依赖组织追问，先核实事实，再问当前可决定的问题；默认仍一次一个问题，不扩大实施授权。 |
+| `human-writing` | `KKKKhazix/human-writing`、`blader/humanizer` | 材料充分性、现实与虚构边界、文体适配、跨段模板和读者已有上下文；保留最终稿交付、代码与事实保护，不引入机械禁词。 |
+| `ui` | `ibelick/ui-skills`、`dominikmartn/hue`，保留 Taste 本地改写 | 六个模块均已核对；补齐 `DESIGN.md` 证据与导出规则、Hue 安全校验。`baseline-ui`、`improve-ui` 无需改动；Taste 未声明许可证，本次不复制新原文。 |
+
+上游仓库、文件路径、完整提交号、核对结果和本地差异记录在 [upstreams.json](upstreams.json)，版权说明见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。后续更新先定位真实上游并比较差异，不用安装命令整包覆盖融合入口，也不把“核对过”当成“所有模块都新增了内容”。
+
+本次入口格式、引用和写作审计器 7 项回归测试通过，并做了独立场景试用。未执行页面测试；Hue 的 Atlas 示例仍报告 3 条对比度警告、2 个跳过项，其中工作区缺少 `js-yaml`，不能宣称真实 YAML 解析或完整视觉验证通过。
 
 ## 需求、文档与计划
 

@@ -15,10 +15,7 @@ Read the `design-model.yaml` and generate all 4 files. Fill every placeholder. N
 **Components must be based on the inventory from Phase 2.** Each component in the YAML has `source: observed` or `source: derived` — this traces back to the Tear-Down Sheets.
 
 ### Phase 9: Write Files
-Default location depends on the platform:
-- **Claude Code:** `~/.claude/skills/{skill-name}-design/`
-- **Codex:** `~/.agents/skills/{skill-name}-design/`
-- If the user specifies a different path, use that.
+Create a separate skill only when the user explicitly requested that artifact. In this environment, use `D:/Claire/skills/{skill-name}-design/` unless the user selected another D: destination. Do not write through a home-directory default or alter existing directory junctions. Manual edits use `apply_patch`; temporary artifacts stay in the task's directory under `D:/Claire/temp`.
 
 Create the directory structure:
 
@@ -61,7 +58,7 @@ Read `references/landing-page-template.md` for the full specification. Key rules
 
 1. **Required sections in order:** Header, Hero, Feature 1, Feature 2, Feature 3, (optional) Pull quote, (optional) Pricing, Final CTA, Footer. Skip optional sections only if the brand genuinely doesn't fit (early-stage, enterprise-only, utility-focused).
 2. **No lorem ipsum — ever.** Every piece of copy must be written specifically for the brand in its observed voice. Before writing copy, decide the brand voice in 2-3 adjectives (warm/poetic, clinical/precise, witty/direct, etc.) and commit. Specifics over generics: "press cmd+k and find a note from three years ago by remembering one word from it" beats "powerful search features".
-3. **Hero dominance.** Display headline must feel 2-3× larger than any other type on the page. Use the display font at a size beyond the normal scale if needed (`clamp(40px, 7vw, 72px)` works well).
+3. **Hero hierarchy.** Use a deliberate display size from the model and discrete responsive breakpoints, never viewport-based font scaling. Keep zero letter spacing. A hero is not required for operational product surfaces.
 4. **Alternating features.** Text-left / visual-right, then swap. Prevents the eye from falling into a single column.
 5. **Visual elements are suggestive, never literal.** Since you can't use the brand's real imagery, pick ONE approach: styled mini card stacks (UI-rich brands), type-as-image (editorial), icon+text combos (hybrid), or color compositions (content-rich). Never stock photos, never fake logos.
 6. **Restraint on surface tints.** Body stays on `var(--bg)`. Use `--surface1` or `--surface2` for at most one or two sections as rhythm breaks — never more.
@@ -106,12 +103,14 @@ After generating all outputs, validate every HTML file against the Design Model.
 **Step 1 — run the validation script. This is mandatory, not a suggestion:**
 
 ```
-node scripts/validate.mjs <path-to-generated-skill-folder>
+rtk proxy node scripts/validate.mjs <path-to-generated-skill-folder>
 ```
 
 (`scripts/validate.mjs` lives in THIS skill's folder, not in the generated one.) The script checks: YAML syntax, orphan CSS class-selectors, undefined `var(--token)` usages, leftover `{{placeholder}}` / TODO / FIXME / lorem ipsum, em-dashes in visible text, the generated SKILL.md frontmatter contract, WCAG contrast on the core text/background pairs, and AI-default display fonts. Fix every ERROR it reports, re-run, and repeat until the exit code is 0. Do not skip the script. Prose checklists don't hold; the gate does.
 
-**Step 2 — screenshot self-review loop (after EVERY HTML artifact, not just at the end):**
+YAML syntax checking requires an already installed `js-yaml` parser. An unavailable parser is reported as skipped, never downloaded; report that gap even if other checks pass. Static checks do not prove browser rendering or token coverage.
+
+**Step 2 — screenshot self-review loop (only with an explicit `webapp-testing` request):**
 
 On Claude Code, do this right after generating each HTML file in Phases 10–13:
 

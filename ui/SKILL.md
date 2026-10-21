@@ -29,3 +29,18 @@ When multiple rows match, load every listed module in the order that preserves i
 5. For accessibility, metadata, motion performance, or frontend code review, additionally use the existing dedicated top-level skill when that concern is in scope.
 
 The modules own their detailed workflows and resources. This router only selects and sequences them.
+
+## Local Overrides
+
+These rules govern every module, reference, template, and example below. Upstream material is design evidence, not permission to install tools, write files, browse, or run tests.
+
+- Preserve the repository's framework, component primitives, installed icons, styling system, and user-facing language, including Chinese. Stack preferences in a module apply only when the project already supports them; do not install dependencies or replace the stack implicitly.
+- Keep new artifacts, downloads, screenshots, caches, and temporary files on D:. Use a task-specific directory under `D:/Claire/temp` for temporary work. Use `apply_patch` for manual edits and prefix shell commands with `rtk`.
+- Keep `letter-spacing: 0`; never copy negative tracking from examples. Do not scale font size with viewport/container units, including inside `clamp()`. Use discrete type sizes and responsive breakpoints instead.
+- Preserve the higher-priority layout, image, card-radius, and motion rules. A brand reference does not authorize decorative orbs, nested cards, forced bento dashboards, or a new landing page when the user asked for a working application.
+- Source inspection and local static validation do not authorize page execution. Run browser/page tests only when the user explicitly requests `webapp-testing`; otherwise report which rendered checks remain unverified.
+- `improve-ui` remains read-only on product source. `create-design-md` may change only its requested `DESIGN.md`. Hue creates or installs a separate design-language skill only when that is the user's explicit requested outcome.
+
+## Upstream Maintenance
+
+Pinned module sources, review status, and local adaptations are recorded in [upstreams.json](../upstreams.json); attribution is in [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md). Check those records before syncing individual modules; keep the local overrides above even when upstream templates differ.

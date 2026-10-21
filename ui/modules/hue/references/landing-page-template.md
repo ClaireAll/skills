@@ -150,11 +150,14 @@ Never use stock-looking photos, never fabricate logos, never pretend to be someo
     .lp-hero { padding: 128px 0 96px; text-align: center; }
     .lp-hero h1 {
       font-family: 'Lora', serif;
-      font-size: clamp(40px, 7vw, 72px);
+      font-size: 40px;
       line-height: 1.05;
-      letter-spacing: -0.02em;
+      letter-spacing: 0;
       max-width: 800px;
       margin: 0 auto 24px;
+    }
+    @media (min-width: 768px) {
+      .lp-hero h1 { font-size: 64px; }
     }
     .lp-hero p { font-size: 18px; line-height: 1.6; color: var(--text2); max-width: 560px; margin: 0 auto 40px; }
 

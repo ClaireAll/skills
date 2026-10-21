@@ -24,3 +24,4 @@ Use this internal module only after `$ui` identifies a broad or unclear UI task.
 3. Prefer one module. Use two for clearly combined outcomes and at most three for a broad redesign or multi-surface review.
 4. Keep `improve-ui` audit-only. Finish its audit and plan before starting an implementation pass with an editing module.
 5. Preserve the existing stack and design evidence; this selector does not add external skills, dependencies, or tools.
+6. Within the selected outcome, narrow by topic, then the actual stack, then specificity. Prefer a relevant existing specialized skill over a broad module; do not fetch alternatives from a registry.

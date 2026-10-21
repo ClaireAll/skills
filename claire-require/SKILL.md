@@ -47,10 +47,16 @@ Keep the result in the conversation unless the user requests an artifact. Tempor
 
 Use this as the built-in grill-me capability; do not create a separate Skill.
 
-1. State the specific uncertainty and why it affects the requirement, behavior, or output.
-2. Ask one question at a time. Prefer concrete choices, examples, or observable outcomes over abstract questions.
-3. After each answer, update the current understanding and identify the next unresolved decision; do not repeat an already confirmed fact.
-4. Stop when the remaining uncertainty cannot change the requested output, or when it belongs to a named stakeholder and has been recorded as an open question.
-5. Summarize confirmed requirements, assumptions, rejected directions, and remaining questions. Continue within the user's established scope; ask only when an unresolved decision would materially change the result.
+1. Map the material decisions as a design tree: record what each decision depends on and what its answer would change. Keep this working map internal unless the user asks to see it; do not expand it into unrelated product design.
+2. Separate discoverable facts from user decisions. Inspect supplied documents, the scoped repository, or available read-only tools for facts instead of asking the user to look them up. An unread source or unfinished lookup remains an unsettled prerequisite; do not treat it as evidence or block independent questions on it.
+3. Identify the current frontier: decisions whose prerequisites are already settled. Choose the most consequential unanswered decision from that frontier. A question that depends on another unanswered question belongs to a later round.
+4. Ask one question at a time by default. State the concrete uncertainty, why it matters, your recommended answer, and the main tradeoff when there is enough evidence to recommend one. Use observable examples or choices; a recommendation is not a confirmed requirement. If the user explicitly asks for a batch, group only independent frontier questions and keep their answers separately identifiable.
+5. After each answer, record the confirmed decision and recompute the frontier. Revisit downstream decisions when a prerequisite changes; do not repeat settled questions or silently keep an invalid assumption.
+6. Stop when no material decision remains, the user ends the interview, or the remaining decisions belong to named stakeholders and have been recorded as open questions. Do not interrogate every conceivable branch or require answers to facts that can be safely verified.
+7. Summarize confirmed requirements, assumptions, rejected directions, and remaining questions. In an explicit deep-questioning session, ask whether this captures the shared understanding before moving into implementation; ordinary reading does not require an extra approval round. Continue only within the user's requested scope, and do not turn interview completion into permission to modify code or publish a document.
 
 Understanding remains useful on its own. Formal audits and self-check cases belong to `claire-test`; page execution belongs to explicitly requested `webapp-testing`.
+
+## Upstream Maintenance
+
+The clarification loop adapts `mattpocock/skills`'s `grill-me` and its shared `grilling` dependency. Pinned sources and local adaptations are recorded in [upstreams.json](../upstreams.json); attribution is in [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md). Preserve one-question-at-a-time routing, read-only defaults, and the explicit BDD boundary when syncing.

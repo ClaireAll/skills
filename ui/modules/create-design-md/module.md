@@ -22,11 +22,11 @@ Capture the intentional design system for one product or coherent website. Do no
 ## Required Route
 
 1. Collect evidence in the chosen mode, then **MUST READ** `references/schema-and-validation.md` before drafting frontmatter.
-2. Record each candidate as `role -> value -> source -> scope -> recurrence -> confidence`.
+2. Record each candidate as `role -> value -> source -> scope -> recurrence -> confidence`. For URL evidence, retain the sampled page, viewport, element, computed property, and matching loaded declaration in the private ledger.
 3. Admit only values that are shared, observable, and consequential to implementation. Omit local styling, guesses, migration artifacts, generated output, and undocumented preference.
 4. Normalize admitted evidence into the DESIGN.md schema before writing Markdown. Do not draft prose and retrofit invalid YAML later.
 5. Write the smallest document that represents supported design intent: overview first, then only the standard sections that have evidence.
-6. Run the required lint and compatibility export. Do not return a draft, summary, or success claim until both pass and the populated categories actually emit.
+6. Run the required lint and compatibility export with an already available tool, without implicit installation. Do not return a draft, summary, or success claim until both pass and the populated categories actually emit; report a blocked validation step explicitly.
 
 ## Evidence Discipline
 

@@ -1,0 +1,148 @@
+{
+  "schema_version": 1,
+  "checked_on": "2026-10-21",
+  "sync_mode": "selective-adaptation",
+  "scope": "Embedded capabilities in claire-require, human-writing and ui only; excludes BDD, standalone skills and runtime-only dependencies.",
+  "skills": {
+    "claire-require": {
+      "sources": [
+        {
+          "repository": "https://github.com/mattpocock/skills",
+          "branch": "main",
+          "commit": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
+          "committed_at": "2026-10-19T15:51:40Z",
+          "paths": [
+            "skills/productivity/grill-me/SKILL.md",
+            "skills/productivity/grilling/SKILL.md"
+          ],
+          "license": "MIT",
+          "license_path": "LICENSE",
+          "status": "synced",
+          "applied": "Decision-tree dependencies, settled-prerequisite frontier, fact lookup before questions, recommendations and recomputation after answers."
+        }
+      ],
+      "local_overrides": [
+        "One question at a time unless the user explicitly requests a batch; no decorative question template.",
+        "Only material decisions within the requested scope; no mandatory subagent per factual lookup.",
+        "Read-only by default, no implicit BDD, code changes or document publishing."
+      ]
+    },
+    "human-writing": {
+      "sources": [
+        {
+          "repository": "https://github.com/KKKKhazix/human-writing",
+          "branch": "main",
+          "commit": "4fda173f3fef7fb808f3eba991eeb2528ea4b189",
+          "committed_at": "2026-08-05T10:38:36Z",
+          "version": "1.1.0",
+          "paths": [
+            "human-writing/SKILL.md",
+            "human-writing/references/forum-prose.md",
+            "human-writing/references/reality.md",
+            "human-writing/references/fiction.md",
+            "human-writing/references/formats.md",
+            "human-writing/references/revision.md"
+          ],
+          "license": "MIT",
+          "license_path": "human-writing/LICENSE",
+          "status": "synced",
+          "applied": "Evidence sufficiency before long drafts, factual and fictional boundaries, genre-specific writing and material-led revision."
+        },
+        {
+          "repository": "https://github.com/blader/humanizer",
+          "branch": "main",
+          "commit": "8c307f367c91bd974002f10f2be2965d642c13df",
+          "committed_at": "2026-10-16T19:12:03Z",
+          "version": "3.1.0",
+          "paths": ["SKILL.md"],
+          "license": "MIT",
+          "license_path": "LICENSE",
+          "status": "synced",
+          "applied": "Structural editing before word lists, weak-signal judgment, reader-context awareness, preservation of claims and protected file regions."
+        }
+      ],
+      "local_overrides": [
+        "Final-only delivery unless the user requests an audit; no automatic draft/checklist/final bundle.",
+        "No rigid punctuation bans, minimum material counts or fixed word-count gates.",
+        "No invented facts, personal experience, research traces or author attitudes; preserve required format and technical content.",
+        "The existing lexical auditor remains advisory and does not certify authorship or full structural coverage."
+      ]
+    },
+    "ui": {
+      "sources": [
+        {
+          "repository": "https://github.com/ibelick/ui-skills",
+          "branch": "main",
+          "commit": "55363c305097d4c84487bd5f323d29b3f067bf72",
+          "committed_at": "2026-10-20T21:11:02Z",
+          "license": "MIT",
+          "license_path": "LICENSE",
+          "modules": [
+            {
+              "local_path": "ui/modules/ui-skills-root/module.md",
+              "paths": ["skills/ui-skills-root/SKILL.md"],
+              "version": "1.0.0",
+              "status": "synced",
+              "applied": "Local routing by topic, active stack and specificity; no registry installation."
+            },
+            {
+              "local_path": "ui/modules/baseline-ui/module.md",
+              "paths": ["skills/baseline-ui/SKILL.md"],
+              "status": "reviewed-no-change"
+            },
+            {
+              "local_path": "ui/modules/create-design-md/module.md",
+              "paths": ["skills/create-design-md/SKILL.md"],
+              "status": "synced",
+              "applied": "Evidence ledger and cross-page scope, rounded.base normalization, export-target defaults and exporter limitations."
+            },
+            {
+              "local_path": "ui/modules/improve-ui/module.md",
+              "paths": [
+                "skills/improve-ui/SKILL.md",
+                "skills/improve-ui/references/plan-template.md"
+              ],
+              "status": "reviewed-no-change"
+            }
+          ]
+        },
+        {
+          "repository": "https://github.com/BND-1/taste-skill",
+          "branch": "main",
+          "commit": "0443d0fe1266ad6785a44b99b4deb2791cfef96b",
+          "committed_at": "2026-02-24T16:12:41Z",
+          "paths": ["SKILL.md"],
+          "local_path": "ui/modules/design-taste-frontend/module.md",
+          "license": null,
+          "status": "reviewed-retained",
+          "note": "No license declaration found. Keep the existing local adaptation; no new upstream text copied and no automatic switch to the fork parent."
+        },
+        {
+          "repository": "https://github.com/dominikmartn/hue",
+          "branch": "main",
+          "commit": "a910e31cd24b45b9455c0c3502150413aa5a3b32",
+          "committed_at": "2026-06-11T04:55:26Z",
+          "version": "1.2.0",
+          "paths": ["SKILL.md", "references", "scripts", "examples"],
+          "local_path": "ui/modules/hue/module.md",
+          "license": "MIT",
+          "license_path": "LICENSE",
+          "local_license_path": "ui/modules/hue/LICENSE",
+          "status": "synced",
+          "applied": "Reviewed the pinned workflow and vendored resources; retained local generation routing and aligned templates and validation with local constraints."
+        }
+      ],
+      "local_overrides": [
+        "Six embedded modules behind one ui entry; no new modules, runtime dependencies or standalone skills.",
+        "Preserve repository framework, primitives, installed icons and user language; new files and caches on D: only.",
+        "Zero letter spacing and no viewport/container-unit font scaling, including in examples used for generation.",
+        "improve-ui is read-only; browser/page tests require an explicit webapp-testing request.",
+        "No implicit npx download: Hue YAML parsing uses installed js-yaml or reports SKIP; DESIGN.md lint/export use existing tooling or report blocked."
+      ],
+      "validation_limits": [
+        "No browser tests were requested or run.",
+        "js-yaml is not installed in this workspace. The real Atlas example run reported 0 errors, 3 contrast warnings and 2 skips (YAML parsing and absent generated SKILL.md). This is not complete YAML, contrast or rendered validation."
+      ]
+    }
+  }
+}
