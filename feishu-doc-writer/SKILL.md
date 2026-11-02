@@ -17,7 +17,16 @@ Before writing a Feishu document, read:
 references/feishu-doc-style-guide.md
 ```
 
-This embedded reference is copied from the user's Feishu document style guide. Treat it as the source of truth for structure, tone, tables, callouts, and "do not invent" rules.
+This embedded reference is adapted from the user's Feishu document style guide, including the confirmed Archify image preference below. Treat it as the source of truth for structure, tone, tables, callouts, and "do not invent" rules.
+
+## Diagram Routing
+
+For new or materially changed architecture, workflow, sequence, data-flow, and lifecycle/state diagrams, load and invoke the already installed [archify](../archify/SKILL.md). This applies to ordinary requests such as "write a development document, with diagrams where useful"; the user need not name Archify. Deliver these diagrams as static PNG images in Feishu, retaining the local specification and HTML for later edits.
+
+- Read [references/diagram-verification.md](references/diagram-verification.md) for generation, export, image insertion, and verification. Follow Archify's own rendering and validation contract; do not substitute an unvalidated hand-drawn SVG or Mermaid block.
+- An explicit request for editable Feishu boards or another format overrides the image preference. Diagram types outside Archify's supported set follow the style guide's native-board rules, using only available capabilities.
+- Text-only edits and verification do not redraw existing diagrams. Preserve unaffected images and boards; a diagram is not required when prose or a table is clearer.
+- Reuse installed Archify, not `diagram-design`; do not install a new skill, renderer, or CLI. If generation or insertion is unavailable, preserve the local artifacts, explain the specific gap, and help restore the needed capability without silently changing the chosen format.
 
 ## Workflow
 
@@ -31,7 +40,7 @@ This embedded reference is copied from the user's Feishu document style guide. T
    - Remove a matching first-level `# Title` from the Markdown body to avoid duplicate titles.
    - Do not hand-write a table of contents.
    - Convert GitHub callouts like `> [!IMPORTANT]` into Feishu `<callout>` blocks when using `create-doc`.
-   - If the requested content contains diagrams, read [references/diagram-verification.md](references/diagram-verification.md). Record their sections, intended output types, and expected counts before writing; keep the local preview source unchanged.
+   - Apply Diagram Routing before drawing. Record each diagram's section, source files, intended output, and expected count; check the current tool's image-insertion capability before writing. Keep the local preview source unchanged.
 3. Write the document:
    - If an exposed Lark/Feishu MCP tool exists, use its document creation/import tool.
    - If the user provides a Feishu MCP server URL, call it directly with MCP HTTP JSON-RPC.
@@ -39,7 +48,7 @@ This embedded reference is copied from the user's Feishu document style guide. T
 4. Verify:
    - Read the created document back with `fetch-doc` or the available document-read tool.
    - Confirm the title, non-empty body, and requested sections/tables. Read the relevant scope in full, including later diagrams; a truncated first-page response is not complete verification.
-   - For diagrams, reconcile each write's returned board tokens/blocks and warnings with the source inventory, then verify the final document's corresponding diagrams. If tokens/counts are unavailable, use actual read-back evidence; do not infer completeness from the body or an absent warning.
+   - For diagrams, reconcile each write's returned image/board resource IDs, blocks, and warnings with the source inventory, then inspect the final document's corresponding diagrams. If IDs/counts are unavailable, use actual read-back evidence; do not infer completeness from the body or an absent warning.
    - Fix a failed diagram only in its uniquely identified location, preserve unrelated content, and read back again. Report the final Feishu link, verified diagram count when applicable, and any pending issue; partial diagram conversion is not complete delivery.
 
 ## Connection and Uncertain Writes
@@ -89,6 +98,7 @@ function convertCallout(md, tag, emoji, bg) {
 | "挂在这个 wiki 下方" | Pass the wiki URL/token as `wiki_node` |
 | "我给你飞书 MCP URL" | Use HTTP JSON-RPC, list tools if needed, call `create-doc` |
 | "重新完善飞书文档" | Create/update content using the embedded style guide, then verify |
+| "写开发文档，必要时配图" | Invoke installed `archify` for supported diagrams, validate and export PNG, insert through a supported image path, then read back |
 | "确认写进去了没" | Read back the requested content; verify corresponding diagrams when present |
 
 ## Common Mistakes

@@ -1,6 +1,6 @@
 ---
 name: bug-des
-description: Use when writing, publishing, or updating a Chinese Feishu bug comment, bug description, or bug-fix PR description for fx-data-web or fv-web2, including colored rich-text comments.
+description: Use when writing, publishing, or updating a Chinese Feishu bug comment, bug description, or bug-fix PR description for fx-data-web or fv-web2.
 ---
 
 # Bug Description Writer
@@ -13,7 +13,13 @@ Use `assets/template.txt` as the only output structure for Feishu bug comments a
 
 Start every draft by copying the structure in `assets/template.txt`. Do not draft headings from memory or borrow another bug/PR template.
 
-Output exactly these three Feishu rich-text H2 headings, in this order, with no renamed, omitted, or additional headings:
+Keep `原因` and `改动内容` as the first two section headings, in that order. Select the final section from the evidence:
+
+- Concrete residual risk: use `可能导致的问题`.
+- No concrete residual risk, but directly affected flows are known: use `影响的场景`.
+- Neither is supported: omit the final section.
+
+Use at most one final section; do not retain an empty section or fill it with `略`. The template below shows the affected-scenarios branch:
 
 ```markdown
 ## 原因
@@ -25,8 +31,8 @@ Output exactly these three Feishu rich-text H2 headings, in this order, with no 
 ## 改动内容
 - <confirmed user-facing change>
 
-## 可能导致的问题
-- <concrete scenario and its possible result>
+## 影响的场景
+- <directly affected operation, flow, or feature supported by the change>
 ```
 
 User-facing prose must not contain source file paths, file names, extensions, directories, component file names, or diff-hunk identifiers. Use those only to establish the internal facts, then describe the affected feature, flow, interaction, or business behavior instead. Include a source artifact only when the user explicitly asks for it.
@@ -41,39 +47,27 @@ Keep the final comment short while preserving every independently meaningful use
 - 来源提交每项只保留“提交信息 + 改动行为 + 可能造成的现象 + 关联链接”，合并重复候选，不重复解释同一因果链。
 - `改动内容` 按独立改动逐条列出；多个内部改动不能合并成一条，每个 bullet 尽量只写一句话，直接说明用户可见结果。完整性通过逐条覆盖有意义的改动保证，不逐行复述 diff、调用链或文件改动。
 - `可能导致的问题` 每个场景只写一句“触发条件 + 可能结果”，不追加分析、验证、处理建议或保护措施。
+- `影响的场景` 只列本次改动直接涉及的操作、流程或功能范围，不把尚未验证的恢复结果写成已通过。
 - 删除重复主语、套话、过程连接词和同义改写；不要为了显得完整而补充源码中没有的背景。
 
 先在内部保留完整的行为清单，再将同一用户结果合并到最终评论。内部清单不能直接整段复制到评论中。
 
 ### External Comment Filter
 
-The completed template contains only these four kinds of information:
+The completed template contains only the following information:
 
 - `原因`：解释当前现象所需的最短因果链。
 - `来源提交`：能够说明当前现象由何种改动引入的最少提交；只有中间修复本身造成了当前现象时，才把它列为来源提交。
 - `改动内容`：最终产生的用户可见变化；提交哈希、PR 链接、测试结果、工时和交付状态留在交付汇报中。
-- `可能导致的问题`：证据支持的剩余风险场景。
+- `可能导致的问题` / `影响的场景`：有具体风险时写证据支持的风险场景；没有具体风险时写有依据的直接影响范围。
 
 输出前为每句话匹配上述一个位置；无法匹配的内容不进入评论。排查过程、尝试过但未引入当前现象的失败方案，以及同一因果链的重复解释只保留在内部证据中。
 
-## Feishu Rich-Text Publishing
+## Feishu MCP Publishing
 
-When publishing or updating a Feishu bug comment, colored rich text is the default. Keep `assets/template.txt` as the content source, then apply this presentation:
+Publish or update authorized Feishu bug comments directly through available Feishu Project MCP comment tools. Use plain text or tool-supported Markdown, preserving template section order, bullets and links. Do not apply custom colors, font sizes or rich-text clipboard formatting, or open a browser merely to style a comment.
 
-| Content | Style |
-| --- | --- |
-| `原因` | 20px, bold, `#B42318` |
-| `改动内容` | 20px, bold, `#067647` |
-| `可能导致的问题` | 20px, bold, `#B54708` |
-| `Bug 原因：` | 14px, normal, `#B42318` |
-| `可能导致问题的来源提交：` | 14px, normal, `#175CD3` |
-| Body and list items | 14px, normal, default text color |
-
-Use the Feishu API to create one plain-text fallback comment first. Then use browser automation to edit that same comment and paste rendered rich text through the system clipboard; copying HTML source text is not sufficient. Never create a second comment for the colored version.
-
-Before sending the edited comment, verify that the three headings have the required colors and size, body text and list items render at 14px with normal weight, links still work, no unexpected emoji or blank heading was inserted, and only one comment will remain. Do not use `!important`; Feishu strips it. If rich-text paste or verification fails, cancel the edit, preserve the plain fallback comment, and tell the user that color formatting was not applied.
-
-This publishing workflow applies only when writing to Feishu. A draft returned in chat and a PR description remain Markdown.
+Create one comment or update the specified existing comment, then verify the saved content through MCP. If a write times out or its result is unclear, query the original target before retrying to avoid duplicates. If MCP is unavailable or authorization expires, help restore the existing connection and retain the draft; do not automatically switch to browser publishing. A browser may be used for required human login or authorization; verify MCP recovery separately. Publishing still requires user authorization. Chat drafts and PR descriptions remain Markdown.
 
 ## Cause And Source Commit Attribution
 
@@ -115,14 +109,15 @@ Replace every recognized standalone item id found in a source commit or its cont
    - Record the confirmed cause or mark it pending. Never infer a cause from a file name alone.
    - For each source-commit candidate, record its short hash, author, date, subject, linked item ids, changed behavior, and evidence connecting it to the symptom.
    - Record every independently meaningful behavior-level change in the final diff.
-   - For each residual risk, record one concrete scenario and the possible user-visible result.
+   - For each residual risk, record one concrete scenario and the possible user-visible result. If none is supported, record the operations, flows, or features directly affected by the change.
 3. Fill the template:
 
 | Section | Fill rule |
 | --- | --- |
 | `原因` | Write `Bug 原因` first, followed by `可能导致问题的来源提交`. Keep the cause behavior-focused and evidence-backed. Use `原因待确认。` when the cause is not established. Use one complete bullet per independently supported source commit; when none is supported, write `**可能导致问题的来源提交：** 略`. |
 | `改动内容` | Provide a complete behavior-level inventory of the final diff. Keep each independently meaningful feature, flow, interaction, business rule, state guard or recovery, validation or error-handling behavior, and API or data-contract behavior as a separate concise bullet. Do not merge distinct changes. Do not list diff lines, call chains, or implementation steps. Pure formatting or comment-only changes may be omitted. Do not use checkboxes. |
-| `可能导致的问题` | Write only concrete scenarios. Use one natural sentence per bullet that combines the relevant condition or user action with its possible result. Do not add field labels, analysis, mitigation, verification status, or follow-up actions. A scenario must not be presented as observed fact unless evidence confirms it. |
+| `可能导致的问题` | Use only for evidence-backed residual risks. Write one sentence per bullet combining the condition or user action with its possible result. Do not add field labels, analysis, mitigation, verification status, or follow-up actions, or present a possible result as an observed fact. |
+| `影响的场景` | When no concrete residual risk is supported, list only the operations, flows, or features directly affected by the change. Do not invent a risk or imply that unverified scenarios have passed. |
 
    Use this shape for each supported scenario:
 
@@ -130,13 +125,9 @@ Replace every recognized standalone item id found in a source commit or its cont
    - <具体条件或用户操作>时，可能<具体结果>。
    ```
 
-   If reviewed evidence supports no specific scenario, write exactly:
+   If reviewed evidence supports no concrete risk, omit `可能导致的问题` and use `影响的场景` for the direct affected flows supported by the final diff or requirements. If neither is supported, omit the final section instead of leaving an empty section or writing `略`.
 
-   ```markdown
-   略
-   ```
-
-   If a concrete scenario is known but its outcome is not sufficiently verified, use:
+   If evidence supports a concrete potential failure but its outcome is not sufficiently verified, use:
 
    ```markdown
    - <具体场景>待验证。
@@ -145,18 +136,18 @@ Replace every recognized standalone item id found in a source commit or its cont
    Do not invent a risk or use generic labels such as `逻辑问题`, `交互问题`, or `性能问题` merely to fill the section.
 4. Humanize the factual draft with `human-writing`:
    - Treat it as Chinese technical rewrite work with compression, not expansion.
-   - Give it only the completed body text after source-artifact references have been removed. The three headings, cause/source order, bullets, links, and spacing remain under `bug-des` control.
-   - Keep the tone concise, professional, and direct. Prefer one sentence per change or risk bullet and natural sentence rhythm.
-   - Preserve every fact, uncertainty, negation, commit detail, Markdown link, complete change item, and risk scenario.
+   - Give it only the completed body text after source-artifact references have been removed. The selected headings, cause/source order, bullets, links, and spacing remain under `bug-des` control.
+   - Keep the tone concise, professional, and direct. Prefer one sentence per change, risk, or affected-scenario bullet and natural sentence rhythm.
+   - Preserve every fact, uncertainty, negation, commit detail, Markdown link, complete change item, and risk or affected scenario.
    - Remove repetition, background, causal claims not in the facts, verification claims, reassurance, personal voice, marketing language, source-file information, and unnecessary transition phrases without changing the certainty level.
 5. Run the final evidence gate:
-   - Compare every `##` heading with `assets/template.txt`; exactly three headings must appear in the same order.
+   - Check the heading branch against `assets/template.txt`: `原因` then `改动内容`, followed by at most one of `可能导致的问题` or `影响的场景` according to the evidence.
    - Remove every HTML comment and placeholder.
    - Confirm `原因` states the Bug cause before source commits and uses the exact pending wording when evidence is missing.
    - Confirm every recognized item id in source attribution is linked correctly.
    - Confirm the completed prose contains no source path, file name, extension, directory, component file name, or diff-hunk identifier unless explicitly requested.
    - Compare the internal final-diff behavior list with `改动内容`; every independently meaningful behavior change must have a corresponding bullet.
-   - Confirm `可能导致的问题` contains only one-sentence scenario bullets with a possible result, a one-sentence pending scenario, or exactly `略`.
+   - Confirm `可能导致的问题` is present only for concrete supported risks, and contains one-sentence possible-result or pending-scenario bullets. Otherwise use `影响的场景` for supported direct effects, or omit the final section; never leave an empty final section or use `略` as its content.
    - Confirm each sentence is supported by the diff, issue context, history, verification output, or user-provided evidence.
 6. Output only the completed template. Use the same completed content for the Feishu comment and PR description unless the user asks for different wording.
 
@@ -165,5 +156,5 @@ Replace every recognized standalone item id found in a source commit or its cont
 - Ask one concise follow-up only when missing information prevents an accurate completed template.
 - Use `原因待确认。` when the root cause is not established; do not invent one.
 - Use `**可能导致问题的来源提交：** 略` when history cannot identify a supported candidate; do not ask for more history solely to fill this field.
-- Use `略` when no supported risk scenario can be identified; use the pending scenario form when only the result remains unverified.
+- When no concrete risk is supported, use `影响的场景` for direct affected flows supported by the available evidence; if neither is supported, omit the final section. Lack of verification alone is not a risk scenario.
 - If the diff path is outside the repo or cannot be inferred, ask for the relevant path, file list, or diff snippet.

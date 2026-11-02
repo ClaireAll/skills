@@ -1,104 +1,102 @@
 ---
 name: webapp-testing
-description: Toolkit for interacting with and testing local web applications using Playwright. Supports verifying frontend functionality, debugging UI behavior, capturing browser screenshots, and viewing browser logs.
+description: Use when the user explicitly invokes webapp-testing to execute browser tests on a specified local or remote web application, capture screenshots, or collect browser and network evidence. Includes Jiushuyun environment, realtime refresh, tracking, and data-source testing references. Not for ordinary source review or merely updating this skill.
 license: Complete terms in LICENSE.txt
 ---
 
 # Web Application Testing
 
-To test local web applications, write native Python Playwright scripts.
+Execute the user's specified page scenarios with native Python Playwright scripts. Preserve the existing explicit-only invocation policy in `agents/openai.yaml`. A request to read or improve this skill does not authorize tests against the product.
 
-**Helper Scripts Available**:
-- `scripts/with_server.py` - Manages server lifecycle (supports multiple servers)
+## Scope and evidence
 
-**Always run scripts with `--help` first** to see usage. DO NOT read the source until you try running the script first and find that a customized solution is abslutely necessary. These scripts can be very large and thus pollute your context window. They exist to be called directly as black-box scripts rather than ingested into your context window.
+- State the page/scenarios and modules being tested before acting. Use the supplied requirements as the acceptance contract; missing expected behavior stays pending.
+- Do not modify business code, add test IDs, invoke BDD, or turn an observed defect into an authorized fix.
+- Page testing does not authorize changing enterprise versions, whitelists, permissions, orders, database contents, shared containers, or notification recipients. Continue independent scenarios and report the missing prerequisite; perform setup mutations only when already authorized or after explaining their effect and obtaining agreement.
+- Use a test enterprise and disposable fixtures for authorized writes. Except for the test logins explicitly supplied below by the user, keep credentials out of the skill. Keep credentials, Authorization headers, cookies, login profiles and sensitive response bodies out of reports and shared evidence. Do not commit or push stored passwords without explicit authorization to include them. Redact evidence before sharing.
+- Report each scenario as passed, failed, blocked, not executed, or not applicable, with expected/observed results and evidence. Separate actual backend execution from mocked response coverage; browser event emission does not prove database ingestion.
 
-## Decision Tree: Choosing Your Approach
+## Default Jiushuyun login
 
+For authorized Jiushuyun browser tests, use account `15827566085` and password `Tt2333!!` by default, unless the user specifies another account beforehand. Apply this default only to the intended Jiushuyun environment, never to unrelated sites. Do not repeat the password in replies, logs, screenshots or generated test scripts; supply it at runtime. A stored login does not authorize testing or other account actions by itself.
+
+Additional user-authorized Jiushuyun test accounts (these do not replace the default above):
+
+| Account | Password |
+| --- | --- |
+| `15800000666` | `Tt2333!!` |
+| `15800000999` | `Tt2333!!` |
+| `18295906261` | `Ilovejava1!` |
+
+These accounts may be used when the authorized test needs another identity. Their roles, tenant membership and permissions are unspecified; verify them in the intended environment rather than assuming them. The same credential-handling and authorization rules above apply.
+
+If a Jiushuyun scenario needs a fresh or additional account that is not available, stop before running that scenario and ask the user to create the account and provide its username and password. Wait for the user; do not register users through the frontend or passport administration, invent phone numbers or passwords, or reset existing accounts. Do not substitute an existing account for a scenario requiring a fresh user. Once the user supplies the credentials, verify the identity in the intended environment before resuming; keep newly supplied credentials runtime-only unless the user explicitly requests storing them.
+
+## Read only the relevant references
+
+For Jiushuyun/data-analysis tasks, select by the actual scenario. Generic web apps do not inherit these product-specific rules.
+
+Use the [official Jiushuyun help center](https://help.fanruan.com/jiushuyun/) as the first learning source when an operation or step is unfamiliar. Browse its navigation or search by feature name, UI text and intended action; if needed, use a site-restricted web search (`site:help.fanruan.com/jiushuyun/ <keywords>`) and read the relevant original articles. Match the documented edition, role and prerequisites to the actual environment, then verify the operation against the current page. Only ask the user how to perform the step when relevant documentation and page inspection still cannot resolve it, or the source is inaccessible; explain what was checked and what remains unclear. Documentation does not supply missing user intent, acceptance criteria or authorization, and this link does not imply the entire help center has already been read.
+
+| Task | Read before execution |
+| --- | --- |
+| Enterprise type, domain, integration login, role, version, whitelist, corp/user identifiers | [Environment and identity](references/jiushuyun-environments.md) |
+| Members, search, export, dates, analysis/chart terminology, engine coverage, AI | [Scenario coverage](references/jiushuyun-scenarios.md) |
+| WebSocket interruption/recovery, tracking, trace, update failure, alert evidence | [Realtime and diagnostics](references/jiushuyun-diagnostics.md) |
+| Response overrides, data sources, project/FVS copies, metric-tree history fixtures, local agent fixtures | [Data and response preparation](references/jiushuyun-test-data.md) |
+| Recheck a changing rule, original screenshot or setup instruction | [Source index and reading limits](references/toolbox-sources.md) |
+
+These references distill the team's “测试百宝箱”. They are testing context, not a replacement for current feature requirements. Re-read the linked source when version support, entrypoints or backend contracts matter. An old screenshot, crossed-out method, or example threshold does not establish today's behavior.
+
+Read Feishu inputs through connected document tools. On a missing connection, expired authorization or 401, retain the source and progress, help restore the existing connection, then verify the original target read-only before resuming. Distinguish missing resource permission from login failure; do not replace unread material with guesses.
+
+## Runtime and local artifacts
+
+- Python: `D:/Claire/tools/webapp-testing/.venv/Scripts/python.exe`.
+- Put scripts, screenshots, profiles, downloads, traces and logs under `D:/Claire/temp/<task>`; set `TEMP` and `TMP` there **before** launching Python/browser. Set `PLAYWRIGHT_BROWSERS_PATH=D:/Claire/cache/ms-playwright` before any explicitly needed browser installation.
+- Reuse installed Chrome in headless mode. Try `p.chromium.launch(channel="chrome", headless=True)`; if channel discovery fails, verify the installed executable and pass `executable_path` rather than reinstalling or assuming Chrome is absent. On 2026-10-26 the verified executable was `C:/Program Files/Google/Chrome/Application/chrome.exe`; read/execute it without creating task files on C.
+- Human login, SSO, CAPTCHA and authorization confirmations belong to the user. Open a visible browser only when needed for that step; keep its task profile on D. A successful login must be verified against the intended tenant/page before testing.
+- Use isolated browser contexts for different identities. Close only the contexts, browsers and servers created by this task; preserve user-owned sessions.
+
+## Choose the execution approach
+
+1. Static HTML: inspect the file to identify selectors, then verify the rendered behavior.
+2. Dynamic app already running: reuse its supplied URL; do not start another server.
+3. Local app without a running server: use `scripts/with_server.py` to manage only the needed server(s).
+4. Remote test environment: use the specified environment and identity; localhost server helpers are unnecessary.
+
+**Run helper scripts with `--help` first.** Use them as black boxes; read their source only if the documented interface cannot support the task.
+
+Single server (example):
+
+```powershell
+D:/Claire/tools/webapp-testing/.venv/Scripts/python.exe -B D:/Claire/skills/webapp-testing/scripts/with_server.py --help
+D:/Claire/tools/webapp-testing/.venv/Scripts/python.exe -B D:/Claire/skills/webapp-testing/scripts/with_server.py --server "npm run dev" --port 5173 -- D:/Claire/tools/webapp-testing/.venv/Scripts/python.exe -B D:/Claire/temp/<task>/automation.py
 ```
-User task → Is it static HTML?
-    ├─ Yes → Read HTML file directly to identify selectors
-    │         ├─ Success → Write Playwright script using selectors
-    │         └─ Fails/Incomplete → Treat as dynamic (below)
-    │
-    └─ No (dynamic webapp) → Is the server already running?
-        ├─ No → Run: python scripts/with_server.py --help
-        │        Then use the helper + write simplified Playwright script
-        │
-        └─ Yes → Reconnaissance-then-action:
-            1. Navigate and wait for networkidle
-            2. Take screenshot or inspect DOM
-            3. Identify selectors from rendered state
-            4. Execute actions with discovered selectors
-```
 
-## Example: Using with_server.py
+Multiple servers: repeat `--server` and matching `--port` for backend/frontend, using the project's actual commands. The helper owns their lifecycle; the automation script contains browser logic.
 
-To start a server, run `--help` first, then use the helper:
+## Observe, act, assert
 
-**Single server:**
-```bash
-python scripts/with_server.py --server "npm run dev" --port 5173 -- python your_automation.py
-```
+1. Register the relevant console, page-error, request-failure and response listeners **before** the tested action.
+2. Navigate with a bounded timeout. Wait for the actual business-ready state: the target visible/enabled control, loading indicator completion, required response, or expected rendered data. Apps with polling and realtime traffic may never become network-idle; `networkidle` is not a required readiness gate. A wait timeout alone does not establish a product defect.
+3. Inspect rendered DOM and screenshots, then choose selectors from actual roles, labels, text or stable DOM. Do not guess selectors or add test IDs to the product.
+4. Perform one meaningful action, assert its specified visible result and relevant request/business result, and capture failure evidence. An HTTP 200 is insufficient when the body reports a business error.
+5. Scroll lazy-loaded dashboard components into view and wait for their own content. Initial viewport readiness does not prove all components have loaded.
+6. Prefer locator assertions and condition-based waits. Fixed sleeps do not prove save completion, recovery or event ingestion. Install request/response waits before triggering the request.
+7. In `finally`, remove this task's routes, offline/throttle settings and local-storage debug changes; reload when event handlers were removed. Restore only state changed by this task. Distinguish reconnecting transport from observing the latest data and a subsequent successful refresh.
 
-**Multiple servers (e.g., backend + frontend):**
-```bash
-python scripts/with_server.py \
-  --server "cd backend && python server.py" --port 3000 \
-  --server "cd frontend && npm run dev" --port 5173 \
-  -- python your_automation.py
-```
+## Deliver the actual result
 
-To create an automation script, include only Playwright logic (servers are managed automatically):
-```python
-from playwright.sync_api import sync_playwright
+Record the tested URL/domain, enterprise type, identity/role, relevant version/engine/timezone, scenario statuses and evidence paths. List omitted branches and prerequisite gaps. For mocked tests identify the exact URL/method/body match, injected response and its scope; never label it real backend validation. For diagnostics keep the action timestamp, resource identifier and trace/log link with secrets removed.
 
-with sync_playwright() as p:
-    browser = p.chromium.launch(headless=True) # Always launch chromium in headless mode
-    page = browser.new_page()
-    page.goto('http://localhost:5173') # Server already running and ready
-    page.wait_for_load_state('networkidle') # CRITICAL: Wait for JS to execute
-    # ... your automation logic
-    browser.close()
-```
+### Evidence for review
 
-## Reconnaissance-Then-Action Pattern
+- Every result other than fully passed, including failed, blocked, pending confirmation, partial and unexecuted, needs three fields in its execution-status cell: an actual screenshot of the problem or blocking state, a concise reason, and a link to an independent reproduction copy. Keep the result's actual status; missing prerequisites do not prove a product defect.
+- Put the required access account and its verified role or permission state beside every test or reproduction link in execution statuses and reports; a global account list is not enough. When reproduction needs several identities, distinguish the setup, applicant, approver and visitor accounts and state which account opens each link. Do not include passwords, tokens or cookies; do not guess an account's permissions.
+- Before later tests change the scene, copy the problem resource and any required project or dependencies within the authorized scope, then reproduce the problem or verify the blocking condition on that copy. Reopen its link to check access and state, retain the copy for review, and do not reuse it for later tests. If copying is blocked, state what is missing and leave that evidence requirement incomplete.
+- Product copies may omit history or drafts, and some problems depend on timing or accounts. Record these limits and the repeatable steps or conditions; an ordinary copy is not a complete snapshot and cannot guarantee permanent reproducibility.
+- A case description's source cites the whiteboard link, full node path and verbatim child-node text that supports it. Keep user-confirmed additions separate when no matching node exists. Unread or unmatched nodes remain a source gap; do not substitute a broad category or invent node wording.
+- Aim for execution-status explanations under 100 Chinese characters, with links and screenshots on separate lines. Use human-writing to polish the wording while preserving observations, uncertainty, prerequisites and mocked-test scope. If essential information needs more space, keep it and explain the exception rather than cutting facts. Preserve quoted source-node text verbatim.
 
-1. **Inspect rendered DOM**:
-   ```python
-   page.screenshot(path='/tmp/inspect.png', full_page=True)
-   content = page.content()
-   page.locator('button').all()
-   ```
-
-2. **Identify selectors** from inspection results
-
-3. **Execute actions** using discovered selectors
-
-## Common Pitfall
-
-❌ **Don't** inspect the DOM before waiting for `networkidle` on dynamic apps
-✅ **Do** wait for `page.wait_for_load_state('networkidle')` before inspection
-
-## Best Practices
-
-- **Use bundled scripts as black boxes** - To accomplish a task, consider whether one of the scripts available in `scripts/` can help. These scripts handle common, complex workflows reliably without cluttering the context window. Use `--help` to see usage, then invoke directly.
-- Use `sync_playwright()` for synchronous scripts
-- Always close the browser when done
-- Use descriptive selectors: `text=`, `role=`, CSS selectors, or IDs
-- Add appropriate waits: `page.wait_for_selector()` or `page.wait_for_timeout()`
-
-## Reference Files
-
-- **examples/** - Examples showing common patterns:
-  - `element_discovery.py` - Discovering buttons, links, and inputs on a page
-  - `static_html_automation.py` - Using file:// URLs for local HTML
-  - `console_logging.py` - Capturing console logs during automation
-
-## Claire's Windows Runtime
-
-- Use `D:/Claire/tools/webapp-testing/.venv/Scripts/python.exe`; Playwright is installed in this D-drive environment.
-- Reuse installed Chrome with `p.chromium.launch(channel="chrome", headless=True)`.
-- Put temporary scripts, screenshots, profiles, and logs in a task-specific directory under `D:/Claire/temp`; set `TEMP` and `TMP` to that directory before launching Python. If a managed browser download is needed, set `PLAYWRIGHT_BROWSERS_PATH=D:/Claire/cache/ms-playwright` first.
-- Use existing page roles, text, or DOM selectors for audits; changing business code or adding test IDs requires a separate request.
-- Read Feishu input through the connected document tools before testing; this skill does not supply Feishu authentication.
+The bundled `examples/` cover element discovery, static HTML automation and console logging. Adapt their paths, runtime and waits to the rules above rather than copying outdated defaults.

@@ -2,9 +2,10 @@
   "schema_version": 1,
   "checked_on": "2026-10-21",
   "sync_mode": "selective-adaptation",
-  "scope": "Embedded capabilities in claire-require, human-writing and ui only; excludes BDD, standalone skills and runtime-only dependencies.",
+  "scope": "Embedded capabilities in claire-require, human-writing and ui, plus the job-search local-framework adapter; excludes BDD, other standalone skills and runtime-only dependencies.",
   "skills": {
     "claire-require": {
+      "updated_on": "2026-10-22",
       "sources": [
         {
           "repository": "https://github.com/mattpocock/skills",
@@ -19,12 +20,30 @@
           "license_path": "LICENSE",
           "status": "synced",
           "applied": "Decision-tree dependencies, settled-prerequisite frontier, fact lookup before questions, recommendations and recomputation after answers."
+        },
+        {
+          "repository": "https://github.com/addyosmani/agent-skills",
+          "branch": "main",
+          "commit": "aeac41d4d005999432bb7312f7ff06383a91d59d",
+          "committed_at": "2026-10-13T20:21:06Z",
+          "checked_on": "2026-10-22",
+          "paths": [
+            "skills/interview-me/SKILL.md",
+            "skills/spec-driven-development/SKILL.md"
+          ],
+          "license": "MIT",
+          "license_path": "LICENSE",
+          "status": "synced",
+          "applied": "Intent hypotheses, target users, success and binding constraints, explicit non-goals, source-backed observable acceptance conditions, and strict separate-turn review gates for clarification and authored requirements."
         }
       ],
       "local_overrides": [
         "One question at a time unless the user explicitly requests a batch; no decorative question template.",
         "Only material decisions within the requested scope; no mandatory subagent per factual lookup.",
-        "Read-only by default, no implicit BDD, code changes or document publishing."
+        "Read-only by default, no implicit BDD, code changes or document publishing.",
+        "User selected strict mode B: proposed summary and later confirmed handoff are terminal turns; no automatic downstream tools even when later work was requested earlier.",
+        "Gate only active clarification or authored/revised requirement contracts; clear-source reading, extraction and already-confirmed direct review requests keep their existing routes.",
+        "No numerical confidence claims, forced PRD files, capability-map architecture, task planning, fixed performance targets or complete upstream lifecycle."
       ]
     },
     "human-writing": {
@@ -142,6 +161,30 @@
       "validation_limits": [
         "No browser tests were requested or run.",
         "js-yaml is not installed in this workspace. The real Atlas example run reported 0 errors, 3 contrast warnings and 2 skips (YAML parsing and absent generated SKILL.md). This is not complete YAML, contrast or rendered validation."
+      ]
+    },
+    "job-search": {
+      "updated_on": "2026-10-30",
+      "sources": [
+        {
+          "repository": "https://github.com/ai-job-search-dev/ai-job-search",
+          "branch": "master",
+          "commit": "83c788d779b74522bb346145ef675b984bf2d3f7",
+          "committed_at": "2026-10-27T16:14:35+01:00",
+          "license": "MIT",
+          "license_path": "LICENSE",
+          "paths": ["AGENTS.md", ".claude/skills/job-application-assistant", "tools/posting_guard.py"],
+          "local_checkout": "D:/Claire/papers/AAA/ai-job-search",
+          "status": "installed-local-framework",
+          "applied": "Reference-backed candidate evidence, supplied-JD evaluation, truthful resume tailoring, interview practice, and the existing posting-integrity helper through a local Codex entrypoint."
+        }
+      ],
+      "local_overrides": [
+        "Domestic Chinese job-change preparation; inputs are supplied postings, resumes and user-confirmed facts.",
+        "Personal files remain in D:/Claire/papers/AAA, outside the upstream checkout and the skills repository; original documents are preserved.",
+        "No automated job search, account creation, contact, submission, synchronization or publication; no Bun, TeX or portal CLI dependency installation.",
+        "Preserve the posting trust boundary and guard helper; do not treat template preferences, numerical scoring, LaTeX designs or page counts as user requirements.",
+        "Use Codex-native requests, available document tools and requested formats rather than copying Claude command permissions."
       ]
     }
   }

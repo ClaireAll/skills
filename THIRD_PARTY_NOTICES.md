@@ -9,6 +9,9 @@ continue to apply.
 
 - `claire-require`: `mattpocock/skills`, `grill-me` and `grilling`.
   Copyright (c) 2026 Matt Pocock
+- `claire-require`: `addyosmani/agent-skills`, selected instructions from
+  `interview-me` and `spec-driven-development`.
+  Copyright (c) 2025 Addy Osmani
 - `human-writing`: `KKKKhazix/human-writing`.
   Copyright (c) 2026 Human Writing Skill contributors
 - `human-writing`: `blader/humanizer`.

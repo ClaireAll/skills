@@ -1,6 +1,6 @@
 # Codex Skills
 
-更新日期：2026-10-21
+更新日期：2026-11-02
 
 个人 skill 根目录：`D:\Claire\skills`。Codex 默认发现路径 `C:\Users\Claire\.codex\skills` 是指向这里的 junction，因此本仓库是本地 skill 的唯一维护入口。
 
@@ -8,11 +8,11 @@
 
 ## Skill 目录与插件索引
 
-下表记录本地目录与插件的历史索引，部分入口尚未在当前会话加载。2026-10-20 核对本地 personal 共 **27** 个：新增 `teach`，移除已不存在的 `21-day-self-interview`；`.system/plugin-creator` 也已移除。插件实际可用入口以当前会话发现结果为准，历史数量不代表当前可调用总数。
+下表记录本地目录与插件的历史索引，部分入口尚未在当前会话加载。2026-10-30 新增 `job-search` 后核对本地 personal 共 **28** 个。此前已新增 `teach`、移除已不存在的 `21-day-self-interview`，`.system/plugin-creator` 也已移除。插件实际可用入口以当前会话发现结果为准，历史数量不代表当前可调用总数。
 
 | 来源 | 数量 | Skill 名称 |
 | --- | ---: | --- |
-| 本地 personal | 27 | `agent-reach`、`akshare-data`、`archify`、`bug-des`、`bug-memory-workflow`、`bugfix`、`claire-require`、`claire-test`、`codex-session-timeline`、`feishu-doc-writer`<br>`find-skills`、`fixing-accessibility`、`fixing-motion-performance`、`frontend-code-review`、`fx-ui`、`human-writing`、`i-have-adhd`、`i18n-helper`、`interaction-guide`<br>`life-decision-guide`、`life-design`、`maintaining-windows-health`、`open-code-review-delegate`、`resolving-merge-conflicts`、`teach`、`ui`、`webapp-testing` |
+| 本地 personal | 28 | `agent-reach`、`akshare-data`、`archify`、`bug-des`、`bug-memory-workflow`、`bugfix`、`claire-require`、`claire-test`、`codex-session-timeline`、`feishu-doc-writer`<br>`find-skills`、`fixing-accessibility`、`fixing-motion-performance`、`frontend-code-review`、`fx-ui`、`human-writing`、`i-have-adhd`、`i18n-helper`、`interaction-guide`、`job-search`<br>`life-decision-guide`、`life-design`、`maintaining-windows-health`、`open-code-review-delegate`、`resolving-merge-conflicts`、`teach`、`ui`、`webapp-testing` |
 | 本地 `.system` | 4 | `imagegen`、`openai-docs`、`skill-creator`、`skill-installer` |
 | Dev Toolkit 插件 | 9 | `dev-toolkit:bkt`、`dev-toolkit:code-figma`、`dev-toolkit:commit`、`dev-toolkit:deploy-app`、`dev-toolkit:fetch-library-docs`、`dev-toolkit:firecrawl`、`dev-toolkit:open-bitbucket-pr`、`dev-toolkit:read-feature-input`、`dev-toolkit:worktree` |
 | FXDATA BDD 插件 | 5 | `fx-bdd:bdd`、`fx-bdd:setup`、`fx-bdd:test-scenario-planner`、`fx-data-test-skills:read-feature-input`、`fx-data-test-skills:test-plan-generator` |
@@ -33,9 +33,10 @@
 ## 使用原则
 
 - 优先选择职责清晰、覆盖完整任务的最小入口。
-- `claire-require` 负责读懂飞书、Figma、本地资料与需求说明，澄清验收规则和开发注意点；不再内置测试计划生成器。
+- `claire-require` 主动识别自然语言中的功能新增、行为调整、交互规则和验收条件，负责读懂飞书、Figma、本地资料与需求说明；区分操作咨询、故障排查和机械修改，仅在关键歧义时澄清。澄清及新拟需求采用严格分阶段确认，不内置测试计划生成器。
 - `claire-test` 默认只读审查需求与源码，结合规格对照与实际边界给出代码问题、修改方案和手动验证步骤；用户自行修改。要求自查用例时才生成完整清单。
 - `webapp-testing` 保持独立，仅在明确点名时实测页面；普通审查不自动运行浏览器、不添加 test-id、不修改业务源码。
+- 九数云页面测试按需读取环境、场景、实时诊断和测试数据参考资料；遇到不熟悉的步骤，先查官方帮助并搜索，再结合页面核实，仍无法确定时询问用户。模拟回包与真实后端、埋点发送与实际入库分别报告。
 - `interaction-guide` 是源码交互 HTML 说明的入口，配合 `claire-require` 核对行为、配合 `archify` 展示流程；默认独立子流程、右侧详情和悬浮关联线高亮，内容覆盖与页面验证分开验收。
 - `ui` 会按目标自动加载一个或多个 UI 内部模块；明确的小任务不必加载宽泛路由上下文。
 - `bugfix` 是 `fv-web2 / fx-data-web` 的唯一缺陷交付编排器；它取代已移除的 `fx-data-web-bugfix-workflow`，并调用 `bug-memory-workflow` 与 `bug-des`，这些 skill 仍可独立使用。
@@ -47,13 +48,17 @@
 
 | 本地入口 | 上游能力 | 本次同步重点 |
 | --- | --- | --- |
-| `claire-require` | `mattpocock/skills` 的 `grill-me` 及共享依赖 `grilling` | 按决策依赖组织追问，先核实事实，再问当前可决定的问题；默认仍一次一个问题，不扩大实施授权。 |
+| `claire-require` | `mattpocock/skills` 的 `grill-me`、`grilling`；`addyosmani/agent-skills` 的 `interview-me`、`spec-driven-development` | 按依赖追问，核对目标、约束和不做什么，形成有来源的验收条件；澄清结束和确认回合均停止，不自动进入后续阶段。 |
 | `human-writing` | `KKKKhazix/human-writing`、`blader/humanizer` | 材料充分性、现实与虚构边界、文体适配、跨段模板和读者已有上下文；保留最终稿交付、代码与事实保护，不引入机械禁词。 |
 | `ui` | `ibelick/ui-skills`、`dominikmartn/hue`，保留 Taste 本地改写 | 六个模块均已核对；补齐 `DESIGN.md` 证据与导出规则、Hue 安全校验。`baseline-ui`、`improve-ui` 无需改动；Taste 未声明许可证，本次不复制新原文。 |
 
 上游仓库、文件路径、完整提交号、核对结果和本地差异记录在 [upstreams.json](upstreams.json)，版权说明见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。后续更新先定位真实上游并比较差异，不用安装命令整包覆盖融合入口，也不把“核对过”当成“所有模块都新增了内容”。
 
-本次入口格式、引用和写作审计器 7 项回归测试通过，并做了独立场景试用。未执行页面测试；Hue 的 Atlas 示例仍报告 3 条对比度警告、2 个跳过项，其中工作区缺少 `js-yaml`，不能宣称真实 YAML 解析或完整视觉验证通过。
+2026-10-22 仅增强 `claire-require`，未重新刷新其他来源。新增项单独记录核对日期。按用户选择的 B 模式：逐题澄清 → 待确认理解总结（停）→ 用户确认 → 确认版需求（停）→ 用户选择下一阶段。明确资料的只读摘要、已有规则摘录和已确认需求的直接审查，不额外启动访谈。新增规则不强制落盘 PRD、不编造量化目标，也不引入上游开发、测试或发布流程。
+
+本次增强通过入口格式、来源记录和本地引用检查，并完成 7 个独立对话场景及本地草稿授权分支的模拟验证；未对真实飞书/Figma 文档或业务页面执行测试，也未在模拟中创建草稿文件。
+
+2026-10-21 的融合更新通过入口格式、引用和写作审计器 7 项回归测试，并做了独立场景试用。该次未执行页面测试；Hue 的 Atlas 示例仍报告 3 条对比度警告、2 个跳过项，其中工作区缺少 `js-yaml`，不能宣称真实 YAML 解析或完整视觉验证通过。
 
 ## 需求、文档与计划
 
@@ -61,8 +66,10 @@
 | --- | --- |
 | `find-skills` | 本地没有合适能力时，发现和安装可复用 skill。 |
 | [`interaction-guide`](interaction-guide/SKILL.md) | 根据指定源码逐动作整理可点击 HTML 交互说明；覆盖实际文案、环境权限、置灰 tooltip、异步状态及字段级分支，支持分块补充现有文档和核对遗漏。 |
-| [`claire-require`](claire-require/SKILL.md) | 读取、对齐飞书、Figma、本地文档或文字需求，整理验收标准、状态、权限、开发注意点和待确认项；保留明确要求时的交互文档对齐及同步，正式代码问题审查交给 `claire-test`。 |
-| `feishu-doc-writer` | 创建、更新或核验飞书/Lark 文档和 wiki 页面。 |
+| [`claire-require`](claire-require/SKILL.md) | 读取、对齐飞书、Figma、本地文档或文字需求；必要时逐题核对真实目标与范围，形成可验证的验收条件并分阶段确认。保留交互文档对齐及明确要求时的同步；正式代码问题审查交给 `claire-test`。 |
+| `feishu-doc-writer` | 创建、更新或核验飞书/Lark 文档和 wiki 页面；需要技术配图时自动调用已有 `archify`，生成并校验 PNG 后通过受支持的图片路径插入，逐图读回验证。明确要求可编辑时保留原生白板路线。 |
+
+例如：`用 feishu-doc-writer 根据这份方案写开发文档，必要时配图`。架构、流程、时序、数据流和状态图会调用已有 `archify`，无需额外点名或安装 `diagram-design`。图片不能在飞书内编辑节点，本地保留规格与 HTML；若当前工具只有 URL 导入、没有本地图片上传能力，先交付本地预览并说明上传阻塞，不自动外传图片或改用 Mermaid。
 
 ## BDD 流水线
 
@@ -158,6 +165,18 @@ $fx-bdd:setup 刷新本机五个 BDD 子代理配置，文件保存在 D:\Claire
 | --- | --- | --- |
 | `life-decision-guide` | 检索《高性价比人生指南》，按成本、收益量级和证据等级回答健康、法律、社保、消费及其他具体人生决策，并注明条目出处。建议按需显式调用。 | `$life-decision-guide 替朋友担保值不值得？` |
 | `life-design` | 针对职业、生活重心或未来方向进行 6–9 轮访谈，形成三条五年路径及低成本验证行动。仅在明确调用时使用。 | `$life-design 帮我做一次人生设计，重点梳理未来五年的职业方向`。 |
+
+## 求职辅助
+
+| Skill | 适用场景 | 调用示例 |
+| --- | --- | --- |
+| [`job-search`](job-search/SKILL.md) | 基于 `ai-job-search` 的国内求职 Codex 入口，结合简历与代码证据，按产品和长期职责整理经历，分析 JD、优化中文简历及模拟面试；写明具体工作，避免空泛包装，不启用自动搜岗、投递或联系招聘方。 | `$job-search 分析这个岗位与我的经历是否匹配：<JD>` |
+
+求职工作区：`D:\Claire\papers\AAA`；上游完整参考仓库放在其 `ai-job-search` 子目录，个人资料和输出留在外层，不填入上游受 Git 跟踪的模板，也不进入 skills 仓库。优化简历时保留原文件，沿用既有格式另存结果；不安装 Bun、LaTeX 或海外招聘站 CLI。
+
+根据提交记录梳理经历时，先核对作者、时间范围和代表性代码，再按长期负责的模块与业务目的归组，不把每个迭代都拆成项目。已有答案不重复询问，只补会影响职责、方案或交付表述的关键信息。简历使用具体职责和处理办法，结合 `human-writing` 去掉抽象评价、重复总结和未经证实的收益；用户排除的经历也不出现在职业概述中。复查求职方向与经历证据是否对应，区分 AI 辅助研发和 AI 产品开发；缺口在交付说明中指出，不擅自改方向或补造经历，也不把措辞审计无命中当作简历质量通过。
+
+从下一条消息可使用：`$job-search 读取 D:\Claire\papers\AAA\简历.docx，先梳理真实经历和待补充信息，不修改原文件。` 模拟面试可说：`$job-search 根据已确认的简历和这个 JD 逐题模拟面试，重点追问项目细节。` 本地入口不等于上游 Claude 的斜杠命令；需要文件时沿用用户要求和现有文档格式，不强制两页 LaTeX 简历。
 
 ## 学习辅助
 
@@ -275,7 +294,7 @@ Codex 没有上游工作流运行器时，`claire-test` 按上游 checker、分�
 | --- | --- |
 | `bug-memory-workflow` | Bug 修复、调查或 review 前检索已确认的历史经验。 |
 | `bugfix` | `fv-web2 / fx-data-web` 的修复、review gate、Feishu、Bitbucket PR 与交付流程。 |
-| `bug-des` | 基于 issue 与 diff 生成中文 Feishu 缺陷评论或 PR 描述。 |
+| `bug-des` | 基于 issue 与 diff 生成简洁中文飞书缺陷评论或 PR 描述；通过飞书项目 MCP 发布、更新并核验评论，使用普通文本或工具支持的 Markdown，不再要求彩色富文本和浏览器排版。 |
 
 ## Git 协作
 
@@ -291,10 +310,10 @@ Codex 没有上游工作流运行器时，`claire-test` 按上游 checker、分�
 
 | Skill | 后续可能使用的能力 | 当前状态 |
 | --- | --- | --- |
-| `diagram-design` | 生成 editorial 风格的 HTML/SVG/PNG 图表；支持流程图、用户旅程、泳道图、状态图，并可导入 Mermaid、draw.io 和 Excalidraw。 | 尚未安装；需要高质量静态图表或飞书文档配图时使用 |
+| `diagram-design` | 生成 editorial 风格的 HTML/SVG/PNG 图表；支持流程图、用户旅程、泳道图、状态图，并可导入 Mermaid、draw.io 和 Excalidraw。 | 用户选择不安装；飞书技术配图复用已有 `archify` |
 | `interaction-guide` | 根据源码生成详细交互说明、HTML 模拟页面预览、流程节点与页面状态联动，以及权限、空状态、加载和失败场景。 | 已安装；交互文档和页面预览 |
 | `archify` | 生成经过校验的架构图、流程图、时序图、数据流图和生命周期图，并输出独立 HTML。 | 已安装；技术流程和结构图 |
-| `feishu-doc-writer` | 根据 Markdown 创建、更新和回读验证飞书文档或 Wiki；后续可接入图表图片插入。 | 已安装；飞书文档交付 |
+| `feishu-doc-writer` | 根据 Markdown 创建、更新和回读验证飞书文档或 Wiki；技术配图自动调用 `archify`，校验并导出 PNG，检查图片插入能力与最终资源。 | 已安装；已接入绘图调用规则，实际上传取决于当前云文档工具能力 |
 | `figma:figma-generate-diagram` | 将 Mermaid 生成可编辑的 FigJam 流程图、架构图、时序图、状态图或 ER 图。 | 已安装插件；需要 FigJam 协作时使用 |
 | `fx-bdd:bdd` | 根据产品和交互文档生成 Gherkin 用例，并接入 FXDATA BDD 执行流程。 | 已安装插件；需要可执行验收场景时使用 |
 
