@@ -1,6 +1,6 @@
 # Codex Skills
 
-更新日期：2026-11-02
+更新日期：2026-11-05
 
 个人 skill 根目录：`D:\Claire\skills`。Codex 默认发现路径 `C:\Users\Claire\.codex\skills` 是指向这里的 junction，因此本仓库是本地 skill 的唯一维护入口。
 
@@ -8,12 +8,14 @@
 
 ## Skill 目录与插件索引
 
-下表记录本地目录与插件的历史索引，部分入口尚未在当前会话加载。2026-10-30 新增 `job-search` 后核对本地 personal 共 **28** 个。此前已新增 `teach`、移除已不存在的 `21-day-self-interview`，`.system/plugin-creator` 也已移除。插件实际可用入口以当前会话发现结果为准，历史数量不代表当前可调用总数。
+2026-11-05 核对本地个人 Skill 共 **30** 个、系统 Skill 共 **5** 个。插件行保留历史索引，实际可调用入口以当前会话发现结果为准。
+
+2026-11-03 新增独立的 [`interview-coach`](interview-coach/SKILL.md)，用途与调用方式见“求职辅助”。另已安装 follow-builders，用于按需读取 AI 开发者信息源并生成摘要；安装未创建定时任务或配置推送。
 
 | 来源 | 数量 | Skill 名称 |
 | --- | ---: | --- |
-| 本地 personal | 28 | `agent-reach`、`akshare-data`、`archify`、`bug-des`、`bug-memory-workflow`、`bugfix`、`claire-require`、`claire-test`、`codex-session-timeline`、`feishu-doc-writer`<br>`find-skills`、`fixing-accessibility`、`fixing-motion-performance`、`frontend-code-review`、`fx-ui`、`human-writing`、`i-have-adhd`、`i18n-helper`、`interaction-guide`、`job-search`<br>`life-decision-guide`、`life-design`、`maintaining-windows-health`、`open-code-review-delegate`、`resolving-merge-conflicts`、`teach`、`ui`、`webapp-testing` |
-| 本地 `.system` | 4 | `imagegen`、`openai-docs`、`skill-creator`、`skill-installer` |
+| 本地 personal | 30 | `agent-reach`、`akshare-data`、`archify`、`bug-des`、`bug-memory-workflow`、`bugfix`、`claire-require`、`claire-test`、`codex-session-timeline`、`feishu-doc-writer`<br>`find-skills`、`fixing-accessibility`、`fixing-motion-performance`、`follow-builders`、`frontend-code-review`、`fx-ui`、`human-writing`、`i-have-adhd`、`i18n-helper`、`interaction-guide`、`interview-coach`、`job-search`<br>`life-decision-guide`、`life-design`、`maintaining-windows-health`、`open-code-review-delegate`、`resolving-merge-conflicts`、`teach`、`ui`、`webapp-testing` |
+| 本地 `.system` | 5 | `imagegen`、`openai-docs`、`review-agent`、`skill-creator`、`skill-installer` |
 | Dev Toolkit 插件 | 9 | `dev-toolkit:bkt`、`dev-toolkit:code-figma`、`dev-toolkit:commit`、`dev-toolkit:deploy-app`、`dev-toolkit:fetch-library-docs`、`dev-toolkit:firecrawl`、`dev-toolkit:open-bitbucket-pr`、`dev-toolkit:read-feature-input`、`dev-toolkit:worktree` |
 | FXDATA BDD 插件 | 5 | `fx-bdd:bdd`、`fx-bdd:setup`、`fx-bdd:test-scenario-planner`、`fx-data-test-skills:read-feature-input`、`fx-data-test-skills:test-plan-generator` |
 | FX Workflow 插件 | 4 | `fx-workflow:dev-doc-writer`、`fx-workflow:feishu-issue-commit`、`fx-workflow:reading-kms-confluence-pages`、`fx-workflow:work-log` |
@@ -28,7 +30,7 @@
 | 安全插件 | 1 | `defense-factory:open-defense-factory` |
 | Superpowers 插件 | 15 | `superpowers:brainstorming`、`superpowers:diagnosing-superpowers`、`superpowers:dispatching-parallel-agents`、`superpowers:executing-plans`、`superpowers:finishing-a-development-branch`、`superpowers:receiving-code-review`、`superpowers:requesting-code-review`、`superpowers:subagent-driven-development`<br>`superpowers:systematic-debugging`、`superpowers:test-driven-development`、`superpowers:using-git-worktrees`、`superpowers:using-superpowers`、`superpowers:verification-before-completion`、`superpowers:writing-plans`、`superpowers:writing-skills` |
 
-`review-agent` 未计入上述索引；系统技能是否存在及是否可调用，以本机目录和会话发现结果为准。
+本地文件存在不代表当前会话已加载；实际可调用入口以会话发现结果为准。
 
 ## 使用原则
 
@@ -171,6 +173,15 @@ $fx-bdd:setup 刷新本机五个 BDD 子代理配置，文件保存在 D:\Claire
 | Skill | 适用场景 | 调用示例 |
 | --- | --- | --- |
 | [`job-search`](job-search/SKILL.md) | 基于 `ai-job-search` 的国内求职 Codex 入口，结合简历与代码证据，按产品和长期职责整理经历，分析 JD、优化中文简历及模拟面试；写明具体工作，避免空泛包装，不启用自动搜岗、投递或联系招聘方。 | `$job-search 分析这个岗位与我的经历是否匹配：<JD>` |
+| [`interview-coach`](interview-coach/SKILL.md) | 结合真实经历和目标岗位开展逐题练习、项目追问、完整模拟、面试复盘及跨会话进度跟踪；独立安装，不替换 `job-search`。技术混合面与系统设计主要评价表达、推理和取舍，不保证技术方案正确。 | `$interview-coach 根据我的简历开展前端面试练习，重点追问项目方案和取舍，一次一题。` |
+
+`interview-coach` 来源：[noamseg/interview-coach-skill](https://github.com/noamseg/interview-coach-skill)，安装日期为 2026-11-03，来源提交为 `634a8dd8689e0420c21e5f0c8ae3cfa9e1a7ab7e`；保留上游参考文件与 [MIT 许可证](interview-coach/LICENSE)。仅补充本机工作区与个人资料存放边界，不改变既有 `job-search` 的规则。
+
+- 日常练习：`$interview-coach practice 根据已确认的简历练习项目表达，逐题追问并反馈。`
+- 完整模拟：`$interview-coach mock 做一轮前端技术与项目经历混合面试，一次一题，结束后统一复盘。` 上游完整模拟通常为 4–6 题，不在每题之间给评价。
+- 查看进度：`$interview-coach progress 查看已保存的训练进度和薄弱点，建议下一次练什么。`
+
+训练状态固定保存在 `D:\Claire\papers\AAA\coaching_state.md`，由实际训练流程创建；简历、面试记录、报告及状态归档不进入 skills 仓库。安装本身不初始化个人档案，也不自动开始训练。首次使用缺少必要资料时再补齐，不把练习评分当作录用概率，也不把模拟题称为已核实的公司真题。
 
 求职工作区：`D:\Claire\papers\AAA`；上游完整参考仓库放在其 `ai-job-search` 子目录，个人资料和输出留在外层，不填入上游受 Git 跟踪的模板，也不进入 skills 仓库。优化简历时保留原文件，沿用既有格式另存结果；不安装 Bun、LaTeX 或海外招聘站 CLI。
 
@@ -322,3 +333,10 @@ Codex 没有上游工作流运行器时，`claire-test` 按上游 checker、分�
 | Skill | 适用场景 |
 | --- | --- |
 | [`codex-session-timeline`](codex-session-timeline/SKILL.md) | 按上海日期浏览 Codex 会话内容摘要、时间与 Token 用量，并生成可直接打开的 HTML 时间轴。 |
+
+## 2026-11-05 维护记录
+
+- UI 新增 Hallmark 内部模块，为开放的新页面设计或明确的视觉重设计补充方向与审查参考；既有 Figma 和产品设计优先，不增加运行依赖。
+- 投资知识与公开讨论读取规则统一维护在 akshare-data，agent-reach 保留读取渠道入口；money-tool 项目数据仍留在业务目录。
+- claire-test 自查表明确有序操作步骤、独立预期及实际执行证据的记录格式。
+- 本机五个 BDD 子代理配置及 agents 目录联接已按要求删除；上文安装命令仅供历史参考，不代表当前配置仍存在，也不自动重新生成。

@@ -88,7 +88,32 @@
       ]
     },
     "ui": {
+      "updated_on": "2026-11-02",
       "sources": [
+        {
+          "repository": "https://github.com/Nutlope/hallmark",
+          "branch": "main",
+          "commit": "4f6a46c6dc325d40ab268c93e25c7b96676ebccd",
+          "committed_at": "2026-10-29T16:50:04Z",
+          "checked_on": "2026-11-02",
+          "version": "2.0.0",
+          "paths": [
+            "skills/hallmark/SKILL.md",
+            "skills/hallmark/references/anatomy.md",
+            "skills/hallmark/references/direction.md",
+            "skills/hallmark/references/gates.md",
+            "skills/hallmark/references/themes/index.json",
+            "skills/hallmark/references/themes/cobalt.md",
+            "skills/hallmark/references/themes/vellum.md",
+            "skills/hallmark/references/themes/werkstatt.md"
+          ],
+          "local_path": "ui/modules/hallmark/module.md",
+          "license": "MIT",
+          "license_path": "LICENSE",
+          "status": "selectively-adapted",
+          "applied": "Automatic supplement for open new-page design and explicit visual redesign; task-led page anatomy, truthful material inventory, six adapted theme directions, and evidence-aware template-reflex review.",
+          "note": "Not a full Hallmark installation. No upstream scripts, previews, hooks, photo catalog, generated styles or runtime dependencies bundled. Theme summaries are locally adapted references, not exact presets."
+        },
         {
           "repository": "https://github.com/ibelick/ui-skills",
           "branch": "main",
@@ -152,7 +177,9 @@
         }
       ],
       "local_overrides": [
-        "Six embedded modules behind one ui entry; no new modules, runtime dependencies or standalone skills.",
+        "Seven embedded modules behind one ui entry; Hallmark is internal, with no new runtime dependencies or standalone skills.",
+        "Hallmark supplements open new-page design and explicit visual redesign automatically; binding Figma or product design takes precedence, and narrow fixes keep their existing route.",
+        "Hallmark themes and template-reflex checks are advisory references; no random theme dealing, mandatory word/section budgets, CSS stamps, logs, automatic reviewers or upstream render workflow.",
         "Preserve repository framework, primitives, installed icons and user language; new files and caches on D: only.",
         "Zero letter spacing and no viewport/container-unit font scaling, including in examples used for generation.",
         "improve-ui is read-only; browser/page tests require an explicit webapp-testing request.",

@@ -49,7 +49,7 @@ Ask only about uncertainty that changes execution or acceptance, and continue in
 
 ## Deliver
 
-- For self-check cases, default to one table with three columns: 编号、描述（场景＋预期）、执行状态. Leave new execution statuses blank and preserve existing records. Keep source locations, analysis notes, and coverage ledgers out of the default table.
+- For self-check cases, default to one table with three columns: 编号、描述（操作步骤＋预期）、执行状态. Use an ordered list for operation steps and a separate expected-result paragraph in the description cell. Use 通过 ✅、失败 ❌、待确认 ⚠️ for recorded verdicts; passed cells need no links or account details. Failed and pending-confirmation cells include the observation/question, access account with verified permissions, and actual screenshot evidence. Follow `references/self-check.md` for missing evidence and cloud-table formatting. Leave new execution statuses blank and preserve existing records. Keep source locations, analysis notes, and coverage ledgers out of the default table.
 - Expand a full self-check analysis report only when the user explicitly requests full analysis or a full analysis report. Answer requests for one item's evidence, coverage, or risk within that scope. “完整用例” and “全部场景” still use the concise table and do not reduce applicable coverage. Follow any explicitly requested format instead.
 - For an audit, lead with evidenced code problems and concrete proposed changes, then verification steps and coverage gaps. An audit request does not authorize code changes or page execution.
 

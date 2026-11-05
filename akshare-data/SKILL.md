@@ -9,6 +9,20 @@ description: Use when obtaining financial data with AKShare or analyzing A-share
 
 **不适用于**：高可靠生产行情源、逐笔级 tick 数据、需要强 SLA 的实时交易系统。纯 A 股历史行情或季频财务指标也可评估 `baostock-data`。
 
+## 个人投资知识入口
+
+基金、股票、ETF、持仓、市场和板块研究的知识统一维护在本 skill。每次分析前，先读 [投资研究规则](references/investment-research.md)，再读 `references/personal-knowledge/` 下的全部 Markdown（包括子目录）；先评估仓位、重复暴露和回撤风险，再判断趋势。
+
+| 资料 | 用途 |
+| --- | --- |
+| [趋势与筛选知识](references/personal-knowledge/data.md) | 价格结构、均线、量价、形态、基本面筛选和关注的 UP 主名单 |
+| [持仓风控规则](references/personal-knowledge/risk-rules.md) | 仓位集中、回撤与持有、减仓、加仓条件 |
+| [信息源清单](references/personal-knowledge/links.md) | 按本次问题访问相关来源，核对消息日期与原始出处 |
+
+- 在 `D:\work\2026\money-tool` 内工作时，还须遵守 [money-tool 项目研究规则](references/money-tool-project-rules.md)；其中 `data/` 和 `resource/` 均相对该项目根目录。
+- money-tool 的 `resource/` 是指向 `references/personal-knowledge/` 的目录联接，知识正文只在本 skill 维护。持仓、观察名单、设置和行情快照仍在 `D:\work\2026\money-tool\data`；这些是业务数据，不能当成实时持仓或知识正文。
+- 需要雪球等公开讨论时，结合 [agent-reach](../agent-reach/SKILL.md)，按 [公开讨论与雪球读取规则](references/public-discussion.md) 使用已接通的后端。
+
 ## 本机入口与投资研究
 
 - 已安装 AKShare `1.19.1`；运行环境固定为 `D:\Claire\tools\investment-research\.venv`，不要用系统 Python 或全局 pip 安装依赖。
@@ -19,7 +33,7 @@ rtk proxy D:\Claire\tools\investment-research\.venv\Scripts\python.exe -B D:\Cla
 ```
 
 - 脚本与输出放在 `D:\Claire\temp\<任务名>`；完成后清理本次无需保留的文件，不把持仓和账户信息写入本仓库。
-- 分析已有持仓、主动筛选标的或给操作建议时，先读 [投资研究规则](references/investment-research.md)。按用户需要区分几天以内的短线与几周到几个月的波段；结合讨论时调用 `agent-reach`，不把社交热度当作行情证据。
+- 按用户需要区分几天以内的短线与几周到几个月的波段；结合讨论时调用 `agent-reach`，不把社交热度当作行情证据。
 - 本地参考文档已经修正 `fund_open_fund_info_em(symbol=...)`；不确定的接口仍以当前安装签名和官方文档为准，不机械复制旧示例。
 - 2026-10-15 的安装验收中，东方财富股票/ETF日线接口连接中断；新浪备用接口 `stock_zh_a_daily(symbol="sh600519", ...)`、`fund_etf_hist_sina(symbol="sh510300")` 和基金净值 `fund_open_fund_info_em(symbol="000001", ...)` 均返回非空数据，最新日期为 2026-10-14。这是一次连通性快照，不代表永久可用或盘中实时。日后先检查数据日期和字段，失败再按实际来源降级；新浪 ETF 日线无复权参数，不直接用于未经分红/拆分核验的收益计算。
 

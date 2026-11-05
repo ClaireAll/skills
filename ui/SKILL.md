@@ -14,11 +14,16 @@ Route a UI task to the smallest internal module set without asking the user to c
 | UI goal is broad, unclear, or spans multiple surfaces | `modules/ui-skills-root/module.md`, then the matching modules below |
 | Fast cleanup of spacing, hierarchy, typography, or small layout problems | `modules/baseline-ui/module.md` |
 | Build or materially rework a frontend experience with a deliberate visual direction | `modules/design-taste-frontend/module.md` |
+| Build a new page or explicitly redesign an existing page, with room to choose its visual direction | `modules/design-taste-frontend/module.md`, then `modules/hallmark/module.md` |
 | Create or update a product `DESIGN.md` from source or a public website | `modules/create-design-md/module.md` |
 | Create, remix, or apply a named design-language skill | `modules/hue/module.md` |
+| Explore Hallmark visual directions or use a Hallmark theme as a page reference | `modules/hallmark/module.md` (add design-taste only for implementation) |
 | Read-only UI audit, design-drift investigation, or implementation-plan handoff | `modules/improve-ui/module.md` |
+| Read-only review specifically of template-like / AI-generated appearance, or a Hallmark audit | `modules/improve-ui/module.md`, then the review section of `modules/hallmark/module.md` |
 
-When multiple rows match, load every listed module in the order that preserves its boundary. Examples: broad UI redesign uses the root router plus design-taste; repository design-system documentation plus a redesign uses create-design-md before design-taste; a named design-language request uses Hue alone unless another outcome is explicitly requested.
+When multiple rows match, load every listed module in the order that preserves its boundary. Examples: broad UI redesign uses the root router, design-taste and Hallmark; repository design-system documentation plus a redesign uses create-design-md before design-taste; a named design-language request uses Hue alone unless another outcome is explicitly requested.
+
+Hallmark is an automatic internal supplement for new page design and explicit visual redesign; the user need not name it. If Figma, an applicable `DESIGN.md`, or the established product system already determines the design, follow that evidence and skip Hallmark theme selection and structural invention. Narrow component changes and ordinary fixes do not activate Hallmark. An explicit Hallmark reference alone does not authorize a redesign. A Hallmark theme reference uses the internal module, not Hue skill creation; a direction-only request stays advice-only.
 
 ## Route Rules
 

@@ -22,6 +22,9 @@ continue to apply.
 - `ui/modules/hue`: `dominikmartn/hue`.
   Copyright (c) 2026 Dominik Martin
   The original [Hue license](ui/modules/hue/LICENSE) is also retained.
+- `ui/modules/hallmark`: selected design instructions and theme descriptions
+  from `Nutlope/hallmark`, adapted for the local UI workflow.
+  Copyright (c) 2026 Hallmark contributors
 
 The following MIT license applies to the above upstream contributions:
 
