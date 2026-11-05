@@ -17,7 +17,6 @@
 | 本地 personal | 30 | `agent-reach`、`akshare-data`、`archify`、`bug-des`、`bug-memory-workflow`、`bugfix`、`claire-require`、`claire-test`、`codex-session-timeline`、`feishu-doc-writer`<br>`find-skills`、`fixing-accessibility`、`fixing-motion-performance`、`follow-builders`、`frontend-code-review`、`fx-ui`、`human-writing`、`i-have-adhd`、`i18n-helper`、`interaction-guide`、`interview-coach`、`job-search`<br>`life-decision-guide`、`life-design`、`maintaining-windows-health`、`open-code-review-delegate`、`resolving-merge-conflicts`、`teach`、`ui`、`webapp-testing` |
 | 本地 `.system` | 5 | `imagegen`、`openai-docs`、`review-agent`、`skill-creator`、`skill-installer` |
 | Dev Toolkit 插件 | 9 | `dev-toolkit:bkt`、`dev-toolkit:code-figma`、`dev-toolkit:commit`、`dev-toolkit:deploy-app`、`dev-toolkit:fetch-library-docs`、`dev-toolkit:firecrawl`、`dev-toolkit:open-bitbucket-pr`、`dev-toolkit:read-feature-input`、`dev-toolkit:worktree` |
-| FXDATA BDD 插件 | 5 | `fx-bdd:bdd`、`fx-bdd:setup`、`fx-bdd:test-scenario-planner`、`fx-data-test-skills:read-feature-input`、`fx-data-test-skills:test-plan-generator` |
 | FX Workflow 插件 | 4 | `fx-workflow:dev-doc-writer`、`fx-workflow:feishu-issue-commit`、`fx-workflow:reading-kms-confluence-pages`、`fx-workflow:work-log` |
 | Figma 插件 | 14 | `figma:figma-code-connect`、`figma:figma-create-new-file`、`figma:figma-design-to-code`、`figma:figma-generate-design`、`figma:figma-generate-diagram`、`figma:figma-generate-library`、`figma:figma-generative-plugins`<br>`figma:figma-implement-motion`、`figma:figma-shaders`、`figma:figma-swiftui`、`figma:figma-use`、`figma:figma-use-figjam`、`figma:figma-use-motion`、`figma:figma-use-slides` |
 | 文档与表格能力 | 6 | `documents:documents`、`pdf:pdf`、`presentations:Presentations`、`spreadsheets:Spreadsheets`、`spreadsheets:excel-live-control`、`template-creator:template-creator` |
@@ -72,65 +71,6 @@
 | `feishu-doc-writer` | 创建、更新或核验飞书/Lark 文档和 wiki 页面；需要技术配图时自动调用已有 `archify`，生成并校验 PNG 后通过受支持的图片路径插入，逐图读回验证。明确要求可编辑时保留原生白板路线。 |
 
 例如：`用 feishu-doc-writer 根据这份方案写开发文档，必要时配图`。架构、流程、时序、数据流和状态图会调用已有 `archify`，无需额外点名或安装 `diagram-design`。图片不能在飞书内编辑节点，本地保留规格与 HTML；若当前工具只有 URL 导入、没有本地图片上传能力，先交付本地预览并说明上传阻塞，不自动外传图片或改用 Mermaid。
-
-## BDD 流水线
-
-| Skill | 适用场景 |
-| --- | --- |
-| `fx-bdd:bdd`（Codex 插件） | 官方 BDD 流水线执行入口，负责初始化、`doctor`、需求到可执行场景的完整编排。首次安装或更新插件后必须新开 Codex 会话，再以 `$fx-bdd:bdd` 调用。 |
-| `fx-bdd:setup` | 初始化或刷新 Codex 的五个 BDD 子代理配置；安装或升级后执行，配置生成后新开会话加载。 |
-| `fx-bdd:test-scenario-planner` | BDD 内的测试场景树与覆盖台账生成器，负责来源、需求、经验规则、草稿、反向核对及脚本校验；随 `fx-bdd` 安装，不替代日常 `claire-test`。 |
-| `dev-toolkit:read-feature-input` | 新版 BDD Phase 0 的输入读取依赖，负责飞书文档、画板文字层级与 Figma 备注等材料；仅由明确的 BDD 任务调用或用户明确点名时使用。 |
-
-依据[接入 BDD 流水线执行手册](https://fanruan-x.feishu.cn/wiki/PrmZwZyTiihXjpkrBSscytqunZc)及上游源码于 2026-10-12 核对：当前安装的 `fx-bdd` 为 `1.1.10`，配套 `dev-toolkit 1.5.4`。Codex 不会自动解析这项插件间依赖，必须显式安装并确认两个插件都为 `installed, enabled`。
-
-手册中“Codex 不能注册 agent”的说明早于本次插件更新。`fx-bdd 1.1.10` 新增 `setup` 和注册脚本：本机已将五份配置生成到 `D:\Claire\agents`，`C:\Users\Claire\.codex\agents` 是指向该目录的 junction。代理名称为 `fx-bdd-feature-reader`、`fx-bdd-test-planner`、`fx-bdd-coverage-critic`、`fx-bdd-convention-critic`、`fx-bdd-impact-critic`；需要新会话加载。环境支持具名代理时按这些名称调用，否则使用独立通用子代理读取插件中的对应定义，不能由主流程代替独立审计。升级后从实际安装副本重新运行注册脚本。
-
-`fx-data-test-skills 0.4.0` 继续保留，但不再是新版 `fx-bdd` 的输入读取依赖，不要用它替代 `dev-toolkit`。本次三个 BDD 相关插件均已刷新安装副本并逐文件核对上游，旧测试插件仍为 `0.4.0`。安装工具同时刷新了同市场的 `fx-workflow` 到 `4.0.1`，该版本移除了 `feishu-mcp-reauth`。
-
-新版 BDD 输入读取与测试计划回填优先使用已安装的 `lark-cli`，不可用时回退到飞书 MCP；画板读取需要文字和层级。两种工具的图表及提醒语法不同，按对应参考文件执行。本机未安装 `lark-cli`，MCP 连接或授权失效时，按全局连接恢复规则协助用户重连或在浏览器授权，验证后继续原任务。
-
-这两个插件保留，但只在用户明确要求 BDD 流程或点名其 BDD 入口时调用。普通需求读取、辅助开发、源码审查、自查用例生成和页面测试不调用 `fx-bdd:*` 或 `fx-data-test-skills:*`；其通用关键词触发说明不覆盖该偏好。
-
-`dev-toolkit:read-feature-input` 也不增加日常入口，普通需求仍走 `claire-require`。`dev-toolkit` 是完整官方插件，随依赖安装另带八个研发工具，上方索引已逐一列出。
-
-### Codex 安装与更新
-
-更新源是保留 Git remote 的 D 盘本地 clone：`D:\Claire\cache\codex-marketplaces\skill-manager` 与 `D:\Claire\cache\codex-marketplaces\fx-data-test-skills`；Codex 以本地 marketplace 注册它们，避免再次向 C 盘下载快照。当前源码提交分别为 `571481f4f25f84d4a5b78a4edf3f25cb50d9bd9e` 与 `89c190695e4538fba424772392096296512d9d9c`。
-
-插件实际缓存位于 `D:\Claire\cache\codex-plugins\skill-manager` 和 `D:\Claire\cache\codex-plugins\fx-data-test-skills`；对应的 `C:\Users\Claire\.codex\plugins\cache\<marketplace>` 仅为 junction。后续更新先拉源码，再刷新安装副本；本地 marketplace 不通过 `marketplace upgrade` 自动拉取 Git：
-
-```powershell
-rtk git -C D:/Claire/cache/codex-marketplaces/skill-manager pull --ff-only
-rtk proxy codex plugin add dev-toolkit@skill-manager
-rtk proxy codex plugin add fx-bdd@skill-manager
-rtk proxy codex plugin list -m skill-manager --json
-
-rtk git -C D:/Claire/cache/codex-marketplaces/fx-data-test-skills pull --ff-only
-rtk proxy codex plugin add fx-data-test-skills@fx-data-test-skills
-rtk proxy codex plugin list -m fx-data-test-skills --json
-```
-
-安装或更新后新开会话，在业务仓库中使用完整名称：
-
-```text
-$fx-bdd:bdd 对当前仓库做 doctor 体检
-$fx-bdd:bdd 初始化当前仓库的 BDD 档案
-$fx-bdd:bdd 按这些需求开展 BDD，先提交用例给我评审
-$fx-bdd:setup 刷新本机五个 BDD 子代理配置，文件保存在 D:\Claire\agents
-```
-
-不要只写 `$fx-bdd` 或 `$bdd`。本次更新了插件及依赖并完成子代理初始化，没有对业务仓库运行 BDD 初始化、doctor 或业务测试。六个 BDD 相关 Skill 与五份代理配置通过基础校验，注册脚本的四项测试通过；文件生成不代表当前会话已加载新能力。
-
-### 接入与执行边界
-
-- 团队独立 harness 必须先在 Bitbucket 网页 fork `FXDATA/bdd-harness`，再 clone 自己的 fork；`origin` 指向个人空间，`upstream` 指向团队上游。更新上游用 `--ff-only`，用例 PR 源与目标保持同线；已有改动或分支歧义不能直接切分支。
-- 产品仓与 harness 的开发线按各仓 `docs/bdd/profile.md` 核对，不把手册的某个项目映射直接套到所有仓库。跨仓路径写入 `docs/bdd/local.json`，必须使用绝对路径，并通过 `.git/info/exclude` 排除。
-- 仅在明确要求接入时生成 `profile.md` 与 `domain-dimensions.md`，探测结果交用户确认；领域库先建骨架，不编造规则。`test-plan/`、`design.md`、`fixtures.md` 入库，`progress.md`、`inputs/`、`audits/` 按官方规则排除。
-- 独立 harness 的 `.feature`、step、helper 和 Playwright 配置不复制到产品仓。完整 BDD 可能按仓库锚点契约补充测试属性；普通 `claire-test` 与 `webapp-testing` 不因此获得修改业务代码的权限。
-- harness 的依赖与 Chromium revision 按其锁定版本安装，浏览器缓存设置在 D 盘；通过 Playwright 报告的安装路径验证实际就位，不能只看安装退出码，也不能为运行成功随意改依赖版本。
-- 开跑前确认被测平台、账号与测试数据就绪。doctor 核对档案、跨仓环境及依赖能力，不跑业务用例；MCP 工具可见不等于鉴权有效，必须区分未暴露、已暴露未验证与实际调用失败。
-- Phase 2 保留人工评审卡点；默认会把测试计划回填飞书并创建审核待办，不需要回填时提前说明。自主续跑不自行 commit 或 push；跨仓改动分别提交，产品 PR 链接对应的用例 PR。
 
 ## 飞书与内部工作流
 
@@ -339,4 +279,4 @@ Codex 没有上游工作流运行器时，`claire-test` 按上游 checker、分�
 - UI 新增 Hallmark 内部模块，为开放的新页面设计或明确的视觉重设计补充方向与审查参考；既有 Figma 和产品设计优先，不增加运行依赖。
 - 投资知识与公开讨论读取规则统一维护在 akshare-data，agent-reach 保留读取渠道入口；money-tool 项目数据仍留在业务目录。
 - claire-test 自查表明确有序操作步骤、独立预期及实际执行证据的记录格式。
-- 本机五个 BDD 子代理配置及 agents 目录联接已按要求删除；上文安装命令仅供历史参考，不代表当前配置仍存在，也不自动重新生成。
+- 2026-11-05 已卸载 fx-bdd、fx-data-test-skills，移除旧测试插件的专属市场注册和 BDD 使用指引；五个子代理配置及 agents 联接已删除。业务仓库历史用例与其他插件保留。
