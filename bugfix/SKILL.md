@@ -1,6 +1,6 @@
 ---
 name: bugfix
-description: Use when a task in D:\work\fv-web2 or D:\work\fx-data-web contains a Feishu Project issue/detail URL or work item key, or when fixing, investigating, reviewing, commenting on, committing, or delivering a bug in those repositories.
+description: Use when a task in D:\work\fv-web2 or D:\work\fx-data-web contains a Feishu Project issue/detail URL or work item key, or when fixing, investigating, reviewing, commenting on, committing, or delivering a bug in those repositories. Also use for writing, publishing, or updating their Chinese bug descriptions, Feishu comments, or bug-fix PR descriptions.
 ---
 
 # Bugfix
@@ -11,7 +11,7 @@ Use this skill as the repository-specific Bug-fix conductor for `D:\work\fv-web2
 
 Fix and validate in the current checkout on its current branch. Keep Bug edits in a dedicated change group so existing and unrelated user changes remain separate and visible. If neither the plugin UI/tools nor its documented JSON protocol is usable, continue with the recorded dirty-file baseline and exact Bug diff; do not block the work or overwrite protected changes. Commit and deliver the Bug from a dedicated PR branch, then clean the Bug edits and change group, when present, from the original checkout after the PR is verified.
 
-**REQUIRED SUB-SKILLS:** Use `bug-memory-workflow` before code edits and `bug-des` for Chinese Feishu/PR content.
+**REQUIRED INTERNAL MODULE:** Read [the memory module](modules/memory/module.md) before diagnosis or code edits and follow its required diagnosis/verification dependencies; search existing history before edits and record only verified fixes. For Chinese bug descriptions, Feishu comments and bug-fix PR descriptions, read [the description module](modules/description/module.md) and its template before drafting; it retains the required `human-writing` rewrite step. Description-only requests do not authorize code edits or delivery.
 
 ## Immediate Issue-Link Gate
 
@@ -39,7 +39,7 @@ When the latest user message introduces a primary Feishu Project `issue/detail` 
 - A change group is not active merely because it exists. After every Bug edit batch and before validation or reporting, compare each full hunk from `git diff HEAD --unified=3` with the repository Git directory's `change-groups.json`; every Bug hunk must belong to the active group. If the UI cannot assign it, follow the plugin README's JSON protocol: preserve other groups, write the complete hunk, and atomically replace the JSON file. Refresh and recheck. Leave protected baseline changes, unrelated changes, and explicitly generated files outside the group. UI/tool absence alone is not grounds to skip the documented protocol.
 - Inspect callers before changing shared behavior; move the fix to a shared point only when that change is necessary for the confirmed Bug, not merely because a sibling path has another defect.
 - Before editing code, explain the evidenced cause, approach, and scope. Obtain direction confirmation if it has not already been given; a reply such as “修复” or “继续修复” after that explanation confirms the described direction. Do not ask again unless a new choice materially changes behavior, risk, or cost.
-- Do not stage, commit, push, comment on Feishu, or create a PR before the user approves that delivery action.
+- Do not stage, commit, push, comment on Feishu, or create a PR before the user approves the relevant action. A request to submit a PR authorizes the PR delivery, but does not override a higher-priority rule requiring explicit authorization to send a Feishu comment.
 - If Bug edits overlap protected user changes and cannot be separated safely into the Bug change group or exact ungrouped diff, stop before overwriting them.
 - Use repository scripts from `package.json` and prefer focused checks such as `pnpm eslint:files <path>`.
 - Run `ponytail:ponytail` for every touched or directly involved source file, keeping only scoped simplifications.
@@ -78,7 +78,7 @@ Use the confirmed scope above. Ask one concise question only when the direction 
 1. Complete the Immediate Issue-Link Gate and confirm the repo is supported.
 2. Record the current branch, `HEAD`, `git status`, dirty paths, and listening-port baseline without altering them.
 3. Create or select the active Bug change group and record its name or identifier. If UI/tools are unavailable, use the documented JSON protocol; use baseline and exact-diff isolation only if that protocol is also unavailable.
-4. Use `bug-memory-workflow`: search `D:\Claire\memory\bug-fix.md` by work item, repo, package, page, component, API, error, symptom, data key, and likely file names; read only matching entries.
+4. Read [the memory module](modules/memory/module.md) and its entry reference: search `D:\Claire\memory\bug-fix.md` by work item, repo, package, page, component, API, error, symptom, data key, and likely file names; read only matching entries.
 5. Read relevant code, inspect callers, and identify the root cause or narrow behavior gap.
 6. 向用户说明 **Bug 原因**、**修改思路** 和 **修改方向**，按「修复范围与展示依据」锁定边界。复用已有确认；仅在方向尚未确认或存在新的实质选择时询问并等待，不重复要求确认。
 7. 用户确认后，才在当前分支小范围修改，遵循现有模式，并将每个 Bug 代码改动放入 active change group。若 UI/tools 不可用，按插件 JSON 协议归组；只有协议也不可用时，才持续对照已记录基线并避开受保护路径和 hunk。
@@ -97,7 +97,7 @@ The Bug changes already live in the current checkout; do not transfer or reapply
 2. Run the Change Group Closure Gate again. Confirm every Bug hunk is assigned to the active group when present; without a group, compare the exact Bug diff with the recorded baseline and confirm unrelated changes remain untouched.
 3. Run focused verification in the current checkout.
 4. Run the Runtime Cleanup Gate and report the branch, change-group status, files, preserved user changes, and result.
-5. Once verified, update the existing entry in `D:\Claire\memory\bug-fix.md` rather than creating a duplicate.
+5. Follow [the memory module](modules/memory/module.md) after verification: update the existing entry in `D:\Claire\memory\bug-fix.md` rather than creating a duplicate.
 
 ## Concurrent Bugs
 
@@ -133,8 +133,8 @@ Run only after `submit`, `提交`, or equivalent delivery approval.
 1. Recheck the original branch, recorded pre-Bug `HEAD`, active Bug change group or baseline-based isolation, intended files, protected changes, `git status`, and remote.
 2. Resolve the exact issue title and work item key; an explicit key wins, otherwise use `f-<numeric issue ID>`.
 3. Create or reuse the Commit-stage temporary worktree and dedicated `codex/bugfix/<work-item-key>` source branch. Apply and commit only the active Bug change group if present; otherwise transfer only the verified Bug paths or hunks relative to the recorded baseline.
-4. Use `bug-des` to build the Chinese Feishu comment and PR description from issue context and the dedicated branch diff.
-5. Post the Feishu comment and push the dedicated source branch.
+4. Read [the description module](modules/description/module.md) and its template to build the Chinese Feishu comment and PR description from issue context and the dedicated branch diff.
+5. Publish and read back the Feishu comment when sending it is authorized by the user's instructions and higher-priority rules. If a higher-priority rule requires an explicit instruction to send a message and none was given, prepare the exact comment and ask the user to authorize posting it; do not treat automatic skill activation as that authorization. Record the comment as pending and continue independent authorized PR work. Push the dedicated source branch.
 6. Resolve the PR destination separately from the active `bkt` context. Inspect `git remote -v` and `bkt context list`, then confirm the source and destination repositories with `bkt repo view`. Never assume the active context is the destination: it may point to a personal fork. In the current `D:\work\fv-web2` setup, `origin` is `~CLAIRE.TANG/fx-web2`, while the upstream destination is `FXDATA/fx-data-web`; create a cross-repository PR with explicit `--project FXDATA --repo fx-data-web --source-project '~CLAIRE.TANG' --source-repo fx-web2`. Verify this mapping against the live remotes and contexts each time. Do not create a PR from the personal repository back into itself.
 7. Resolve the target branch from the rules below (`release-x` -> `release`; `feature-x` -> `feature`). Before PR creation, read [references/bitbucket-reviewers.md](references/bitbucket-reviewers.md), query effective reviewers with the real source/target repository IDs and refs, and exclude the authenticated PR author. Do not substitute an unrelated branch pair or reviewer-group list for the actual PR conditions.
 8. Create the PR through `bkt` with explicit source and destination repository arguments and repeatable `--reviewer <username>` flags for the verified set. On Data Center, do not rely on `--with-default-reviewers`: fork refs may be resolved in the destination and the author may not be excluded. Verify the PR URL, source project/repository/branch, destination project/repository/target, title, description, reviewer list, and remote commit using `bkt pr view` with explicit destination arguments.
@@ -142,13 +142,13 @@ Run only after `submit`, `提交`, or equivalent delivery approval.
 10. Only after verification succeeds, remove this Bug's edits from the original checkout through its change group when present. Without a group, revert only the verified Bug paths or hunks relative to the recorded baseline. Preserve every protected or unrelated hunk, then delete the change group if present.
 11. Remove the temporary delivery worktree and delete the local delivery branch after confirming the remote branch still backs the PR. Verify the original branch, `HEAD`, and protected changes match the pre-delivery state.
 12. Run the Runtime Cleanup Gate. Prefix the existing task title with `✅` without otherwise rewriting it, using the same native-tool-or-CLI fallback from the Immediate Issue-Link Gate.
-13. Report the commit, Feishu comment, remote source branch, PR, reviewers, verification, original-checkout cleanup, group deletion when applicable, and runtime cleanup.
+13. Report the commit, Feishu comment status, remote source branch, PR, reviewers, verification, original-checkout cleanup, group deletion when applicable, and runtime cleanup. If the required comment is pending, report delivery as incomplete, identify the precise reason, and provide the prepared comment for approval; do not imply that PR creation completed every delivery step.
 
 If push, PR creation, or verification fails, keep the original Bug edits, change group when present, delivery worktree, and local branch for a safe retry; do not claim cleanup.
 
 ## Description Stage
 
-Use `bug-des` and base the text on the issue context and the active change group's scoped diff, or the verified ungrouped Bug diff.
+Read [the description module](modules/description/module.md) and its template before drafting; base the text on the issue context and the active change group's scoped diff, or the verified ungrouped Bug diff.
 
 ## Bitbucket Rules
 

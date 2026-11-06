@@ -1,17 +1,12 @@
----
-name: bug-des
-description: Use when writing, publishing, or updating a Chinese Feishu bug comment, bug description, or bug-fix PR description for fx-data-web or fv-web2.
----
-
 # Bug Description Writer
 
-Use `assets/template.txt` as the only output structure for Feishu bug comments and matching bug-fix PR descriptions. Facts control wording.
+Use `template.txt` as the only output structure for Feishu bug comments and matching bug-fix PR descriptions. Facts control wording.
 
 **REQUIRED SUB-SKILL:** After the factual draft is complete, use `human-writing` in rewrite mode to make the Chinese read naturally. It may improve expression only; it must not add, remove, or reinterpret facts.
 
 ## Final Output Contract
 
-Start every draft by copying the structure in `assets/template.txt`. Do not draft headings from memory or borrow another bug/PR template.
+Start every draft by copying the structure in `template.txt`. Do not draft headings from memory or borrow another bug/PR template.
 
 Keep `原因` and `改动内容` as the first two section headings, in that order. Select the final section from the evidence:
 
@@ -136,12 +131,12 @@ Replace every recognized standalone item id found in a source commit or its cont
    Do not invent a risk or use generic labels such as `逻辑问题`, `交互问题`, or `性能问题` merely to fill the section.
 4. Humanize the factual draft with `human-writing`:
    - Treat it as Chinese technical rewrite work with compression, not expansion.
-   - Give it only the completed body text after source-artifact references have been removed. The selected headings, cause/source order, bullets, links, and spacing remain under `bug-des` control.
+   - Give it only the completed body text after source-artifact references have been removed. The selected headings, cause/source order, bullets, links, and spacing remain under this module’s control.
    - Keep the tone concise, professional, and direct. Prefer one sentence per change, risk, or affected-scenario bullet and natural sentence rhythm.
    - Preserve every fact, uncertainty, negation, commit detail, Markdown link, complete change item, and risk or affected scenario.
    - Remove repetition, background, causal claims not in the facts, verification claims, reassurance, personal voice, marketing language, source-file information, and unnecessary transition phrases without changing the certainty level.
 5. Run the final evidence gate:
-   - Check the heading branch against `assets/template.txt`: `原因` then `改动内容`, followed by at most one of `可能导致的问题` or `影响的场景` according to the evidence.
+   - Check the heading branch against `template.txt`: `原因` then `改动内容`, followed by at most one of `可能导致的问题` or `影响的场景` according to the evidence.
    - Remove every HTML comment and placeholder.
    - Confirm `原因` states the Bug cause before source commits and uses the exact pending wording when evidence is missing.
    - Confirm every recognized item id in source attribution is linked correctly.

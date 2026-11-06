@@ -8,13 +8,13 @@
 
 ## Skill 目录与插件索引
 
-2026-11-06 核对本地个人 Skill 共 **29** 个、系统 Skill 共 **5** 个。插件行保留历史索引，实际可调用入口以当前会话发现结果为准。
+2026-11-06 核对本地个人 Skill 共 **27** 个、系统 Skill 共 **5** 个。插件行保留历史索引，实际可调用入口以当前会话发现结果为准。
 
 2026-11-03 新增独立的 [`interview-coach`](interview-coach/SKILL.md)，用途与调用方式见“求职辅助”。2026-11-06 已卸载 `follow-builders` AI 动态摘要 Skill。
 
 | 来源 | 数量 | Skill 名称 |
 | --- | ---: | --- |
-| 本地 personal | 29 | `agent-reach`、`akshare-data`、`archify`、`bug-des`、`bug-memory-workflow`、`bugfix`、`claire-require`、`claire-test`、`codex-session-timeline`、`feishu-doc-writer`<br>`find-skills`、`fixing-accessibility`、`fixing-motion-performance`、`frontend-code-review`、`fx-ui`、`human-writing`、`i-have-adhd`、`i18n-helper`、`interaction-guide`、`interview-coach`、`job-search`<br>`life-decision-guide`、`life-design`、`maintaining-windows-health`、`open-code-review-delegate`、`resolving-merge-conflicts`、`teach`、`ui`、`webapp-testing` |
+| 本地 personal | 27 | `agent-reach`、`akshare-data`、`archify`、`bugfix`、`claire-require`、`claire-test`、`codex-session-timeline`、`feishu-doc-writer`<br>`find-skills`、`fixing-accessibility`、`fixing-motion-performance`、`frontend-code-review`、`fx-ui`、`human-writing`、`i-have-adhd`、`i18n-helper`、`interaction-guide`、`interview-coach`、`job-search`<br>`life-decision-guide`、`life-design`、`maintaining-windows-health`、`open-code-review-delegate`、`resolving-merge-conflicts`、`teach`、`ui`、`webapp-testing` |
 | 本地 `.system` | 5 | `imagegen`、`openai-docs`、`review-agent`、`skill-creator`、`skill-installer` |
 | Dev Toolkit 插件 | 9 | `dev-toolkit:bkt`、`dev-toolkit:code-figma`、`dev-toolkit:commit`、`dev-toolkit:deploy-app`、`dev-toolkit:fetch-library-docs`、`dev-toolkit:firecrawl`、`dev-toolkit:open-bitbucket-pr`、`dev-toolkit:read-feature-input`、`dev-toolkit:worktree` |
 | FX Workflow 插件 | 4 | `fx-workflow:dev-doc-writer`、`fx-workflow:feishu-issue-commit`、`fx-workflow:reading-kms-confluence-pages`、`fx-workflow:work-log` |
@@ -40,7 +40,7 @@
 - 九数云页面测试按需读取环境、场景、实时诊断和测试数据参考资料；遇到不熟悉的步骤，先查官方帮助并搜索，再结合页面核实，仍无法确定时询问用户。模拟回包与真实后端、埋点发送与实际入库分别报告。
 - `interaction-guide` 是源码交互 HTML 说明的入口，配合 `claire-require` 核对行为、配合 `archify` 展示流程；默认独立子流程、右侧详情和悬浮关联线高亮，内容覆盖与页面验证分开验收。
 - `ui` 会按目标自动加载一个或多个 UI 内部模块；明确的小任务不必加载宽泛路由上下文。
-- `bugfix` 是 `fv-web2 / fx-data-web` 的唯一缺陷交付编排器；它取代已移除的 `fx-data-web-bugfix-workflow`，并调用 `bug-memory-workflow` 与 `bug-des`，这些 skill 仍可独立使用。
+- `bugfix` 是 `fv-web2 / fx-data-web` 的唯一缺陷交付编排器；它取代已移除的 `fx-data-web-bugfix-workflow`，内置 memory 模块，负责修复前检索与验证后记录；中文评论与 PR 描述规则已迁入其内部 description 模块，不再保留独立的 bug-des Skill。
 - 只有脚本产生的缓存、报告和构建输出应被忽略；skill 源码、模板和验证脚本应留在版本控制中。
 
 ## 内置开源能力维护
@@ -243,9 +243,9 @@ Codex 没有上游工作流运行器时，`claire-test` 按上游 checker、分�
 
 | Skill | 适用场景 |
 | --- | --- |
-| `bug-memory-workflow` | Bug 修复、调查或 review 前检索已确认的历史经验。 |
+| `bugfix` 内部 memory 模块 | Bug 修复、调查或 review 前检索已确认的历史经验。 |
 | `bugfix` | `fv-web2 / fx-data-web` 的修复、review gate、Feishu、Bitbucket PR 与交付流程。 |
-| `bug-des` | 基于 issue 与 diff 生成简洁中文飞书缺陷评论或 PR 描述；通过飞书项目 MCP 发布、更新并核验评论，使用普通文本或工具支持的 Markdown，不再要求彩色富文本和浏览器排版。 |
+| `bugfix` 内部 description 模块 | 基于 issue 与 diff 生成简洁中文飞书缺陷评论或 PR 描述；通过飞书项目 MCP 发布、更新并核验评论，使用普通文本或工具支持的 Markdown，不再要求彩色富文本和浏览器排版。 |
 
 ## Git 协作
 
@@ -280,3 +280,7 @@ Codex 没有上游工作流运行器时，`claire-test` 按上游 checker、分�
 - 投资知识与公开讨论读取规则统一维护在 akshare-data，agent-reach 保留读取渠道入口；money-tool 项目数据仍留在业务目录。
 - claire-test 自查表明确有序操作步骤、独立预期及实际执行证据的记录格式。
 - 2026-11-05 已卸载 fx-bdd、fx-data-test-skills，移除旧测试插件的专属市场注册和 BDD 使用指引；五个子代理配置及 agents 联接已删除。业务仓库历史用例与其他插件保留。
+
+2026-11-06：将 bug-des 的完整描述规则及模板迁入 `bugfix/modules/description/`，保留 human-writing 润色、MCP 发布及读回核验要求，移除独立入口。
+
+2026-11-06：将 bug-memory-workflow 规则与记忆格式参考迁入 `bugfix/modules/memory/`，移除独立入口；历史记忆继续保存在 `D:\Claire\memory\bug-fix.md`。
