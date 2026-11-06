@@ -9,14 +9,26 @@ The user has asked you to teach them something. This is a stateful request - the
 
 ## Teaching Workspace
 
-Treat the current directory as a teaching workspace. The state of their learning is captured in this directory in several files:
+Use `D:/Claire/learning` as the persistent teaching root, regardless of the current working directory. Do not put courses in the skills repository, a business repository, or a new dated folder by default.
+
+### Resolve the workspace before writing
+
+1. Read `D:/Claire/learning/课程目录.md` if present, then inspect the matching topic directory and its `MISSION.md`, `NOTES.md`, learning records and reusable assets.
+2. Continue in the existing topic workspace when the learning goal matches. A new lesson is a new numbered HTML file inside that workspace, not a new topic folder. Reuse confirmed goals; ask about the mission only when it is missing or materially unclear.
+3. Create one Chinese-named topic directory only for a genuinely new learning goal, such as `AI概念入门` or `Docker入门`. Preserve established technical names such as Three.js. Ask if multiple existing workspaces fit and the choice changes the learning mission.
+4. Use `课程/`, `参考资料/`, `素材/`, and, when needed, `学习记录/`. Lessons use `0001-中文课题.html`; references use descriptive Chinese filenames, with numbering when useful. Keep `MISSION.md`, `RESOURCES.md`, `NOTES.md`, and `GLOSSARY.md` as stable metadata filenames. CSS/JS filenames may keep their existing technical names.
+5. Increment from existing lesson numbers and update only the affected entries in `课程目录.md`. Do not overwrite courses, reset numbering, or duplicate assets merely because a new chat or day started.
+
+When explicitly asked to migrate older courses, inventory them first; move the whole topic with its sources, assets, tests and learning evidence. Check destination conflicts, file integrity and local links, and update known referring documents. Do not collect unrelated project documents or personal files, keep duplicate course trees, or leave stale links without reporting them.
+
+The state of learning is captured in the selected topic workspace in several files:
 
 - `MISSION.md`: A document capturing the _reason_ the user is interested in the topic. This should be used to ground all teaching. Use the format in [MISSION-FORMAT.md](./MISSION-FORMAT.md).
-- `./reference/*.html`: A directory of reference materials. These are the compressed learnings from the lessons - cheat sheets, reference algorithms, syntax, yoga poses, glossaries. They are the raw units of learning. They should be beautiful documents which print out well, and are designed for quick reference.
+- `./参考资料/*.html`: A directory of reference materials. These are the compressed learnings from the lessons - cheat sheets, reference algorithms, syntax, yoga poses, glossaries. They are the raw units of learning. They should be beautiful documents which print out well, and are designed for quick reference.
 - `RESOURCES.md`: A list of resources which can be explored to ground your teaching in contextual knowledge, or to acquire knowledge and wisdom. Use the format in [RESOURCES-FORMAT.md](./RESOURCES-FORMAT.md).
-- `./learning-records/*.md`: A directory of learning records, which capture what the user has learned. These are loosely equivalent to architectural decision records in software development - they capture non-obvious lessons and key insights that may need to be revised later, or drive future sessions. These should be used to calculate the zone of proximal development. They are titled `0001-<dash-case-name>.md`, where the number increments each time. Use the format in [LEARNING-RECORD-FORMAT.md](./LEARNING-RECORD-FORMAT.md).
-- `./lessons/*.html`: A directory of lessons. A **lesson** is a single, self-contained HTML output that teaches one tightly-scoped thing tied to the mission. This is the primary unit of teaching in this workspace.
-- `./assets/*`: Reusable **components** shared across lessons. See [Assets](#assets).
+- `./学习记录/*.md`: Evidence-based learning records, numbered as `0001-中文要点.md`. Use the format in [LEARNING-RECORD-FORMAT.md](./LEARNING-RECORD-FORMAT.md). Merely delivering material is not evidence of learning; do not create mastery records without evidence.
+- `./课程/*.html`: A directory of lessons. A **lesson** is a single HTML output that teaches one tightly-scoped thing tied to the mission. This is the primary unit of teaching in this workspace.
+- `./素材/*`: Reusable **components** shared across lessons. See [Assets](#assets).
 - `NOTES.md`: A scratchpad for you to jot down user preferences, or working notes.
 
 ## Philosophy
@@ -46,13 +58,13 @@ Fluency can give the user an illusory sense of mastery, but storage strength is 
 
 ## Lessons
 
-A lesson is the main thing you produce: the unit in which knowledge and skills reach the user. Each lesson is one self-contained HTML file, saved to `./lessons/` and titled `0001-<dash-case-name>.html` where the number increments each time.
+A lesson is the main thing you produce: the unit in which knowledge and skills reach the user. Each lesson is one HTML file, saved to `./课程/` and titled `0001-中文课题.html` where the number increments each time. Shared local assets remain beside the course and are linked relatively; only promise a single portable file when those assets are actually embedded.
 
 A lesson should be **beautiful**, with clean, readable typography and layout, since the user will return to these later to review. Think Tufte.
 
 The lesson should be short, and completable very quickly. Learners' working memory is very small, and we need to stay within it. But each lesson should give the user a single tangible win that they can build on. It should be directly tied to the mission, and should be in the user's zone of proximal development.
 
-If possible, open the lesson file for the user by running a CLI command.
+Return a clickable absolute link to the lesson and the course directory. Do not automatically open a browser or start a server. Follow the user's explicit-only `webapp-testing` rule for page tests; otherwise verify files, local references and script syntax statically and state the rendered/interactive checks that remain unverified.
 
 Each lesson should link via HTML anchors to other lessons and reference documents.
 
@@ -62,9 +74,9 @@ Each lesson should contain a reminder to ask followup questions to the agent. Th
 
 ## Assets
 
-Lessons are built from reusable **components**, stored in `./assets/`: stylesheets, quiz widgets, simulators, diagram helpers, and anything else a second lesson could reuse.
+Lessons are built from reusable **components**, stored in `./素材/`: stylesheets, quiz widgets, simulators, diagram helpers, and anything else a second lesson could reuse.
 
-Reuse is the default, not the exception. Before authoring a lesson, read `./assets/` and build from the components already there. When a lesson needs something new and reusable, write it as a component in `./assets/` and link to it; never inline code a future lesson would duplicate.
+Reuse is the default, not the exception. Before authoring a lesson, read `./素材/` and build from the components already there. When a lesson needs something new and reusable, write it as a component in `./素材/` and link to it; never inline code a future lesson would duplicate.
 
 A shared stylesheet is the first component every workspace earns: every lesson links it, so the lessons look like one consistent course rather than a pile of one-offs. As the workspace grows, so should the component library.
 
@@ -84,7 +96,7 @@ Each lesson, the user should always feel as if they are being challenged 'just e
 
 The user may specify an exact thing they want to learn. If they don't, figure out their zone of proximal development by:
 
-- Reading their `learning-records`
+- Reading their `学习记录`
 - Figuring out the right thing to teach them based on their mission
 - Teach the most relevant thing that fits in their zone of proximal development
 

@@ -1,6 +1,6 @@
 # Codex Skills
 
-更新日期：2026-11-05
+更新日期：2026-11-06
 
 个人 skill 根目录：`D:\Claire\skills`。Codex 默认发现路径 `C:\Users\Claire\.codex\skills` 是指向这里的 junction，因此本仓库是本地 skill 的唯一维护入口。
 
@@ -8,13 +8,13 @@
 
 ## Skill 目录与插件索引
 
-2026-11-05 核对本地个人 Skill 共 **30** 个、系统 Skill 共 **5** 个。插件行保留历史索引，实际可调用入口以当前会话发现结果为准。
+2026-11-06 核对本地个人 Skill 共 **29** 个、系统 Skill 共 **5** 个。插件行保留历史索引，实际可调用入口以当前会话发现结果为准。
 
-2026-11-03 新增独立的 [`interview-coach`](interview-coach/SKILL.md)，用途与调用方式见“求职辅助”。另已安装 follow-builders，用于按需读取 AI 开发者信息源并生成摘要；安装未创建定时任务或配置推送。
+2026-11-03 新增独立的 [`interview-coach`](interview-coach/SKILL.md)，用途与调用方式见“求职辅助”。2026-11-06 已卸载 `follow-builders` AI 动态摘要 Skill。
 
 | 来源 | 数量 | Skill 名称 |
 | --- | ---: | --- |
-| 本地 personal | 30 | `agent-reach`、`akshare-data`、`archify`、`bug-des`、`bug-memory-workflow`、`bugfix`、`claire-require`、`claire-test`、`codex-session-timeline`、`feishu-doc-writer`<br>`find-skills`、`fixing-accessibility`、`fixing-motion-performance`、`follow-builders`、`frontend-code-review`、`fx-ui`、`human-writing`、`i-have-adhd`、`i18n-helper`、`interaction-guide`、`interview-coach`、`job-search`<br>`life-decision-guide`、`life-design`、`maintaining-windows-health`、`open-code-review-delegate`、`resolving-merge-conflicts`、`teach`、`ui`、`webapp-testing` |
+| 本地 personal | 29 | `agent-reach`、`akshare-data`、`archify`、`bug-des`、`bug-memory-workflow`、`bugfix`、`claire-require`、`claire-test`、`codex-session-timeline`、`feishu-doc-writer`<br>`find-skills`、`fixing-accessibility`、`fixing-motion-performance`、`frontend-code-review`、`fx-ui`、`human-writing`、`i-have-adhd`、`i18n-helper`、`interaction-guide`、`interview-coach`、`job-search`<br>`life-decision-guide`、`life-design`、`maintaining-windows-health`、`open-code-review-delegate`、`resolving-merge-conflicts`、`teach`、`ui`、`webapp-testing` |
 | 本地 `.system` | 5 | `imagegen`、`openai-docs`、`review-agent`、`skill-creator`、`skill-installer` |
 | Dev Toolkit 插件 | 9 | `dev-toolkit:bkt`、`dev-toolkit:code-figma`、`dev-toolkit:commit`、`dev-toolkit:deploy-app`、`dev-toolkit:fetch-library-docs`、`dev-toolkit:firecrawl`、`dev-toolkit:open-bitbucket-pr`、`dev-toolkit:read-feature-input`、`dev-toolkit:worktree` |
 | FX Workflow 插件 | 4 | `fx-workflow:dev-doc-writer`、`fx-workflow:feishu-issue-commit`、`fx-workflow:reading-kms-confluence-pages`、`fx-workflow:work-log` |
@@ -133,7 +133,7 @@
 
 | Skill | 适用场景 |
 | --- | --- |
-| [`teach`](teach/SKILL.md) | 显式调用时开展持续学习，维护学习目标、课程、参考资料与学习记录。 |
+| [`teach`](teach/SKILL.md) | 显式调用时开展持续学习；统一存放于 `D:\Claire\learning`，先查“课程目录.md”并复用已有主题。中文主题目录和课程文件名，同主题课程编号递增，复用素材与学习记录，不按会话或日期另建课程目录。 |
 
 ## 投资研究与网络信息
 

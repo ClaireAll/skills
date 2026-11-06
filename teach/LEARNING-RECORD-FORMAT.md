@@ -1,6 +1,6 @@
 # Learning Record Format
 
-Learning records live in `./learning-records/` and use sequential numbering: `0001-slug.md`, `0002-slug.md`, etc. Create the directory lazily: only when the first record is written.
+Learning records live in the topic workspace's `./学习记录/` and use sequential numbering: `0001-中文要点.md`, `0002-中文要点.md`, etc. Topic workspaces live under `D:/Claire/learning`. Create the record directory lazily: only when the first evidence-based record is written.
 
 They are the teaching equivalent of ADRs: they capture non-obvious lessons, key insights, and stated prior knowledge that will steer future sessions. They are used to calculate the zone of proximal development.
 
@@ -24,7 +24,7 @@ Only include these when they add genuine value. Most records won't need them.
 
 ## Numbering
 
-Scan `./learning-records/` for the highest existing number and increment by one.
+Scan `./学习记录/` for the highest existing number and increment by one.
 
 ## When to write a learning record
 

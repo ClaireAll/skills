@@ -90,6 +90,15 @@ Multiple servers: repeat `--server` and matching `--port` for backend/frontend, 
 
 Record the tested URL/domain, enterprise type, identity/role, relevant version/engine/timezone, scenario statuses and evidence paths. List omitted branches and prerequisite gaps. For mocked tests identify the exact URL/method/body match, injected response and its scope; never label it real backend validation. For diagnostics keep the action timestamp, resource identifier and trace/log link with secrets removed.
 
+### Execution-result publishing contract
+
+This skill owns actual browser execution verdicts and their evidence. Reuse existing case IDs, ordered steps, expectations and sources from claire-test; do not regenerate cases merely to publish results. Publishing requires the user to authorize the target table or document.
+
+- Use exactly `通过 ✅`, `失败 ❌`, `待确认 ⚠️`, `阻塞`, `部分完成` or `未执行` for recorded execution results. Never replace them with bare `通过`, `未通过`, `正常` or `异常`. Newly generated cases that have not entered an execution report retain blank status cells.
+- Fully passed cells contain only `通过 ✅`; do not add accounts or evidence links there. Every other reported result includes its actual observation or reason and the evidence below. Do not invent a screenshot or reproduction copy for an unexecuted case: explicitly state why it is unavailable. Missing evidence stays a named gap, never a fabricated pass or product failure.
+- Before writing, check every target row: case ID, allowed status, observation/reason, actual screenshot or explicit screenshot gap, independent reproduction link or explicit copy gap, and access account with verified permissions beside each link (or an explicit permission-verification gap). Use a pending verdict when acceptance rules are unresolved; missing environment/data is blocked. Preserve partial coverage and mocked-backend limits.
+- Write through the available Feishu MCP in its supported format. Then read back the target rows and verify case IDs, exact status text including emoji, explanations, screenshot rendering and links with their access identities. Repair mismatches within the authorized rows and read back again. If the tool cannot preserve formatting or verification remains impossible, report the exact mismatch or verification gap; do not claim compliance. For an unclear write result, query before retrying to avoid duplicates.
+
 ### Evidence for review
 
 - Every result other than fully passed, including failed, blocked, pending confirmation, partial and unexecuted, needs three fields in its execution-status cell: an actual screenshot of the problem or blocking state, a concise reason, and a link to an independent reproduction copy. Keep the result's actual status; missing prerequisites do not prove a product defect.
