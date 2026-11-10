@@ -1,6 +1,6 @@
 ---
 name: claire-test
-description: Review source code against requirements and relevant edge cases, combining spec-to-code-compliance with concrete fix proposals for the user to apply. Also generate requested developer self-check cases. Read-only by default; page execution requires an explicit webapp-testing request.
+description: Review source code against requirements and relevant edge cases, combining spec-to-code-compliance with concrete fix proposals for the user to apply. Also review scoped frontend files or pending changes for code quality, performance and business logic, and generate requested developer self-check cases. Read-only by default; page execution requires an explicit webapp-testing request.
 ---
 
 # Claire Test
@@ -12,6 +12,7 @@ Review implementations against requirements, or generate and reformat developer 
 | Request | Read |
 | --- | --- |
 | Find code problems, review an implementation against a test/requirement document, or propose fixes | `references/source-audit.md` |
+| Review frontend source files or scoped pending frontend changes | `references/source-audit.md`, then `modules/frontend-review/module.md`; combine findings in the existing audit output |
 | Generate developer self-check cases or a pre-test checklist | `references/self-check.md` |
 | Reformat an existing self-check list | `references/self-check.md`; reuse its cases and records without restarting an audit |
 | Both review code and generate cases | Both references; reuse the same source and scope records |

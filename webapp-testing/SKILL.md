@@ -50,6 +50,14 @@ These references distill the team's “测试百宝箱”. They are testing cont
 
 Read Feishu inputs through connected document tools. On a missing connection, expired authorization or 401, retain the source and progress, help restore the existing connection, then verify the original target read-only before resuming. Distinguish missing resource permission from login failure; do not replace unread material with guesses.
 
+## Conditional accessibility checks
+
+During explicitly requested browser testing, read [fixing-accessibility](../fixing-accessibility/SKILL.md) when the scoped scenario involves keyboard operation, forms and validation, dialogs/overlays and focus, menus/tabs/custom controls, icon-only controls, hover-only information, or explicitly requested accessibility checks. Apply only the relevant rules to the controls and flows already in scope; ordinary data, API or realtime tests do not trigger a full accessibility audit.
+
+- For dialogs, verify initial focus, applicable Tab containment, Escape behavior and focus restoration. For forms and controls, check accessible names, keyboard reachability/activation, visible focus and field-error associations as relevant to the scenario.
+- Use actual DOM/accessibility properties and browser interactions as evidence. Record what was and was not tested; automated browser checks do not establish screen-reader compatibility or full WCAG conformance. Do not invent contrast thresholds or mark visual contrast passed from a screenshot alone.
+- This delegation is testing and reporting only. The dependency's fix examples do not authorize business-code edits, test IDs, UI changes, dependency installation or unrelated checks. Report defects and proposed fixes within the existing result/evidence contract.
+
 ## Runtime and local artifacts
 
 - Python: `D:/Claire/tools/webapp-testing/.venv/Scripts/python.exe`.
@@ -94,8 +102,8 @@ Record the tested URL/domain, enterprise type, identity/role, relevant version/e
 
 This skill owns actual browser execution verdicts and their evidence. Reuse existing case IDs, ordered steps, expectations and sources from claire-test; do not regenerate cases merely to publish results. Publishing requires the user to authorize the target table or document.
 
-- Use exactly `通过 ✅`, `失败 ❌`, `待确认 ⚠️`, `阻塞`, `部分完成` or `未执行` for recorded execution results. Never replace them with bare `通过`, `未通过`, `正常` or `异常`. Newly generated cases that have not entered an execution report retain blank status cells.
-- Fully passed cells contain only `通过 ✅`; do not add accounts or evidence links there. Every other reported result includes its actual observation or reason and the evidence below. Do not invent a screenshot or reproduction copy for an unexecuted case: explicitly state why it is unavailable. Missing evidence stays a named gap, never a fabricated pass or product failure.
+- Use exactly `✅`, `失败 ❌`, `待确认 ⚠️`, `阻塞`, `部分完成` or `未执行` for recorded execution results. Never replace them with bare `通过`, `未通过`, `正常` or `异常`. Newly generated cases that have not entered an execution report retain blank status cells.
+- Fully passed cells contain only `✅`; do not add accounts or evidence links there. Every other reported result includes its actual observation or reason and the evidence below. Do not invent a screenshot or reproduction copy for an unexecuted case: explicitly state why it is unavailable. Missing evidence stays a named gap, never a fabricated pass or product failure.
 - Before writing, check every target row: case ID, allowed status, observation/reason, actual screenshot or explicit screenshot gap, independent reproduction link or explicit copy gap, and access account with verified permissions beside each link (or an explicit permission-verification gap). Use a pending verdict when acceptance rules are unresolved; missing environment/data is blocked. Preserve partial coverage and mocked-backend limits.
 - Write through the available Feishu MCP in its supported format. Then read back the target rows and verify case IDs, exact status text including emoji, explanations, screenshot rendering and links with their access identities. Repair mismatches within the authorized rows and read back again. If the tool cannot preserve formatting or verification remains impossible, report the exact mismatch or verification gap; do not claim compliance. For an unclear write result, query before retrying to avoid duplicates.
 

@@ -62,7 +62,7 @@ The completed template contains only the following information:
 
 Publish or update authorized Feishu bug comments directly through available Feishu Project MCP comment tools. Use plain text or tool-supported Markdown, preserving template section order, bullets and links. Do not apply custom colors, font sizes or rich-text clipboard formatting, or open a browser merely to style a comment.
 
-Create one comment or update the specified existing comment, then verify the saved content through MCP. If a write times out or its result is unclear, query the original target before retrying to avoid duplicates. If MCP is unavailable or authorization expires, help restore the existing connection and retain the draft; do not automatically switch to browser publishing. A browser may be used for required human login or authorization; verify MCP recovery separately. Publishing still requires user authorization. Chat drafts and PR descriptions remain Markdown.
+Create one comment or update the specified existing comment, then verify the saved content through MCP. If a write times out or its result is unclear, query the original target before retrying to avoid duplicates. If MCP is unavailable or authorization expires, help restore the existing connection and retain the draft; do not automatically switch to browser publishing. A browser may be used for required human login or authorization; verify MCP recovery separately. Use the standing authorization in the main skill for PR delivery. A draft-only request leaves the comment in draft. Chat drafts and PR descriptions remain Markdown.
 
 ## Cause And Source Commit Attribution
 

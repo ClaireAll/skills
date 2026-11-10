@@ -1,6 +1,6 @@
 # Codex Skills
 
-更新日期：2026-11-06
+更新日期：2026-11-10
 
 个人 skill 根目录：`D:\Claire\skills`。Codex 默认发现路径 `C:\Users\Claire\.codex\skills` 是指向这里的 junction，因此本仓库是本地 skill 的唯一维护入口。
 
@@ -8,13 +8,13 @@
 
 ## Skill 目录与插件索引
 
-2026-11-06 核对本地个人 Skill 共 **27** 个、系统 Skill 共 **5** 个。插件行保留历史索引，实际可调用入口以当前会话发现结果为准。
+2026-11-10 核对本地个人 Skill 共 **27** 个、系统 Skill 共 **5** 个。插件行保留历史索引，实际可调用入口以当前会话发现结果为准。
 
 2026-11-03 新增独立的 [`interview-coach`](interview-coach/SKILL.md)，用途与调用方式见“求职辅助”。2026-11-06 已卸载 `follow-builders` AI 动态摘要 Skill。
 
 | 来源 | 数量 | Skill 名称 |
 | --- | ---: | --- |
-| 本地 personal | 27 | `agent-reach`、`akshare-data`、`archify`、`bugfix`、`claire-require`、`claire-test`、`codex-session-timeline`、`feishu-doc-writer`<br>`find-skills`、`fixing-accessibility`、`fixing-motion-performance`、`frontend-code-review`、`fx-ui`、`human-writing`、`i-have-adhd`、`i18n-helper`、`interaction-guide`、`interview-coach`、`job-search`<br>`life-decision-guide`、`life-design`、`maintaining-windows-health`、`open-code-review-delegate`、`resolving-merge-conflicts`、`teach`、`ui`、`webapp-testing` |
+| 本地 personal | 27 | `agent-reach`、`akshare-data`、`archify`、`bugfix`、`claire-require`、`claire-test`、`codex-session-timeline`、`feishu-doc-writer`<br>`find-skills`、`fixing-accessibility`、`fixing-motion-performance`、`fx-ui`、`human-writing`、`i-have-adhd`、`i18n-helper`、`interaction-guide`、`interview-coach`、`job-search`<br>`life-decision-guide`、`life-design`、`maintaining-windows-health`、`open-code-review-delegate`、`resolving-merge-conflicts`、`teach`、`ui`、`web-perf`、`webapp-testing` |
 | 本地 `.system` | 5 | `imagegen`、`openai-docs`、`review-agent`、`skill-creator`、`skill-installer` |
 | Dev Toolkit 插件 | 9 | `dev-toolkit:bkt`、`dev-toolkit:code-figma`、`dev-toolkit:commit`、`dev-toolkit:deploy-app`、`dev-toolkit:fetch-library-docs`、`dev-toolkit:firecrawl`、`dev-toolkit:open-bitbucket-pr`、`dev-toolkit:read-feature-input`、`dev-toolkit:worktree` |
 | FX Workflow 插件 | 4 | `fx-workflow:dev-doc-writer`、`fx-workflow:feishu-issue-commit`、`fx-workflow:reading-kms-confluence-pages`、`fx-workflow:work-log` |
@@ -186,7 +186,7 @@ Python 依赖版本记录在 [requirements.txt](agent-reach/requirements.txt)，
 
 | Skill | 适用场景 |
 | --- | --- |
-| `frontend-code-review` | 审查前端代码中的缺陷、回归和交互风险。 |
+| `claire-test` 内部 frontend-review 模块 | 按实际技术栈补查前端代码质量、性能及业务逻辑，沿用中文只读审查和证据要求。 |
 | `open-code-review-delegate` | 由 OCR 确定性筛选 Git 改动并匹配审查规则，再由当前 Codex 完成逐文件审查；适合跨文件改动或提交 PR 前检查。调用：`$open-code-review-delegate 审查当前工作区改动`。 |
 | `fx-ui` | 规划、实现或审查 `fx-data-web`、`fv-web2` 的前端交互行为。 |
 | `fixing-accessibility` | 修复 ARIA、键盘、焦点、对比度和表单可访问性问题。 |
@@ -284,3 +284,7 @@ Codex 没有上游工作流运行器时，`claire-test` 按上游 checker、分�
 2026-11-06：将 bug-des 的完整描述规则及模板迁入 `bugfix/modules/description/`，保留 human-writing 润色、MCP 发布及读回核验要求，移除独立入口。
 
 2026-11-06：将 bug-memory-workflow 规则与记忆格式参考迁入 `bugfix/modules/memory/`，移除独立入口；历史记忆继续保存在 `D:\Claire\memory\bug-fix.md`。
+
+2026-11-06：frontend-code-review 检查表迁入 `claire-test/modules/frontend-review/`，移除独立入口；保留规则原文，明确项目专属规则的适用条件，统一中文只读报告。
+
+2026-11-10：新增 [web-perf](web-perf/SKILL.md)，用于诊断页面加载、交互延迟及 Core Web Vitals。webapp-testing 在相关场景按需读取 fixing-accessibility。
