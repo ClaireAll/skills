@@ -13,7 +13,7 @@ Use the installed AI Job Search methodology through this Codex entrypoint. This 
 - Upstream checkout: `D:/Claire/papers/AAA/ai-job-search`.
 - Methodology directory: `D:/Claire/papers/AAA/ai-job-search/.claude/skills/job-application-assistant`.
 - Verified Python: `D:/Claire/tools/uv/tools/serena-agent/Scripts/python.exe`.
-- Source: [AI Job Search](https://github.com/ai-job-search-dev/ai-job-search), MIT, commit `83c788d779b74522bb346145ef675b984bf2d3f7`. Maintenance details are in [upstreams.json](../upstreams.json).
+- Source: [AI Job Search](https://github.com/ai-job-search-dev/ai-job-search), MIT. The reference checkout is based on `83c788d779b74522bb346145ef675b984bf2d3f7`; its `tools/posting_guard.py` is synced separately from `d554e797f9aecfa46185cc54fdbb6457f5d7e681`. Maintenance details are in [upstreams.json](../upstreams.json).
 
 Read only the upstream references needed for the requested task. The local adaptations below override upstream tool names, output paths, templates, and market assumptions. Do not copy Claude permissions into Codex settings or assume `/setup` and `/apply` are native Codex commands.
 

@@ -12,13 +12,14 @@ Use this reference only during approved Bitbucket PR delivery. It changes review
 bkt api /rest/default-reviewers/latest/projects/<destination-project>/repos/<destination-repo>/reviewers --param sourceRepoId=<source-repo-id> --param targetRepoId=<destination-repo-id> --param sourceRefId=refs/heads/<source-branch> --param targetRefId=refs/heads/<target-branch> --json
 ```
 
-Compare reviewer identities to the authenticated author, exclude the author, and deduplicate the remaining usernames. Prefer stable user IDs where available; compare Data Center usernames case-insensitively. Do not compare display names. Pass each remaining reviewer via `--reviewer <username>` in `bkt pr create`, with explicit source/destination arguments.
+Compare reviewer identities to the authenticated author, exclude the author, and deduplicate the remaining usernames. Prefer stable user IDs where available; compare Data Center usernames case-insensitively **only for matching**. Pass each remaining reviewer's exact API `name` to `--reviewer` in `bkt pr create`; do not lowercase it or substitute `slug` / `displayName`. Bitbucket Data Center may reject a case-changed username with 409. Use explicit source/destination arguments.
 
 `bkt repo default-reviewers list` may resolve both refs in the destination; do not use it for a fork-only source branch. `bkt pr reviewer-group list` lists groups, not this PR's effective reviewers. For Data Center, explicit reviewers also avoid relying on the Cloud-only author-exclusion promise of `--with-default-reviewers`.
 
 ## Empty or Failed Queries
 
 - A 404 is not an empty default-reviewer result. Recheck host/context, repository IDs, source push, refs, permissions, and the exact error before retrying. Do not change the query to an arbitrary branch pair to make it succeed.
+- If `bkt pr create` or `bkt pr edit --reviewer` returns 409, first compare the supplied reviewer usernames with the API `name` values, including case. Before retrying creation, query for an existing PR with the same source and target; repair its reviewers in place if it exists.
 - A successful empty list can mean no condition matches this PR, or filtering removed the only reviewer. Inspect the destination conditions:
 
 ```text
@@ -31,7 +32,7 @@ bkt api /rest/default-reviewers/latest/projects/<destination-project>/repos/<des
 
 - Parse the actual response shape: `bkt pr create --json` may return `id/title/url`; `bkt pr view --json` may wrap the object in `pull_request`. A missing `links` property alone does not prove creation failed. Reuse the returned ID/URL and refetch with explicit destination arguments before retrying a write whose result is unclear.
 - Read the final PR author and reviewers with `bkt pr view <id> --project <destination-project> --repo <destination-repo> --json`. Allow a brief bounded refetch for server automation; do not recreate the PR when reviewers have not appeared yet.
-- Verify at least one actual reviewer is not the author. An author-only list fails the delivery gate even though it is non-empty. Remove an erroneous author assignment and add missing verified reviewers through explicit `bkt pr edit` flags, then refetch.
+- Compare the final reviewer list with every applicable default reviewer after excluding the author; extra server-added reviewers may remain. Verify at least one actual reviewer is not the author. An author-only or partial default-reviewer list fails the delivery gate even though it is non-empty. Remove an erroneous author assignment and add missing verified reviewers through explicit `bkt pr edit` flags, then refetch.
 - Prefer `bkt pr edit --reviewer` / `--remove-reviewer`; a hand-written raw PUT may replace the entire reviewer list and erase existing assignments. Reviewer repair must preserve unrelated reviewers.
 - Only after PR metadata, remote commit, and independent reviewers are verified may the existing Delivery Stage perform cleanup. If verification is blocked, preserve the recoverable state and report the exact pending action.
 

@@ -1,8 +1,24 @@
 {
   "schema_version": 1,
-  "checked_on": "2026-10-21",
+  "checked_on": "2026-11-11",
   "sync_mode": "selective-adaptation",
-  "scope": "Embedded capabilities in claire-require, human-writing and ui, plus the job-search local-framework adapter; excludes BDD, other standalone skills and runtime-only dependencies.",
+  "scope": "External skill sources used by the personal skills repository. Covers embedded rules, vendored skills and the job-search reference checkout. Installed platform plugins and runtime packages are managed separately.",
+  "review_2026_11_11": [
+    {"local": "claire-require", "source": "mattpocock/skills", "commit": "4ae2317ddb22b046e26455e4f9c9b3aaaf62212d", "result": "grill-me unchanged; retain local fact-lookup routing instead of requiring independent contexts for each lookup."},
+    {"local": "claire-require", "source": "addyosmani/agent-skills", "commit": "301b02b12bff98e4688e6984af6556802322bbde", "result": "Interview unchanged; spec-driven lint example is outside the local requirement workflow."},
+    {"local": "teach", "source": "mattpocock/skills", "commit": "4ae2317ddb22b046e26455e4f9c9b3aaaf62212d", "result": "Adopted varied correct-answer positions; retained the local teaching workspace."},
+    {"local": "ui", "source": "Nutlope/hallmark", "commit": "7e213cb6feb4ef82733bd66a0600b2e54ca0994c", "result": "Tracked source files unchanged."},
+    {"local": "ui, fixing-accessibility, fixing-motion-performance", "source": "ibelick/ui-skills", "commit": "97dea9e747ea94d5671ef1468cbb8f9bd5f32542", "result": "Tracked modules and both standalone instructions unchanged."},
+    {"local": "ui", "source": "BND-1/taste-skill", "commit": "0443d0fe1266ad6785a44b99b4deb2791cfef96b", "result": "Tracked instructions unchanged."},
+    {"local": "ui", "source": "dominikmartn/hue", "commit": "6bdb9379166177db818a78f1e7a9688751600ecc", "result": "Instructions, references, scripts and examples unchanged."},
+    {"local": "interview-coach", "source": "noamseg/interview-coach-skill", "commit": "634a8dd8689e0420c21e5f0c8ae3cfa9e1a7ab7e", "result": "Same source revision."},
+    {"local": "agent-reach", "source": "Panniantong/Agent-Reach", "commit": "c70ae6da5d39bc90e09ad2ae0575ccc89f31e284", "result": "Adapted evidence-completeness guidance. Retained installed CLI commands, local platform routing and explicit login boundaries."},
+    {"local": "akshare-data", "source": "haomingz/skills", "commit": "aabd488de4ab0465117685f6f1af6482e7865e9f", "result": "Same source revision on master."},
+    {"local": "find-skills", "source": "vercel-labs/skills", "commit": "e781cb4d07433dfe1d19e924ed45cc61738c55ec", "result": "Local instructions match upstream."},
+    {"local": "webapp-testing", "source": "anthropics/skills", "commit": "2c5958ecac7cee2b583967a2c4981d0f4a75c579", "result": "Helper, examples and license match upstream; retained the local testing instructions."},
+    {"local": "web-perf", "source": "cloudflare/skills", "commit": "cbf893b954222276bf1af57e5f23379231e0efb9", "result": "Local instructions and reference match upstream."},
+    {"local": "claire-test", "source": "trailofbits/skills", "commit": "e4dd0bb5b15535f7c5a0834187dffba6ac37e4ff", "result": "Workflow, checker and resources match upstream; retained the local explicit-invocation setting."}
+  ],
   "skills": {
     "claire-require": {
       "updated_on": "2026-10-22",
@@ -51,9 +67,9 @@
         {
           "repository": "https://github.com/KKKKhazix/human-writing",
           "branch": "main",
-          "commit": "4fda173f3fef7fb808f3eba991eeb2528ea4b189",
-          "committed_at": "2026-08-05T10:38:36Z",
-          "version": "1.1.0",
+          "commit": "5c0c30d33648deef4a6ed69e5def87adb858f3e2",
+          "committed_at": "2026-11-08T08:36:25Z",
+          "version": "1.2.0",
           "paths": [
             "human-writing/SKILL.md",
             "human-writing/references/forum-prose.md",
@@ -65,19 +81,19 @@
           "license": "MIT",
           "license_path": "human-writing/LICENSE",
           "status": "synced",
-          "applied": "Evidence sufficiency before long drafts, factual and fictional boundaries, genre-specific writing and material-led revision."
+          "applied": "Evidence sufficiency before long drafts, factual and fictional boundaries, genre-specific writing, material-led revision, and preserving useful interiority while removing redundant explanations."
         },
         {
           "repository": "https://github.com/blader/humanizer",
           "branch": "main",
-          "commit": "8c307f367c91bd974002f10f2be2965d642c13df",
-          "committed_at": "2026-10-16T19:12:03Z",
-          "version": "3.1.0",
+          "commit": "b48c832f0f809c1b5658edbb838c2521b72f2413",
+          "committed_at": "2026-11-10T01:34:24Z",
+          "version": "4.0.0",
           "paths": ["SKILL.md"],
           "license": "MIT",
           "license_path": "LICENSE",
           "status": "synced",
-          "applied": "Structural editing before word lists, weak-signal judgment, reader-context awareness, preservation of claims and protected file regions."
+          "applied": "Structural editing before word lists, weak-signal judgment, reader-context awareness, preservation of claims and protected file regions, and explicit coverage for full-document edits."
         }
       ],
       "local_overrides": [
@@ -191,7 +207,7 @@
       ]
     },
     "job-search": {
-      "updated_on": "2026-10-30",
+      "updated_on": "2026-11-11",
       "sources": [
         {
           "repository": "https://github.com/ai-job-search-dev/ai-job-search",
@@ -202,6 +218,10 @@
           "license_path": "LICENSE",
           "paths": ["AGENTS.md", ".claude/skills/job-application-assistant", "tools/posting_guard.py"],
           "local_checkout": "D:/Claire/papers/AAA/ai-job-search",
+          "local_overlays": {
+            "tools/posting_guard.py": "d554e797f9aecfa46185cc54fdbb6457f5d7e681"
+          },
+          "note": "The referenced skill files match the reviewed upstream revision. Git fetch failed; the guard was synced from that revision's archive as a single tracked working-tree modification in the reference checkout.",
           "status": "installed-local-framework",
           "applied": "Reference-backed candidate evidence, supplied-JD evaluation, truthful resume tailoring, interview practice, and the existing posting-integrity helper through a local Codex entrypoint."
         }

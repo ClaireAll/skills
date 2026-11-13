@@ -46,6 +46,16 @@ When several independently testable capabilities are genuinely bundled, expose t
 
 Separate what the requested deliverable can do, what requires another user decision, and what is out of scope. This does not authorize commands, dependencies, schema/API changes, feature flags, automatic tests or code edits. Ordinary requirement work stays read-only, with no BDD invocation.
 
+## Trace Change Impact
+
+Use this when the user asks what a change will affect or when a rule may affect multiple entries and the boundary is unclear. Start from the changed rule and its source. Follow the relevant entry points, shared logic and API calls in scoped code. Record the evidence for each verified impact and mark any unavailable code or untraced path as pending.
+
+| Changed rule and source | Verified impact and evidence | Paths or decisions still open | Observable acceptance |
+| --- | --- | --- | --- |
+| Rule ID or source section | Affected entry or shared logic, with file or symbol | Path to trace or product decision to confirm | Expected behavior supported by a confirmed rule |
+
+Use the clarification loop for unresolved product decisions that change scope. A read-only impact analysis of confirmed rules needs no new approval. Share the list with `claire-test` when formal findings or self-check cases are requested.
+
 ## Keep the Deliverable Proportional
 
 Default to the conversation. Do not create `SPEC.md`, intent files, a project plan, or a new spec system merely because upstream examples use them. If the user has selected the current drafting stage and requests a local requirement draft, use their existing format and D: destination, label unapproved additions and stop for review. A later document named in an earlier chained request does not bypass the intent review gate. A local draft is not permission to publish to Feishu or overwrite an existing document; existing-document edits need the user's applicable authorization.
