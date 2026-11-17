@@ -68,6 +68,8 @@ During explicitly requested browser testing, read [fixing-accessibility](../fixi
 
 ## Choose the execution approach
 
+When the user invokes `$webapp-testing A:<URL> B:<URL> 飞书链接:<URL>` (or otherwise explicitly requests an A/B environment comparison), read [A/B environment acceptance](references/environment-comparison.md) before testing. Treat A as the environment under acceptance and B as the baseline. The addresses and document are supplied per task; examples never become default targets. This mode still follows the scope, credential, evidence and Feishu publishing rules in this skill.
+
 1. Static HTML: inspect the file to identify selectors, then verify the rendered behavior.
 2. Dynamic app already running: reuse its supplied URL; do not start another server.
 3. Local app without a running server: use `scripts/with_server.py` to manage only the needed server(s).
